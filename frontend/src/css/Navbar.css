@@ -1,0 +1,13 @@
+.nav-link {
+   margin-right: 20px;
+   color: #fa2f7d !important;
+}
+
+.nav-link:hover {
+   color: black;
+}
+
+.user-img {
+   border-radius: 20px;
+   border: 2px solid #fa2f7d;
+}
