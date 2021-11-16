@@ -15,6 +15,11 @@ import President from './Users/PRESIDENT';
 import Accounts from './Users/ADMIN/pages/Accounts';
 import ProfileAdmin from './Users/ADMIN/pages/Profile';
 import Events from './Users/ADMIN/pages/Events';
+import SectEvents from './Users/SECRETARY/pages/Events';
+import Attendance from './Users/SECRETARY/pages/Attendance';
+import Qrcode from './pages/Qrcode';
+import PresEvents from './Users/PRESIDENT/pages/Events';
+import Scan from './Users/SECRETARY/pages/Scan';
 // import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -49,6 +54,14 @@ function App() {
             <Route path="/accounts" component={Accounts}></Route>
             <Route path="/profile-admin" component={ProfileAdmin}></Route>
             <Route path="/events" component={Events}></Route>
+            <Route path="/sect/events" component={SectEvents}></Route>
+
+            <Route path="/qrcode" component={Qrcode}></Route>
+
+            <Route path="/sect/scan" component={Scan}></Route>
+            <Route path="/sect/attendance" component={Attendance}></Route>
+
+            <Route path="/pres/events" component={PresEvents}></Route>
          </Router>
       </div>
    );

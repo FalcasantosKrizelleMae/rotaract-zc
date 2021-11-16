@@ -106,4 +106,28 @@ auth.post('/api/insert', (req, res) => {
    db.query(sqlInsert, [first_name, hash, chapter], (err) => {});
 });
 
+auth.post('/insert_qr', (req, res) => {
+   const member_id = req.body.member_id;
+   const qrcode = req.body.qrcode;
+
+   const sqlInsert = 'INSERT INTO qrcode (id, img) VALUES (?, ?)';
+   db.query(sqlInsert, [member_id, qrcode], (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.send({ message: 'success' });
+      }
+   });
+});
+
+//Display all data from table
+auth.get('/list', (req, res) => {
+   const sqlSelect = 'SELECT * FROM qrcode';
+   db.query(sqlSelect, (err, result) => {
+      res.send(result);
+   });
+});
+
+//UPDATE
+
 module.exports = auth;

@@ -19,6 +19,9 @@ app.use('/admin', adminRoute);
 const eventsRoute = require('./routes/events');
 app.use('/events', eventsRoute);
 
+const sectsRoute = require('./routes/sect');
+app.use('/sect', sectsRoute);
+
 const webRoute = require('./routes/web');
 app.use('/web', eventsRoute);
 

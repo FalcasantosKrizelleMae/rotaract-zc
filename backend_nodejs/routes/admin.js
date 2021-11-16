@@ -19,6 +19,7 @@ admin.use(
 //Register
 admin.post('/add_account', (req, res) => {
    const member_id = req.body.member_id;
+   const qrcode = req.body.qrcode;
    const firstName = req.body.firstName;
    const lastName = req.body.lastName;
    const role = req.body.role;
@@ -29,10 +30,10 @@ admin.post('/add_account', (req, res) => {
       if (result.length === 0) {
          //new user logic
          const sqlRegister =
-            'INSERT INTO members (member_id, first_name, last_name, role, chapter) VALUES (?, ?, ?, ?, ?)';
+            'INSERT INTO members (member_id, qrcode, first_name, last_name, role, chapter) VALUES (?, ?, ?, ?, ?, ?)';
          db.query(
             sqlRegister,
-            [member_id, firstName, lastName, role, chapter],
+            [member_id, qrcode, firstName, lastName, role, chapter],
             (err) => {
                if (err) {
                   res.send({ message: 'invalid' });

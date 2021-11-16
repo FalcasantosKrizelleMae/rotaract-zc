@@ -39,14 +39,14 @@ function Admin() {
                alt="Rotaract logo"
             />
             <div className="ms-auto">
-               <Avatar
+               {/* <Avatar
                   className="bg-white"
                   size={50}
                   src={
                      <Image src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                   }
                ></Avatar>
-               {/* DROPDOWN */}
+               DROPDOWN */}
             </div>
          </div>
 

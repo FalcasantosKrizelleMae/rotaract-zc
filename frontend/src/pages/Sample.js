@@ -1,114 +1,87 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Table } from 'react-bootstrap';
-import Axios from 'axios';
+import React, { useState, useRef } from 'react';
+import { Button } from 'react-bootstrap';
+
+import QrCode from 'qrcode';
+import QrReader from 'react-qr-reader';
 
 function Sample() {
-   const [first_name, setFirst_name] = useState('');
-   const [last_name, setLast_name] = useState('');
-   const [chapter, setChapter] = useState('');
-   const [memberList, setMemberList] = useState([]);
-
-   //Display all data
-   useEffect(() => {
-      Axios.get('http://localhost:5000/api/list').then((response) => {
-         setMemberList(response.data);
-      });
-   }, []);
-
-   //Insert to database
-   const insert_member = () => {
-      Axios.post('http://localhost:5000/api/member', {
-         first_name: first_name,
-         last_name: last_name,
-         chapter: chapter,
-      });
-
-      //Interactive data display
-      setMemberList([
-         ...memberList,
-         {
-            first_name: first_name,
-            last_name: last_name,
-            chapter: chapter,
-         },
-      ]);
+   const [text, setText] = useState('');
+   const [qrcode, setQrcode] = useState('');
+   const qrRef = useRef(null);
+   const [scanResultFile, setScanResultFile] = useState('');
+   const [scanResultWebCam, setScanResultWebCam] = useState('');
+   const generateQrCode = async () => {
+      try {
+         const response = await QrCode.toDataURL(text);
+         setQrcode(response);
+      } catch (error) {
+         console.log(error);
+      }
    };
 
-   const delete_member = (member_id) => {
-      Axios.delete(`http://localhost:5000/api/delete./${member_id}`);
+   const handleErrorFile = (error) => {
+      console.log(error);
+   };
+   const handleScanFile = (result) => {
+      if (result) {
+         setScanResultFile(result);
+      }
+   };
+   const onScanFile = () => {
+      qrRef.current.openImageDialog();
+   };
+   const handleErrorWebCam = (error) => {
+      console.log(error);
+   };
+   const handleScanWebCam = (result) => {
+      if (result) {
+         setScanResultWebCam(result);
+      }
    };
 
    return (
-      <div className="row">
-         <div className="mt-5 col-sm">
-            <Form className="p-5 border rounded">
-               <Form.Group className="mb-2">
-                  <Form.Label>First name</Form.Label>
-                  <Form.Control
-                     type="text"
-                     name="first_name"
-                     onChange={(e) => {
-                        setFirst_name(e.target.value);
-                     }}
-                  />
-               </Form.Group>
-
-               <Form.Group className="mb-2">
-                  <Form.Label>Last name</Form.Label>
-                  <Form.Control
-                     type="text"
-                     name="last_name"
-                     onChange={(e) => {
-                        setLast_name(e.target.value);
-                     }}
-                  />
-               </Form.Group>
-
-               <Form.Group className="mb-3">
-                  <Form.Label>Chapter</Form.Label>
-                  <Form.Control
-                     tye="text"
-                     name="chapter"
-                     onChange={(e) => {
-                        setChapter(e.target.value);
-                     }}
-                  />
-               </Form.Group>
-
-               <Button variant="primary" onClick={insert_member}>
-                  Submit
+      <div className="m-5">
+         <div className="row">
+            <div className="col-lg">
+               <input onChange={(e) => setText(e.target.value)} />
+               <Button variant="primary" onClick={() => generateQrCode()}>
+                  Generate
                </Button>
-            </Form>
-         </div>
 
-         <div className="mt-5 col-sm-6">
-            <Table striped bordered hover responsive>
-               <thead>
-                  <tr>
-                     <th>Name</th>
+               <br />
+               {qrcode ? (
+                  <a href={qrcode} download>
+                     <img src={qrcode} alt="" />
+                  </a>
+               ) : null}
+            </div>
 
-                     <th>Chapter</th>
-                     <th className="text-center">Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {memberList.map((val) => {
-                     return (
-                        <tr>
-                           <td>{val.first_name + ' ' + val.last_name}</td>
+            <div className="col-lg">
+               <Button variant="secondary" onClick={onScanFile}>
+                  Scan Qr Code
+               </Button>
+               <QrReader
+                  ref={qrRef}
+                  delay={300}
+                  style={{ width: '100%' }}
+                  onError={handleErrorFile}
+                  onScan={handleScanFile}
+                  legacyMode
+               />
+               <h3>Scanned Code: {scanResultFile}</h3>
+            </div>
 
-                           <td>{val.chapter}</td>
-                           <td className="text-center">
-                              <Button variant="warning">Edit</Button> &nbsp;
-                              <Button variant="danger" onClick={delete_member}>
-                                 Remove
-                              </Button>
-                           </td>
-                        </tr>
-                     );
-                  })}
-               </tbody>
-            </Table>
+            <div className="col-lg">
+               <h3>Web cam</h3>
+               <QrReader
+                  delay={200}
+                  style={{ width: '100%' }}
+                  onError={handleErrorWebCam}
+                  onScan={handleScanWebCam}
+                  facingMode
+               />
+               <h3>Scanned By WebCam Code: {scanResultWebCam}</h3>
+            </div>
          </div>
       </div>
    );

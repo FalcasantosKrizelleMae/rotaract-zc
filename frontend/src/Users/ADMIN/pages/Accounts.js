@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Sidebar';
+
 import { Form, Button, Container, Table, Modal } from 'react-bootstrap';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
 import '../css/main.css';
 import * as BiIcons from 'react-icons/bi';
 import { useForm } from 'react-hook-form';
+import QrCode from 'qrcode';
+import { Avatar, Image } from 'antd';
+import Navbar from '../components/Sidebar';
 
 function Accounts() {
+   const [qrcode, setQrcode] = useState('');
+
    const [member_id, setMember_id] = useState(0);
    const [firstName, setFirstName] = useState('');
    const [lastName, setLastName] = useState('');
@@ -21,6 +26,15 @@ function Accounts() {
       newrole: '',
       newchapter: '',
    });
+
+   const generateQrCode = async () => {
+      try {
+         const response = await QrCode.toDataURL(member_id);
+         setQrcode(response);
+      } catch (error) {
+         console.log(error);
+      }
+   };
 
    const { newmember_id, newfirstname, newlastname, newrole, newchapter } =
       dataList;
@@ -54,6 +68,7 @@ function Accounts() {
    const onSubmit = (data) => {
       Axios.post('http://localhost:5000/admin/add_account', {
          member_id: member_id,
+         qrcode: qrcode,
          firstName: firstName,
          lastName: lastName,
          role: role,
@@ -119,9 +134,9 @@ function Accounts() {
    };
 
    //DELETE ACCOUNT
-   const deleteAccount = (id, name) => {
+   const deleteAccount = (id) => {
       Swal.fire({
-         title: `Remove MEMBER ${name}
+         title: `Are you sure you want to remove this
                from the list?`,
          showDenyButton: true,
 
@@ -135,7 +150,7 @@ function Accounts() {
             ).then((response) => {
                if (response.data.message === 'success') {
                   Swal.fire(
-                     `You just removed ${id}
+                     `You just removed the member
                from the list`,
                      '',
                      'success'
@@ -188,11 +203,10 @@ function Accounts() {
                            <input
                               className="form-control"
                               type="tel"
-                              name="member_id"
                               placeholder="Member ID"
+                              pattern="[0-9]{6}"
+                              minLength="6"
                               onChange={(e) => setMember_id(e.target.value)}
-                              maxLength="5"
-                              pattern="[0-9]{5}"
                            />
                         </Form.Group>
 
@@ -285,11 +299,15 @@ function Accounts() {
                               Clear
                            </Button>
                            &nbsp; &nbsp;
-                           <input
+                           <Button
                               type="submit"
-                              className="btn btn-outline-primary"
-                              value=" Add new account"
-                           />
+                              variant="primary"
+                              onClick={() => {
+                                 generateQrCode();
+                              }}
+                           >
+                              Add account
+                           </Button>
                         </div>
                      </Container>
                   </Form>
@@ -306,6 +324,7 @@ function Accounts() {
                      <tr>
                         <th>Member ID</th>
                         <th>Name</th>
+                        <th>QR Code</th>
                         <th>Position</th>
                         <th>Chapter</th>
 
@@ -318,6 +337,15 @@ function Accounts() {
                            <tr>
                               <td>{val.member_id}</td>
                               <td>{val.first_name + ' ' + val.last_name}</td>
+                              <td>
+                                 {' '}
+                                 <Avatar
+                                    className="bg-white"
+                                    size={70}
+                                    shape="square"
+                                    src={<Image src={val.qrcode} />}
+                                 ></Avatar>
+                              </td>
                               <td>{val.role}</td>
                               <td>{val.chapter}</td>
 

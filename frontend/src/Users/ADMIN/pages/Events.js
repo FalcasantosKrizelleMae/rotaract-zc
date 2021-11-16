@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // needed for dayClick
 import listPlugin from '@fullcalendar/list';
 import Axios from 'axios';
-import Navbar from '../components/Sidebar';
+import dateFormat from 'dateformat';
 import * as BiIcons from 'react-icons/bi';
 import * as AiIcons from 'react-icons/ai';
 import ReactTooltip from 'react-tooltip';
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 
 const App = () => {
    const [event, setEvent] = useState([]);
+   const [event_id, setEvent_id] = useState();
    const [cancelled, setCancelled] = useState([]);
    const [show, setShow] = useState(false);
    const [showModal, setShowModal] = useState(false);
@@ -22,7 +23,7 @@ const App = () => {
    const [end, setEnd] = useState();
    const [description, setDescription] = useState();
    const [chapter, setChapter] = useState();
-   const [code, setCode] = useState();
+
    useForm();
 
    const handleClose = () => {
@@ -40,26 +41,6 @@ const App = () => {
       document.getElementById('add-event-form').reset();
    }
 
-   useEffect(() => {
-      Axios.get('http://localhost:5000/events/all')
-         .then((response) => {
-            if (response) {
-               setEvent(response.data);
-            }
-         })
-         .catch((error) => console.log(error));
-   }, []);
-
-   useEffect(() => {
-      Axios.get('http://localhost:5000/events/cancelled')
-         .then((response) => {
-            if (response) {
-               setCancelled(response.data);
-            }
-         })
-         .catch((error) => console.log(error));
-   }, []);
-
    const { handleSubmit } = useForm();
 
    const onSubmit = (data) => {
@@ -69,7 +50,6 @@ const App = () => {
          end: end,
          description: description,
          chapter: chapter,
-         code: code,
       })
          .then((response) => {
             if (response.data.message === 'success') {
@@ -79,6 +59,7 @@ const App = () => {
                });
                clear();
                handleClose();
+               window.location.reload(true);
             } else if (response.data.message === 'exists') {
                Swal.fire({
                   title: 'Error!',
@@ -108,17 +89,20 @@ const App = () => {
 
          confirmButtonText: 'Yes',
          denyButtonText: `No`,
-      }).then((result) => {
-         /* Read more about isConfirmed, isDenied below */
-         if (result.isConfirmed) {
-            Axios.get(`http://localhost:5000/events/cancel_event/${id}`).then(
-               (response) => {
+      })
+         .then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+               Axios.get(
+                  `http://localhost:5000/events/cancel_event/${id}`
+               ).then((response) => {
                   if (response.data.message === 'success') {
                      Swal.fire({
                         title: 'Event cancelled!',
                         icon: 'success',
                      });
                      handleClose(true);
+                     window.location.reload(true);
                   } else if (response.data.message === 'today') {
                      Swal.fire({
                         title: 'Error!',
@@ -134,14 +118,16 @@ const App = () => {
                         confirmButtonText: 'Okay',
                      });
                   }
+               });
+            } else {
+               if (result.isDenied) {
+                  Swal.fire('No action ', '', 'info');
                }
-            );
-         } else {
-            if (result.isDenied) {
-               Swal.fire('No action ', '', 'info');
             }
-         }
-      });
+         })
+         .then(() => {
+            setCancelled([...cancelled]);
+         });
    };
 
    //DELTE EVENT
@@ -160,6 +146,7 @@ const App = () => {
             ).then((response) => {
                if (response.data.message === 'success') {
                   Swal.fire(`Event successfully deleted`, '', 'success');
+                  window.location.reload(true);
                } else {
                   Swal.fire({
                      title: 'Error!',
@@ -199,9 +186,9 @@ const App = () => {
       Axios.get(`http://localhost:5000/events/getData/${id}`).then(
          (response) => {
             setNewDataList({
-               newid: response.data[0].id,
+               newid: response.data[0].event_id,
                newtitle: response.data[0].title,
-               newstart: Date(response.data[0].start),
+               newstart: response.data[0].start,
                newend: response.data[0].end,
                newdescription: response.data[0].description,
                newchapter: response.data[0].chapter,
@@ -210,14 +197,29 @@ const App = () => {
       );
    };
 
+   useEffect(() => {
+      Axios.get('http://localhost:5000/events/sect/all').then((response) => {
+         if (response) {
+            setEvent(response.data);
+         }
+      });
+   }, []);
+
+   useEffect(() => {
+      Axios.get('http://localhost:5000/events/cancelled').then((response) => {
+         if (response) {
+            setCancelled(response.data);
+         }
+      });
+   }, []);
+
    return (
       <div>
-         <div className="main  ">
-            <Navbar />
-
-            <div className=" row">
-               <div className="col-lg-8 ">
-                  <div className=" bg-white shadow p-5 col-sm-7 rounded position-fixed ">
+         <div className="m-4">
+            <div className="row">
+               <div className="col-lg">
+                  <div className=" bg-white shadow p-5  rounded ">
+                     <h3 className="mb-5 text-pink">ZAMBOANGA CHAPTER</h3>
                      <FullCalendar
                         plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
                         headerToolbar={{
@@ -232,112 +234,48 @@ const App = () => {
                      />
                   </div>
                </div>
-               <div className="col-lg mx-4">
+               <div className="col-lg-4">
                   <div className=" bg-white shadow-sm rounded">
                      <div className="">
                         <div className="row px-4 py-3 fs-5 ">
                            <div className="col-sm d-flex align-items-center  ">
                               Upcoming Events
                            </div>
-                           <div className="col-sm-1">
+                           <div className="col-sm-5">
                               <button
-                                 className="btn float-end"
+                                 className="btn float-end btn-outline-dark"
                                  onClick={handleShow}
-                                 data-tip
-                                 data-for="addEvent"
                               >
-                                 <AiIcons.AiOutlinePlus />
+                                 <AiIcons.AiOutlinePlus /> Add event
                               </button>
-
-                              {/* Add new event */}
-                              <ReactTooltip
-                                 id="addEvent"
-                                 place="top"
-                                 effect="solid"
-                              >
-                                 Add new event
-                              </ReactTooltip>
                            </div>
                         </div>
 
-                        <hr className="mt-0" />
-                        {event.map((val) => {
-                           return (
-                              <div className=" pb-1 mx-4">
-                                 <ul className="container bg-light px-4 pb-1 shadow-sm  py-4 ">
-                                    <h5 className=" text-pink text-uppercase">
-                                       {val.title}{' '}
-                                       <button
-                                          className="btn float-end"
-                                          onClick={() => {
-                                             getData(val.id);
-                                             handleShowModal();
-                                          }}
-                                          data-tip
-                                          data-for="updateEvent"
-                                       >
-                                          <BiIcons.BiEditAlt />
-                                       </button>
-                                       {/* Update */}
-                                    </h5>
-                                    <ReactTooltip
-                                       id="updateEvent"
-                                       place="top"
-                                       effect="solid"
-                                    >
-                                       Update event
-                                    </ReactTooltip>
-                                    <small className="text-dark">
-                                       {val.start}
-                                    </small>
-                                    <br />
-                                    <br />
-                                    {/* badge */}
-                                    <p className="text-dark">
-                                       EVENT CODE:
-                                       <button
-                                          className="btn btn-outline-danger float-end"
-                                          onClick={() => {
-                                             cancelEvent(val.id);
-                                          }}
-                                       >
-                                          Cancel Event
-                                       </button>
-                                       <div className="text-pink">
-                                          {val.event_code}
-                                       </div>
-                                    </p>{' '}
-                                 </ul>
-                              </div>
-                           );
-                        })}
-                     </div>
-                  </div>
-                  {/* CANCELLED */}
-                  <div className="mt-5 bg-white shadow rounded">
-                     <div className="">
-                        <div className="row px-4 py-3 fs-5 ">
-                           <div className="col-sm   ">Cancelled events</div>
-                        </div>
-
-                        <hr className="mt-0" />
-                        {cancelled.map((val) => {
-                           return (
-                              <div className="  pb-1 mx-4">
-                                 <ul className="container bg-light rounded px-4 pb-1 shadow-sm  py-4 ">
-                                    <h5 className=" text-dark text-uppercase">
-                                       {val.title}
-                                       <button
-                                          className="btn float-end"
-                                          onClick={() => {
-                                             deleteEvent(val.id);
-                                          }}
-                                          data-tip
-                                          data-for="deleteEvent"
-                                       >
-                                          <BiIcons.BiTrash className="text-danger" />
-                                       </button>
-                                       {/* Update */}
+                        <hr className="my-0" />
+                        {event.length === 0 ? (
+                           <h6 className="text-pink p-4 bg-light">
+                              No upcoming events
+                           </h6>
+                        ) : (
+                           event.map((val) => {
+                              return (
+                                 <div className=" pb-1 mx-4">
+                                    <ul className="container bg-light px-4 pb-1 shadow-sm  py-4 mt-3">
+                                       <h5 className=" text-pink text-uppercase">
+                                          {val.title}{' '}
+                                          <button
+                                             className="btn float-end"
+                                             onClick={() => {
+                                                getData(val.event_id);
+                                                handleShowModal();
+                                             }}
+                                             data-tip
+                                             data-for="updateEvent"
+                                          >
+                                             <BiIcons.BiEditAlt />
+                                          </button>
+                                          {/* Update */}
+                                       </h5>
                                        <ReactTooltip
                                           id="updateEvent"
                                           place="top"
@@ -345,26 +283,97 @@ const App = () => {
                                        >
                                           Update event
                                        </ReactTooltip>
-                                       <ReactTooltip
-                                          id="deleteEvent"
-                                          place="top"
-                                          effect="solid"
-                                       >
-                                          Delete event
-                                       </ReactTooltip>
-                                    </h5>
-                                    <small className="text-dark">
-                                       {val.start}
-                                    </small>
-                                    <br />
-                                    <span class="badge rounded-pill bg-danger mb-3">
-                                       Cancelled
-                                    </span>
-                                    {/* badge */}
-                                 </ul>
-                              </div>
-                           );
-                        })}
+                                       <small className="text-dark">
+                                          {dateFormat(
+                                             val.start,
+                                             'ddd, mmmm dS, yyyy, h:MM TT'
+                                          )}
+                                       </small>
+                                       <br />
+                                       <br />
+                                       {/* badge */}
+                                       <p className="text-dark">
+                                          EVENT CODE:
+                                          <button
+                                             className="btn btn-outline-danger float-end"
+                                             onClick={() => {
+                                                cancelEvent(val.event_id);
+                                             }}
+                                          >
+                                             Cancel Event
+                                          </button>
+                                          <div className="text-pink">
+                                             {val.event_code}
+                                          </div>
+                                       </p>{' '}
+                                    </ul>
+                                 </div>
+                              );
+                           })
+                        )}
+                     </div>
+                  </div>
+                  {/* CANCELLED */}
+                  <div className="mt-5 bg-white shadow-sm rounded">
+                     <div className="">
+                        <div className="row px-4 py-3 fs-5 ">
+                           <div className="col-sm ">Cancelled events</div>
+                        </div>
+
+                        <hr className="mt-0" />
+                        {cancelled.length === 0 ? (
+                           <h6 className="text-pink p-4 bg-light">
+                              No cancelled events
+                           </h6>
+                        ) : (
+                           cancelled.map((val) => {
+                              return (
+                                 <div className="  pb-1 mx-4">
+                                    <ul className="container bg-light rounded px-4 pb-1 shadow-sm  py-4 ">
+                                       <h5 className=" text-dark text-uppercase">
+                                          {val.title}
+                                          <button
+                                             className="btn float-end"
+                                             onClick={() => {
+                                                deleteEvent(val.event_id);
+                                             }}
+                                             data-tip
+                                             data-for="deleteEvent"
+                                          >
+                                             <BiIcons.BiTrash className="text-danger" />
+                                          </button>
+                                          {/* Update */}
+                                          <ReactTooltip
+                                             id="updateEvent"
+                                             place="top"
+                                             effect="solid"
+                                          >
+                                             Update event
+                                          </ReactTooltip>
+                                          <ReactTooltip
+                                             id="deleteEvent"
+                                             place="top"
+                                             effect="solid"
+                                          >
+                                             Delete event
+                                          </ReactTooltip>
+                                       </h5>
+                                       <small className="text-dark">
+                                          {dateFormat(
+                                             val.start,
+                                             'ddd, mmmm dS, yyyy, h:MM TT'
+                                          )}
+                                       </small>
+                                       <br />
+                                       <span class="badge rounded-pill bg-danger mb-3">
+                                          Cancelled
+                                       </span>
+                                       {/* badge */}
+                                    </ul>
+                                 </div>
+                              );
+                           })
+                        )}
                      </div>
                   </div>
                </div>
@@ -471,17 +480,6 @@ const App = () => {
                               Southern City Colleges
                            </option>
                         </select>
-                     </Form.Group>
-                     <Form.Group className="mb-3">
-                        {/* event */}
-                        <input
-                           className="form-control"
-                           type="text"
-                           name="code"
-                           placeholder="Event code"
-                           onChange={(e) => setCode(e.target.value)}
-                           required
-                        />
                      </Form.Group>
                   </Container>
                </Modal.Body>

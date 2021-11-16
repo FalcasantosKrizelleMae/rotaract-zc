@@ -14,10 +14,11 @@ function Login() {
    let history = useHistory();
    const [member_id, setMember_id] = useState('');
    const [password, setPassword] = useState('');
+
    const [status, setStatus] = React.useState('');
 
    // const [role, setRole] = useState("");
-   const login = () => {
+   const login = (member_id) => {
       Axios.post('http://localhost:5000/auth/api/login', {
          member_id: member_id,
          password: password,
@@ -26,15 +27,35 @@ function Login() {
             setStatus(response.data.message);
          } else {
             if (response.data.role === 'Member') {
-               history.push('/member');
+               history.push({
+                  pathname: `/member/${member_id}`,
+                  state: {
+                     member_id: member_id,
+                  },
+               });
             } else if (response.data.role === 'admin') {
                history.push('/admin');
             } else if (response.data.role === 'Secretary') {
-               history.push('/secretary');
+               history.push({
+                  pathname: `/secretary/${member_id}`,
+                  state: {
+                     member_id: member_id,
+                  },
+               });
             } else if (response.data.role === 'President') {
-               history.push('/president');
+               history.push({
+                  pathname: `/president/${member_id}`,
+                  state: {
+                     member_id: member_id,
+                  },
+               });
             } else if (response.data.role === 'Finance') {
-               history.push('/finance');
+               history.push({
+                  pathname: `/finance/${member_id}`,
+                  state: {
+                     member_id: member_id,
+                  },
+               });
             }
          }
       });
@@ -169,7 +190,7 @@ function Login() {
                            <Button
                               variant="pink"
                               className="w-75 py-2 btn-login"
-                              onClick={login}
+                              onClick={login(member_id)}
                            >
                               LOGIN
                            </Button>
