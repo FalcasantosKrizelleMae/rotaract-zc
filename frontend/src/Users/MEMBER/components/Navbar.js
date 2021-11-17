@@ -3,10 +3,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as BiIcons from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
-import '../../css/navbar.css';
+import '../css/navbar.css';
 import { IconContext } from 'react-icons';
 import { Avatar, Image } from 'antd';
-import logo from '../../../../images/logo.png';
+import { Button } from 'react-bootstrap';
 
 function Navbar() {
    //DROPDOWN
@@ -27,7 +27,7 @@ function Navbar() {
                   />
                </Link>
                <div>
-                  <img src={logo} className="logo" alt="LOGO" />
+                  <h3>My Account</h3>
                </div>
 
                <div className="ms-auto">
@@ -35,7 +35,7 @@ function Navbar() {
                      className="bg-white"
                      size={50}
                      src={
-                        <Image src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <Image src="https://minimaltoolkit.com/images/randomdata/female/100.jpg" />
                      }
                   ></Avatar>
                   {/* DROPDOWN */}
@@ -43,9 +43,13 @@ function Navbar() {
             </div>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                <span className="close">
-                  <Link to="#" className="menu-bars">
+                  <Button
+                     variant="none"
+                     onClick={showSidebar}
+                     className="menu-bars"
+                  >
                      <BiIcons.BiX className="bi-x" />
-                  </Link>
+                  </Button>
                </span>
                <ul className="nav-menu-items" onClick={showSidebar}>
                   <div className="d-flex justify-content-center">
@@ -53,7 +57,7 @@ function Navbar() {
                         className="border bg-light"
                         size={155}
                         src={
-                           <Image src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                           <Image src="https://minimaltoolkit.com/images/randomdata/female/100.jpg" />
                         }
                      ></Avatar>
                   </div>

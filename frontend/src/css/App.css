@@ -12,3 +12,9 @@
 .bg-pink {
    background: #d91b5c;
 }
+
+.main {
+   margin-top: 100px;
+}
+
+@import '~antd/dist/antd.css';

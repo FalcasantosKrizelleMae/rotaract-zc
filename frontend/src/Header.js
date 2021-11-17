@@ -1,87 +1,102 @@
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import React, { Component } from 'react';
+import 'antd/dist/antd.css';
+import './index.css';
+import { Menu } from 'antd';
+import {
+   MailOutlined,
+   AppstoreOutlined,
+   SettingOutlined,
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import * as AiIcons from 'react-icons/ai';
 import logo from './images/logo.png';
-import './css/Navbar.css';
-import { BiLogIn, BiLogOut, BiUser } from 'react-icons/bi';
-import { Link, useHistory } from 'react-router-dom';
 
-function Header() {
-   let user = JSON.parse(localStorage.getItem('user-info'));
-   const history = useHistory();
-   function logOut() {
-      localStorage.clear();
-      history.push('/');
+const { SubMenu } = Menu;
+
+class Header extends Component {
+   state = {
+      current: 'mail',
+   };
+
+   handleClick = (e) => {
+      console.log('click ', e);
+      this.setState({ current: e.key });
+   };
+
+   render() {
+      const { current } = this.state;
+      return (
+         <>
+            <div
+               className=" bg-white pb-0 fixed-top
+         "
+            >
+               <Menu
+                  onClick={this.handleClick}
+                  selectedKeys={[current]}
+                  mode="horizontal"
+                  className=" mt-3
+                px-4"
+               >
+                  <Menu.Item className="pb-3 me-auto ">
+                     <Link to="/">
+                        <img
+                           src={logo}
+                           height={50}
+                           className="img-responsive"
+                           alt="Rotaract logo"
+                        />
+                     </Link>
+                  </Menu.Item>
+
+                  <Menu.Item
+                     key="mail"
+                     icon={<MailOutlined />}
+                     className="item"
+                  >
+                     Dashboard
+                  </Menu.Item>
+                  <Menu.Item
+                     key="app"
+                     icon={<AppstoreOutlined />}
+                     className="item"
+                  >
+                     <Link to="/sect-events" className="text-decoration-none">
+                        Events
+                     </Link>
+                  </Menu.Item>
+
+                  <SubMenu
+                     key="SubMenu"
+                     icon={<SettingOutlined />}
+                     title="Navigation Three - Submenu"
+                     className="item"
+                  >
+                     <Menu.Item key="setting:1">Option 1</Menu.Item>
+                     <Menu.Item key="setting:2">Option 2</Menu.Item>
+                  </SubMenu>
+                  <Menu.Item
+                     key="alipay"
+                     icon={<MailOutlined />}
+                     className="item"
+                  >
+                     <Link to="/sect-accounts" className="text-decoration-none">
+                        Accounts
+                     </Link>
+                  </Menu.Item>
+
+                  <Menu.Item className=" ms-auto me-0 pe-0"> </Menu.Item>
+
+                  <Menu.Item key="logout" icon={<AiIcons.AiOutlineLogin />}>
+                     <Link to="/login" className="text-decoration-none">
+                        Login
+                     </Link>
+                  </Menu.Item>
+               </Menu>
+            </div>
+         </>
+      );
    }
-
-   return (
-      <div>
-         <Navbar bg="light" expand="lg" sticky="top">
-            <Container>
-               <Navbar.Brand>
-                  <img
-                     src={logo}
-                     width="100%"
-                     height="50"
-                     alt="Rotaract logo"
-                  />
-               </Navbar.Brand>
-               <Navbar.Toggle aria-controls="dropdown" />
-               <Navbar.Collapse id="dropdown">
-                  <Nav className="ms-auto">
-                     {localStorage.getItem('user-info') ? (
-                        <>
-                           {/* <img
-                    src={user && user.image}
-                    width="40"
-                    height="40"
-                    className="user-img"
-                    alt="Rotaract logo"
-                  /> */}
-                           <NavDropdown
-                              id="nav-dropdown"
-                              title={user && user.nickname}
-                           >
-                              <NavDropdown.Item onClick={logOut}>
-                                 <BiLogOut color="#FA2F7D" /> &nbsp; Logout
-                              </NavDropdown.Item>
-                              <NavDropdown.Item>
-                                 <BiUser color="#FA2F7D" />
-                                 &nbsp; View profile
-                              </NavDropdown.Item>
-                           </NavDropdown>
-                        </>
-                     ) : (
-                        <>
-                           <Link to="/" className="nav-link">
-                              HOME
-                           </Link>
-                           <Nav.Link className="nav-link">ABOUT</Nav.Link>
-
-                           <NavDropdown title="CHAPTERS" id="nav-dropdown">
-                              <NavDropdown.Item>Chapter 1</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 2</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 3</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 4</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 5</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 6</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 7</NavDropdown.Item>
-                              <NavDropdown.Item>Chapter 8</NavDropdown.Item>
-                           </NavDropdown>
-
-                           <Link to="/register" className="nav-link">
-                              Register
-                           </Link>
-                           <Link to="/login" className="nav-link">
-                              Login &nbsp;
-                              <BiLogIn color="#FA2F7D" />
-                           </Link>
-                        </>
-                     )}
-                  </Nav>
-               </Navbar.Collapse>
-            </Container>
-         </Navbar>
-      </div>
-   );
 }
 
 export default Header;

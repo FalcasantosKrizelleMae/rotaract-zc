@@ -47,9 +47,21 @@ auth.post('/api/login', (req, res) => {
       }
 
       if (result.length > 0) {
-         bcrypt.compare(password, result[0].password, (error, response) => {
+         bcrypt.compare(password, result[0].password, (err, response) => {
             if (response) {
-               res.send({ role: result[0].role });
+               const sqlname =
+                  'SELECT chapter, first_name from members WHERE member_id = ?;';
+               db.query(sqlname, member_id, (err, response) => {
+                  if (err) {
+                     console.log({ err: err });
+                  } else {
+                     res.send({
+                        role: result[0].role,
+                        chapter: response[0].chapter,
+                        name: response[0].first_name,
+                     });
+                  }
+               });
             } else if (member_id === '') {
                res.send({
                   message: 'Please input member id',

@@ -8,7 +8,7 @@ import * as BiIcons from 'react-icons/bi';
 import { useForm } from 'react-hook-form';
 import QrCode from 'qrcode';
 import { Avatar, Image } from 'antd';
-import Navbar from '../components/Sidebar';
+import Navbar from '../components/Navbar';
 
 function Accounts() {
    const [qrcode, setQrcode] = useState('');
@@ -188,128 +188,123 @@ function Accounts() {
    return (
       <>
          <Navbar />
-         <div className="main">
+         <div className="mx-5 main">
             <div className="container-fluid bg-pink p-3  rounded">
                <h5 className="m-0 text-white">ACCOUNTS</h5>
             </div>
-            <div className="col-sm-7 p-5 mt-5 bg-light shadow-sm">
+            <div className="col-sm-7  py-5 ps-4 mt-5 bg-light shadow-sm">
                <h5 className="ms-3 mb-4">ADD NEW USER</h5>
                <div className="col-sm">
                   <Form onSubmit={handleSubmit(onSubmit)} id="add-account-form">
-                     <Container className="">
-                        {/* Member id */}
-                        <Form.Group className="mb-3">
-                           {/* <Form.Label>Member ID</Form.Label> */}
+                     {/* Member id */}
+                     <Form.Group className="mb-3">
+                        {/* <Form.Label>Member ID</Form.Label> */}
+                        <input
+                           className="form-control"
+                           type="tel"
+                           placeholder="Member ID"
+                           pattern="[0-9]{8}"
+                           onChange={(e) => setMember_id(e.target.value)}
+                        />
+                     </Form.Group>
+
+                     {/* Full name */}
+                     <div className="row">
+                        <Form.Group className="mb-3 col-sm">
                            <input
                               className="form-control"
-                              type="tel"
-                              placeholder="Member ID"
-                              pattern="[0-9]{6}"
-                              minLength="6"
-                              onChange={(e) => setMember_id(e.target.value)}
+                              type="text"
+                              name="firstName"
+                              placeholder="First name"
+                              onChange={(e) => setFirstName(e.target.value)}
+                              required
                            />
                         </Form.Group>
 
-                        {/* Full name */}
-                        <div className="row">
-                           <Form.Group className="mb-3 col-sm">
-                              <input
-                                 className="form-control"
-                                 type="text"
-                                 name="firstName"
-                                 placeholder="First name"
-                                 onChange={(e) => setFirstName(e.target.value)}
-                                 required
-                              />
-                           </Form.Group>
+                        <Form.Group className="mb-3 col-sm">
+                           {/* <Form.Label>First name</Form.Label> */}
+                           <input
+                              className="form-control col"
+                              type="text"
+                              name="lastName"
+                              placeholder="Last Name"
+                              onChange={(e) => setLastName(e.target.value)}
+                              required
+                           />
+                        </Form.Group>
+                     </div>
+                     {/* role */}
 
-                           <Form.Group className="mb-3 col-sm">
-                              {/* <Form.Label>First name</Form.Label> */}
-                              <input
-                                 className="form-control col"
-                                 type="text"
-                                 name="lastName"
-                                 placeholder="Last Name"
-                                 onChange={(e) => setLastName(e.target.value)}
-                                 required
-                              />
-                           </Form.Group>
-                        </div>
-                        {/* role */}
+                     <select
+                        className="form-select mb-3"
+                        name="role"
+                        onChange={(e) => setRole(e.target.value)}
+                        required
+                     >
+                        <option value="">Select position</option>
+                        <option name="Member" value="Member">
+                           Member
+                        </option>
 
-                        <select
-                           className="form-select mb-3"
-                           name="role"
-                           onChange={(e) => setRole(e.target.value)}
-                           required
+                        <option name="President" value="President">
+                           President
+                        </option>
+                        <option name="Secretary" value="Secretary">
+                           Secretary
+                        </option>
+                        <option name="Finance" value="Finance">
+                           Finance
+                        </option>
+                     </select>
+
+                     {/* chapter */}
+
+                     <select
+                        className="form-select mb-4"
+                        name="chapter"
+                        onChange={(e) => setChapter(e.target.value)}
+                        required
+                     >
+                        <option value="">Select chapter</option>
+                        <option value="Zamboanga City West">
+                           Zamboanga City West
+                        </option>
+                        <option value="Zamboanga City North">
+                           Zamboanga City North
+                        </option>
+                        <option value="Zamboanga City East">
+                           Zamboanga City East
+                        </option>
+                        <option value="Metro Zamboanga">Metro Zamboanga</option>
+                        <option value="Western Mindanao State University (WMSU)">
+                           Western Mindanao State University (WMSU)
+                        </option>
+                        <option value="Universidad De Zamboanga - CES">
+                           Universidad De Zamboanga - CES
+                        </option>
+                        <option value="Colosa Community">
+                           Colosa Community
+                        </option>
+                        <option value="Southern City Colleges">
+                           Southern City Colleges
+                        </option>
+                     </select>
+
+                     <div className="d-flex justify-content-end ">
+                        <Button variant="outline-danger" onClick={clear}>
+                           Clear
+                        </Button>
+                        &nbsp; &nbsp;
+                        <Button
+                           type="submit"
+                           variant="primary"
+                           onClick={() => {
+                              generateQrCode();
+                           }}
                         >
-                           <option value="">Select position</option>
-                           <option name="Member" value="Member">
-                              Member
-                           </option>
-
-                           <option name="President" value="President">
-                              President
-                           </option>
-                           <option name="Secretary" value="Secretary">
-                              Secretary
-                           </option>
-                           <option name="Finance" value="Finance">
-                              Finance
-                           </option>
-                        </select>
-
-                        {/* chapter */}
-
-                        <select
-                           className="form-select mb-4"
-                           name="chapter"
-                           onChange={(e) => setChapter(e.target.value)}
-                           required
-                        >
-                           <option value="">Select chapter</option>
-                           <option value="Zamboanga City West">
-                              Zamboanga City West
-                           </option>
-                           <option value="Zamboanga City North">
-                              Zamboanga City North
-                           </option>
-                           <option value="Zamboanga City East">
-                              Zamboanga City East
-                           </option>
-                           <option value="Metro Zamboanga">
-                              Metro Zamboanga
-                           </option>
-                           <option value="Western Mindanao State University (WMSU)">
-                              Western Mindanao State University (WMSU)
-                           </option>
-                           <option value="Universidad De Zamboanga - CES">
-                              Universidad De Zamboanga - CES
-                           </option>
-                           <option value="Colosa Community">
-                              Colosa Community
-                           </option>
-                           <option value="Southern City Colleges">
-                              Southern City Colleges
-                           </option>
-                        </select>
-
-                        <div className="d-flex justify-content-end ">
-                           <Button variant="outline-danger" onClick={clear}>
-                              Clear
-                           </Button>
-                           &nbsp; &nbsp;
-                           <Button
-                              type="submit"
-                              variant="primary"
-                              onClick={() => {
-                                 generateQrCode();
-                              }}
-                           >
-                              Add account
-                           </Button>
-                        </div>
-                     </Container>
+                           Add account
+                        </Button>
+                     </div>
                   </Form>
                </div>
 
@@ -332,46 +327,55 @@ function Accounts() {
                      </tr>
                   </thead>
                   <tbody>
-                     {list.map((val) => {
-                        return (
-                           <tr>
-                              <td>{val.member_id}</td>
-                              <td>{val.first_name + ' ' + val.last_name}</td>
-                              <td>
-                                 {' '}
-                                 <Avatar
-                                    className="bg-white"
-                                    size={70}
-                                    shape="square"
-                                    src={<Image src={val.qrcode} />}
-                                 ></Avatar>
-                              </td>
-                              <td>{val.role}</td>
-                              <td>{val.chapter}</td>
+                     {list.length === 0 ? (
+                        <tr className="border">
+                           <div className="p-3">No records available</div>
+                        </tr>
+                     ) : (
+                        list.map((val) => {
+                           return (
+                              <tr>
+                                 <td>{val.member_id}</td>
+                                 <td>{val.first_name + ' ' + val.last_name}</td>
+                                 <td>
+                                    {' '}
+                                    <Avatar
+                                       className="bg-white"
+                                       size={70}
+                                       shape="square"
+                                       src={<Image src={val.qrcode} />}
+                                    ></Avatar>
+                                 </td>
+                                 <td>{val.role}</td>
+                                 <td>{val.chapter}</td>
 
-                              <td className="text-center">
-                                 <Button
-                                    variant="outline-primary"
-                                    onClick={() => {
-                                       handleShow();
-                                       getData(val.member_id, val.first_name);
-                                    }}
-                                 >
-                                    <BiIcons.BiEdit />
-                                 </Button>
-                                 &nbsp;
-                                 <Button
-                                    variant="danger"
-                                    onClick={() => {
-                                       deleteAccount(val.member_id);
-                                    }}
-                                 >
-                                    <BiIcons.BiTrash />
-                                 </Button>
-                              </td>
-                           </tr>
-                        );
-                     })}
+                                 <td className="text-center">
+                                    <Button
+                                       variant="outline-primary"
+                                       onClick={() => {
+                                          handleShow();
+                                          getData(
+                                             val.member_id,
+                                             val.first_name
+                                          );
+                                       }}
+                                    >
+                                       <BiIcons.BiEdit />
+                                    </Button>
+                                    &nbsp;
+                                    <Button
+                                       variant="danger"
+                                       onClick={() => {
+                                          deleteAccount(val.member_id);
+                                       }}
+                                    >
+                                       <BiIcons.BiTrash />
+                                    </Button>
+                                 </td>
+                              </tr>
+                           );
+                        })
+                     )}
                   </tbody>
                </Table>
             </div>

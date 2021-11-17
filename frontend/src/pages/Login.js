@@ -36,11 +36,10 @@ function Login() {
             } else if (response.data.role === 'admin') {
                history.push('/admin');
             } else if (response.data.role === 'Secretary') {
+               localStorage.setItem('member_id', member_id);
+               localStorage.setItem('chapter', response.data.chapter);
                history.push({
                   pathname: `/secretary/${member_id}`,
-                  state: {
-                     member_id: member_id,
-                  },
                });
             } else if (response.data.role === 'President') {
                history.push({

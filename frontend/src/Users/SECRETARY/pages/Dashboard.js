@@ -13,16 +13,19 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Navbar from '../components/Navbar';
 
-function Events() {
+function Dashboard() {
+   const chapter = localStorage.getItem('chapter');
+
    const [event, setEvent] = useState([]);
    const [cancelled, setCancelled] = useState([]);
+   const [code, setCode] = useState();
+
    const [show, setShow] = useState(false);
-   const [showModal, setShowModal] = useState(false);
+
    const [title, setTitle] = useState();
    const [start, setStart] = useState();
    const [end, setEnd] = useState();
    const [description, setDescription] = useState();
-   const [chapter, setChapter] = useState();
 
    useForm();
 
@@ -30,11 +33,6 @@ function Events() {
       setShow(false);
    };
    const handleShow = () => setShow(true);
-
-   const handleCloseModal = () => {
-      setShowModal(false);
-   };
-   const handleShowModal = () => setShowModal(true);
 
    //CLEAR FORM
    function clear(e) {
@@ -50,6 +48,7 @@ function Events() {
          end: end,
          description: description,
          chapter: chapter,
+         code: code,
       })
          .then((response) => {
             if (response.data.message === 'success') {
@@ -59,7 +58,6 @@ function Events() {
                });
                clear();
                handleClose();
-               window.location.reload(true);
             } else if (response.data.message === 'exists') {
                Swal.fire({
                   title: 'Error!',
@@ -77,7 +75,15 @@ function Events() {
             }
          })
          .then(() => {
-            setEvent([...event]);
+            setEvent([
+               ...event,
+               {
+                  title: title,
+                  start: start,
+                  end: end,
+                  chapter: chapter,
+               },
+            ]);
          });
    };
 
@@ -89,20 +95,16 @@ function Events() {
 
          confirmButtonText: 'Yes',
          denyButtonText: `No`,
-      })
-         .then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-               Axios.get(
-                  `http://localhost:5000/events/cancel_event/${id}`
-               ).then((response) => {
+      }).then((result) => {
+         if (result.isConfirmed) {
+            Axios.get(`http://localhost:5000/events/cancel_event/${id}`).then(
+               (response) => {
                   if (response.data.message === 'success') {
                      Swal.fire({
                         title: 'Event cancelled!',
                         icon: 'success',
                      });
                      handleClose(true);
-                     window.location.reload(true);
                   } else if (response.data.message === 'today') {
                      Swal.fire({
                         title: 'Error!',
@@ -118,16 +120,14 @@ function Events() {
                         confirmButtonText: 'Okay',
                      });
                   }
-               });
-            } else {
-               if (result.isDenied) {
-                  Swal.fire('No action ', '', 'info');
                }
+            );
+         } else {
+            if (result.isDenied) {
+               Swal.fire('No action ', '', 'info');
             }
-         })
-         .then(() => {
-            setCancelled([...cancelled]);
-         });
+         }
+      });
    };
 
    //DELTE EVENT
@@ -138,87 +138,68 @@ function Events() {
 
          confirmButtonText: 'Yes',
          denyButtonText: `Cancel`,
-      }).then((result) => {
-         /* Read more about isConfirmed, isDenied below */
-         if (result.isConfirmed) {
-            Axios.delete(
-               `http://localhost:5000/events/delete_event/${id}`
-            ).then((response) => {
-               if (response.data.message === 'success') {
-                  Swal.fire(`Event successfully deleted`, '', 'success');
-                  window.location.reload(true);
-               } else {
-                  Swal.fire({
-                     title: 'Error!',
-                     text: 'ERROR',
-                     icon: 'error',
-                     confirmButtonText: 'Okay',
-                  });
+      })
+         .then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+               Axios.delete(
+                  `http://localhost:5000/events/delete_event/${id}`
+               ).then((response) => {
+                  if (response.data.message === 'success') {
+                     Swal.fire(`Event successfully deleted`, '', 'success');
+                     window.location.reload(true);
+                  } else {
+                     Swal.fire({
+                        title: 'Error!',
+                        text: 'ERROR',
+                        icon: 'error',
+                        confirmButtonText: 'Okay',
+                     });
+                  }
+               });
+            } else {
+               if (result.isDenied) {
+                  Swal.fire('Action cancelled ', '', 'info');
                }
-            });
-         } else {
-            if (result.isDenied) {
-               Swal.fire('Action cancelled ', '', 'info');
             }
-         }
-      });
-   };
-
-   const [dataList, setNewDataList] = useState({
-      newid: '',
-      newtitle: '',
-      newstart: '',
-      newend: '',
-      newdescription: '',
-      newchapter: '',
-   });
-
-   const { newid, newtitle, newstart, newend, newdescription, newchapter } =
-      dataList;
-
-   const onInputChange = (e) => {
-      setNewDataList({ ...dataList, [e.target.name]: e.target.value });
-   };
-
-   const updateEvent = () => {};
-
-   const getData = (id) => {
-      Axios.get(`http://localhost:5000/events/getData/${id}`).then(
-         (response) => {
-            setNewDataList({
-               newid: response.data[0].event_id,
-               newtitle: response.data[0].title,
-               newstart: response.data[0].start,
-               newend: response.data[0].end,
-               newdescription: response.data[0].description,
-               newchapter: response.data[0].chapter,
-            });
-         }
-      );
+         })
+         .then(() => {
+            setEvent([...event]);
+         });
    };
 
    useEffect(() => {
-      Axios.get('http://localhost:5000/events/all').then((response) => {
+      Axios.get(`http://localhost:5000/events/${chapter}`).then((response) => {
          if (response) {
             setEvent(response.data);
          }
       });
-   }, []);
+   }, [chapter]);
 
    useEffect(() => {
-      Axios.get('http://localhost:5000/events/cancelled').then((response) => {
-         if (response) {
-            setCancelled(response.data);
+      Axios.get(`http://localhost:5000/sect/cancelled/${chapter}`).then(
+         (response) => {
+            if (response) {
+               setCancelled(response.data);
+            }
          }
-      });
-   }, []);
+      );
+   }, [chapter]);
 
    return (
       <div>
          <Navbar />
          <div className="main mx-5">
-            <div className="container-fluid bg-pink p-3 mb-4 rounded">
-               <h5 className="m-0 text-white">EVENTS</h5>
+            <div className="container-fluid bg-pink p-4 mb-4 px-5 rounded">
+               <div className="row t">
+                  <div className="col-sm ">
+                     <h3 className="m-0 text-white">EVENTS</h3>
+                  </div>
+
+                  <div className="col-sm text-right ">
+                     <h5 className="text-white text-uppercase">{chapter}</h5>
+                  </div>
+               </div>
             </div>
             <div className="row">
                <div className="col-lg">
@@ -226,16 +207,20 @@ function Events() {
                      <div className="row">
                         <div className="col-sm">
                            <h4 className="mb-5 text-pink">
-                              <AiIcons.AiFillEnvironment /> ZAMBOANGA CHAPTER
+                              <AiIcons.AiFillEnvironment />
+                              &nbsp; List of Events
                            </h4>
                         </div>
                         <div className="col-sm">
-                           <button
-                              className="float-end bg-pink p-2 border-0  rounded  text-white col-sm-5"
-                              onClick={handleShow}
+                           <Button
+                              variant="outline-primary"
+                              onClick={() => {
+                                 handleShow();
+                              }}
+                              className="col-sm-5 float-end"
                            >
-                              <AiIcons.AiOutlinePlus /> Add new event
-                           </button>
+                              + Add new event
+                           </Button>
                         </div>
                      </div>
 
@@ -276,10 +261,6 @@ function Events() {
                                           {val.title}{' '}
                                           <button
                                              className="btn float-end"
-                                             onClick={() => {
-                                                getData(val.event_id);
-                                                handleShowModal();
-                                             }}
                                              data-tip
                                              data-for="updateEvent"
                                           >
@@ -391,7 +372,7 @@ function Events() {
             </div>
          </div>
 
-         {/* MODAL */}
+         {/* MODAL add event*/}
          <Modal
             size="lg"
             show={show}
@@ -458,39 +439,22 @@ function Events() {
                      </div>
                      <Form.Group className="mb-3">
                         {/* chapter */}
-                        <select
+                        <input
                            className="form-select mb-4"
                            name="chapter"
-                           onChange={(e) => setChapter(e.target.value)}
+                           defaultValue={chapter}
+                        />
+                     </Form.Group>
+                     <Form.Group className="mb-3">
+                        {/* event */}
+                        <input
+                           className="form-control"
+                           type="text"
+                           name="code"
+                           placeholder="Event code"
+                           onChange={(e) => setCode(e.target.value)}
                            required
-                        >
-                           <option value="">Select chapter</option>
-                           <option value="all">All Zamboanga Chapters</option>
-                           <option value="Zamboanga City West">
-                              Zamboanga City West
-                           </option>
-                           <option value="Zamboanga City North">
-                              Zamboanga City North
-                           </option>
-                           <option value="Zamboanga City East">
-                              Zamboanga City East
-                           </option>
-                           <option value="Metro Zamboanga">
-                              Metro Zamboanga
-                           </option>
-                           <option value="Western Mindanao State University (WMSU)">
-                              Western Mindanao State University (WMSU)
-                           </option>
-                           <option value="Universidad De Zamboanga - CES">
-                              Universidad De Zamboanga - CES
-                           </option>
-                           <option value="Colosa Community">
-                              Colosa Community
-                           </option>
-                           <option value="Southern City Colleges">
-                              Southern City Colleges
-                           </option>
-                        </select>
+                        />
                      </Form.Group>
                   </Container>
                </Modal.Body>
@@ -514,137 +478,8 @@ function Events() {
                </Modal.Footer>
             </Form>
          </Modal>
-
-         {/* modal for udpate */}
-         {/* MODAL */}
-         <Modal
-            size="lg"
-            show={showModal}
-            onHide={handleCloseModal}
-            backdrop="static"
-            keyboard={false}
-         >
-            <Form
-               className=""
-               onSubmit={handleSubmit(onSubmit)}
-               id="add-event-form"
-            >
-               <Modal.Header className="">
-                  <Modal.Title className="ms-4">UPDATE EVENT</Modal.Title>
-               </Modal.Header>
-               <Modal.Body className="m-3">
-                  <Container className="">
-                     <Form.Group className="mb-3">
-                        {/* <Form.Label>Member ID</Form.Label> */}
-                        <input
-                           className="form-control"
-                           type="text"
-                           name="title"
-                           value={newtitle}
-                           onChange={(e) => onInputChange(e)}
-                           required
-                        />
-                     </Form.Group>
-                     {/* datetime */}
-                     <div className="row">
-                        <Form.Group className="mb-3 col-sm">
-                           <Form.Label>Start date and time</Form.Label>
-                           <input
-                              type="datetime-local"
-                              className="form-control"
-                              name="start"
-                              value={newstart}
-                              onChange={(e) => onInputChange(e)}
-                           />
-                        </Form.Group>
-
-                        {/* end date */}
-                        <Form.Group className="mb-4 col-sm">
-                           <Form.Label>End date and time</Form.Label>
-                           <input
-                              type="datetime-local"
-                              className="form-control"
-                              name="end"
-                              value={newend}
-                              onChange={(e) => onInputChange(e)}
-                           />
-                        </Form.Group>
-
-                        <Form.Label>Description</Form.Label>
-                        <Form.Group className="mb-3">
-                           <Form.Control
-                              as="textarea"
-                              name="description"
-                              placeholder="Event description"
-                              rows={2}
-                              value={newdescription}
-                              onChange={(e) => onInputChange(e)}
-                           />
-                        </Form.Group>
-                     </div>
-                     <Form.Group className="mb-3">
-                        <Form.Label>Chapter</Form.Label>
-                        <select
-                           className="form-select mb-4"
-                           name="chapter"
-                           value={newchapter}
-                           onChange={(e) => onInputChange(e)}
-                        >
-                           <option value="">Select chapter</option>
-                           <option value="all">All Zamboanga Chapters</option>
-                           <option value="Zamboanga City West">
-                              Zamboanga City West
-                           </option>
-                           <option value="Zamboanga City North">
-                              Zamboanga City North
-                           </option>
-                           <option value="Zamboanga City East">
-                              Zamboanga City East
-                           </option>
-                           <option value="Metro Zamboanga">
-                              Metro Zamboanga
-                           </option>
-                           <option value="Western Mindanao State University (WMSU)">
-                              Western Mindanao State University (WMSU)
-                           </option>
-                           <option value="Universidad De Zamboanga - CES">
-                              Universidad De Zamboanga - CES
-                           </option>
-                           <option value="Colosa Community">
-                              Colosa Community
-                           </option>
-                           <option value="Southern City Colleges">
-                              Southern City Colleges
-                           </option>
-                        </select>
-                     </Form.Group>
-                  </Container>
-               </Modal.Body>
-               <Modal.Footer className="px-5">
-                  <Button
-                     variant="secondary"
-                     className="me-auto"
-                     onClick={handleCloseModal}
-                  >
-                     Close
-                  </Button>
-                  <Button variant="outline-danger" onClick={clear}>
-                     Clear
-                  </Button>
-
-                  <Button
-                     variant="outline-success"
-                     onClick={() => {
-                        updateEvent(newid);
-                     }}
-                  >
-                     Save changes
-                  </Button>
-               </Modal.Footer>
-            </Form>
-         </Modal>
       </div>
    );
 }
 
-export default Events;
+export default Dashboard;

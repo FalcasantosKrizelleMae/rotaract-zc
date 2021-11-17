@@ -79,7 +79,7 @@ function Profile() {
                            className="bg-white m-1 p-1"
                            size={300}
                            shape="square"
-                           src={<Image src={qr} />}
+                           src={<Image src="{qr}" />}
                         ></Avatar>
                      </div>
                   </div>

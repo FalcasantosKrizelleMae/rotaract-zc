@@ -71,9 +71,10 @@ const Success = () => {
                <thead>
                   <tr>
                      <th>Email</th>
-                     <th className="text-center">Action</th>
+                     <th className="text-center">Amount</th>
                      <th>Status</th>
                      <th>Description</th>
+                     <th>Payemnt date</th>
                   </tr>
                </thead>
                <tbody>
@@ -83,9 +84,10 @@ const Success = () => {
                            <tr key={payment.id}>
                               <td>{payment.attributes.billing.email}</td>
                               <td>{payment.attributes.amount}</td>
-                              <td>{payment.attributes.amount}</td>
+
                               <td>{payment.attributes.status}</td>
                               <td>{payment.attributes.statement_descriptor}</td>
+                              <td>{payment.attributes.date}</td>
                            </tr>
                         );
                      })}

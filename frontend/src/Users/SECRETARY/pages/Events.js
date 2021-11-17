@@ -7,14 +7,15 @@ import * as AiIcons from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import dateFormat from 'dateformat';
+import Navbar from '../components/Navbar';
 
 const SectEvent = () => {
-   const location = useLocation();
-   const { chapter } = location.state;
+   const chapter = localStorage.getItem('chapter');
    const [event, setEvent] = useState([]);
    let history = useHistory();
 
    const [show, setShow] = useState(false);
+
    const [title, setTitle] = useState();
    const [start, setStart] = useState();
    const [end, setEnd] = useState();
@@ -163,8 +164,9 @@ const SectEvent = () => {
 
    return (
       <div>
-         <div className="container my-5">
-            <div className="mt-4 container shadow p-5 rounded">
+         <Navbar />
+         <div className=" main mx-5">
+            <div className="shadow p-5 rounded">
                <div className="row">
                   <div className="col-sm">
                      {' '}
@@ -204,53 +206,86 @@ const SectEvent = () => {
                                     <span className="badge pill badge bg-danger">
                                        {row.status}
                                     </span>
+                                 ) : row.status === 'accepted' ? (
+                                    <span className="badge pill badge bg-success">
+                                       {row.status}
+                                    </span>
                                  ) : (
-                                    <span className="badge pill badge bg-info">
+                                    <span className="badge pill badge bg-secondary">
                                        {row.status}
                                     </span>
                                  )}
                               </td>
+
                               <td>
-                                 <Button
-                                    variant="white"
-                                    data-tip
-                                    data-for="view"
-                                    className="text-success"
-                                 >
-                                    <AiIcons.AiFillEye />
-                                 </Button>
+                                 {row.status === 'pending' ? (
+                                    <>
+                                       <Button
+                                          variant="white"
+                                          data-tip
+                                          data-for="view"
+                                          className="text-primary"
+                                       >
+                                          <AiIcons.AiFillEye />
+                                       </Button>
 
-                                 <Button
-                                    onClick={() =>
-                                       history.push({
-                                          pathname: `/sect/attendance/${row.event_id}`,
-                                          state: {
-                                             event_id: row.event_id,
-                                             title: row.title,
-                                             chapter: chapter,
-                                             start: row.start,
-                                          },
-                                       })
-                                    }
-                                    type="link"
-                                    className=" text-dark"
-                                    variant="white"
-                                    data-tip
-                                    data-for="check"
-                                 >
-                                    <AiIcons.AiFillCalendar />
-                                 </Button>
+                                       <Button
+                                          variant="white"
+                                          onClick={() => {
+                                             cancelEvent(row.event_id);
+                                          }}
+                                          data-tip
+                                          data-for="cancel"
+                                       >
+                                          <AiIcons.AiOutlineStop className="text-danger" />
+                                       </Button>
+                                    </>
+                                 ) : row.status === 'accepted' ? (
+                                    <>
+                                       <Button
+                                          variant="white"
+                                          data-tip
+                                          data-for="view"
+                                          className="text-success"
+                                       >
+                                          <AiIcons.AiFillEye />
+                                       </Button>
 
-                                 <Button
-                                    variant="white"
-                                    onClick={() => {
-                                       cancelEvent(row.event_id);
-                                    }}
-                                    data-tip
-                                    data-for="cancel"
-                                 >
-                                    <AiIcons.AiOutlineStop className="text-danger" />
-                                 </Button>
+                                       <Button
+                                          onClick={() =>
+                                             history.push({
+                                                pathname: `/sect/attendance/${row.event_id}`,
+                                                state: {
+                                                   event_id: row.event_id,
+                                                   title: row.title,
+                                                   chapter: chapter,
+                                                   start: row.start,
+                                                },
+                                             })
+                                          }
+                                          type="link"
+                                          className=" text-dark"
+                                          variant="white"
+                                          data-tip
+                                          data-for="check"
+                                       >
+                                          <AiIcons.AiFillCalendar />
+                                       </Button>
+
+                                       <Button
+                                          variant="white"
+                                          onClick={() => {
+                                             cancelEvent(row.event_id);
+                                          }}
+                                          data-tip
+                                          data-for="cancel"
+                                       >
+                                          <AiIcons.AiOutlineStop className="text-danger" />
+                                       </Button>
+                                    </>
+                                 ) : (
+                                    <b>--</b>
+                                 )}
 
                                  {/* view event */}
                                  <ReactTooltip

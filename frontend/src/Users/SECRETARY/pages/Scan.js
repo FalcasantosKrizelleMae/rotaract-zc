@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import QrReader from 'react-qr-reader';
 import Axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import Swal from 'sweetalert2';
 
 function Scan() {
    const location = useLocation();
@@ -11,7 +10,6 @@ function Scan() {
    const [member_id, setMember_id] = useState();
    const [event, setEvent] = useState();
    const [scanResultWebCam, setScanResultWebCam] = useState('');
-   const [result, setResult] = useState([]);
 
    const handleErrorWebCam = (error) => {
       console.log(error);
@@ -36,14 +34,7 @@ function Scan() {
                   Axios.post(`http://localhost:5000/sect/add_attendance`, {
                      event_id: event,
                      member_id: member_id,
-                  }).then((result) => {
-                     if (result) {
-                        setResult({ result });
-                     } else {
-                        console.log(result);
-                        setResult('err');
-                     }
-                  });
+                  }).then((result) => {});
                } else {
                   setData([
                      {
@@ -59,13 +50,13 @@ function Scan() {
    });
 
    return (
-      <div className="m-3 ">
+      <div className="main mx-5 ">
          <div className="row">
             <div className="col-lg">
                <h3>Event title: {title}</h3>
 
                <QrReader
-                  className="col-sm-12 col-lg-5 col-md-7"
+                  className="col-sm-12 col-lg-12 col-md-10"
                   delay={300}
                   style={{ width: '100%' }}
                   onError={handleErrorWebCam}
@@ -74,7 +65,7 @@ function Scan() {
                />
             </div>
 
-            <div className="col-lg mt-4 p-5 bg-white shadow">
+            <div className="col-lg mt- p-5 bg-white shadow">
                <h3>RESULT: </h3>
                {data.length === 0 ? (
                   <p></p>
