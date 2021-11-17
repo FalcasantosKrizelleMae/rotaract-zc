@@ -15,10 +15,10 @@ function Home() {
    return (
       <>
          <Header />
-         <div className=" px-5 py-5">
+         <div className=" px-5 py-5 mt-5">
             <div className="row my-5">
                <div className="col-sm my-auto">
-                  <div className="row ">
+                  <div className="row banner">
                      <h3>WELCOME TO ROTARACT </h3>
                   </div>
 
@@ -120,13 +120,13 @@ function Home() {
                            arcu eget velit pulvinar dictum vel in justo.
                         </p>
                      </div>
-                     <div class="col item social">
-                        <FaIcons.FaFacebook size="2em" />
-                        <FaIcons.FaTwitter size="2em" />
-                        <FaIcons.FaInstagram size="2em" />
+                     <div class="  mt-5 text-center">
+                        <FaIcons.FaFacebook className="me-4" size="7vh" />
+                        <FaIcons.FaTwitter className="me-4" size="7vh" />
+                        <FaIcons.FaInstagram className="me-4" size="7vh" />
                      </div>
                   </div>
-                  <p class="copyright">Rotaract Clubs of Zamboanga City </p>
+                  <p className="copyright">Rotary Clubs of Zamboanga City </p>
                </div>
             </footer>
          </div>

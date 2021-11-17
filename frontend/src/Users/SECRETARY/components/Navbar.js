@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Menu } from 'antd';
-import {
-   MailOutlined,
-   AppstoreOutlined,
-   SettingOutlined,
-} from '@ant-design/icons';
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
@@ -13,6 +8,7 @@ import { Button } from 'react-bootstrap';
 
 const { SubMenu } = Menu;
 const member_id = localStorage.getItem('member_id');
+const chapter = localStorage.getItem('chapter');
 
 class Header extends Component {
    state = {
@@ -48,7 +44,11 @@ class Header extends Component {
                   />
                </Menu.Item>
 
-               <Menu.Item key="mail" icon={<MailOutlined />} className="item">
+               <Menu.Item
+                  key="dash"
+                  icon={<AiIcons.AiOutlineAppstore />}
+                  className="item"
+               >
                   <Link
                      to={{
                         pathname: `/secretary/${member_id}`,
@@ -58,29 +58,24 @@ class Header extends Component {
                   </Link>
                </Menu.Item>
                <Menu.Item
-                  key="app"
-                  icon={<AppstoreOutlined />}
+                  key="events"
+                  icon={<AiIcons.AiOutlineCalendar />}
                   className="item"
                >
                   <Link
                      to={{
-                        pathname: `/sect-events/${member_id}`,
+                        pathname: `/sect-events/${chapter}`,
                      }}
                   >
                      Events
                   </Link>
                </Menu.Item>
 
-               <SubMenu
-                  key="SubMenu"
-                  icon={<SettingOutlined />}
-                  title="Navigation Three - Submenu"
+               <Menu.Item
+                  key="alipay"
+                  icon={<AiIcons.AiOutlineAccountBook />}
                   className="item"
                >
-                  <Menu.Item key="setting:1">Option 1</Menu.Item>
-                  <Menu.Item key="setting:2">Option 2</Menu.Item>
-               </SubMenu>
-               <Menu.Item key="alipay" icon={<MailOutlined />} className="item">
                   <Link to="/sect-accounts" className="text-decoration-none">
                      Accounts
                   </Link>

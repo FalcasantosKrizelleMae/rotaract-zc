@@ -84,12 +84,12 @@ function ProfileAdmin() {
    return (
       <>
          <Navbar />
-         <div className="main">
+         <div className="main mx-5">
             <div className="container-fluid bg-pink p-3  rounded">
                <h5 className="m-0 text-white">SETTINGS</h5>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-5 col-sm-6">
                <Card>
                   <Card.Header>
                      <Nav variant="tabs" defaultActiveKey="#first">
@@ -121,7 +121,7 @@ function ProfileAdmin() {
                                           Account number
                                        </Form.Label>
                                        <input
-                                          className="form-control"
+                                          className="form-control col-sm-7"
                                           type="tel"
                                           name="member_id"
                                           value={val.member_id}
@@ -136,7 +136,7 @@ function ProfileAdmin() {
                                        <InputGroup className="">
                                           <Input
                                              name="password"
-                                             className="text-secondary border-end-0"
+                                             className="text-secondary border-end-0 col-sm-7"
                                              type={
                                                 isHidden ? 'password' : 'text'
                                              }

@@ -22,6 +22,8 @@ import Profile from './Users/MEMBER/pages/Profile';
 import ProfileAdmin from './Users/ADMIN/pages/Profile';
 import Dashboard from './Users/ADMIN/pages/Dashboard';
 import Events from './Users/ADMIN/pages/Events';
+
+import PresDashboard from './Users/PRESIDENT/pages/Dashboard';
 // import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -60,7 +62,7 @@ function App() {
             {/* ADMIN */}
             <Route path="/admin" component={Dashboard}></Route>
             <Route path="/accounts" component={Accounts}></Route>
-            <Route path="/profile-admin" component={ProfileAdmin}></Route>
+            <Route path="/profile" component={ProfileAdmin}></Route>
             <Route path="/admin-events" component={Events}></Route>
 
             {/* SECRETARY */}
@@ -69,6 +71,10 @@ function App() {
             <Route path="/secretary" component={SectDashboard}></Route>
             <Route path="/sect/scan" component={Scan}></Route>
             <Route path="/sect/attendance" component={Attendance}></Route>
+
+            {/* PRESIDENT */}
+            <Route path="/pres-events" component={PresEvents}></Route>
+            <Route path="/president" component={PresDashboard}></Route>
          </Router>
       </div>
    );

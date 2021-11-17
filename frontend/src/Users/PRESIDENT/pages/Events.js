@@ -1,90 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form } from 'react-bootstrap';
+import { Table, Button, Modal, Form, Container } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import Axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import Swal from 'sweetalert2';
+import dateFormat from 'dateformat';
+import Navbar from '../components/Navbar';
 
-const PresEvents = () => {
+const SectEvent = () => {
+   const chapter = localStorage.getItem('chapter');
    const [event, setEvent] = useState([]);
-
-   const [newData, setNewData] = useState({
-      newid: '',
-      newtitle: '',
-      newstart: '',
-      newstatus: '',
-   });
-
-   //MODAL
-   const [show, setShow] = useState(false);
-
-   const handleClose = () => {
-      setShow(false);
-   };
-
-   const handleShow = () => setShow(true);
-
-   useEffect(() => {
-      Axios.get('http://localhost:5000/events/sect/all')
-         .then((response) => {
-            if (response) {
-               setEvent(response.data);
-            }
-         })
-         .catch((error) => console.log(error));
-   }, []);
-
-   //GET EVENT
-   const getData = (id) => {
-      Axios.get(`http://localhost:5000/events/getData/${id}`).then(
-         (response) => {
-            setNewData({
-               newid: response.data[0].id,
-               newtitle: response.data[0].title,
-               newstart: response.data[0].start,
-               newstatus: response.data[0].status,
-            });
-         }
-      );
-   };
-
-   const { newid, newtitle, newstart, newstatus } = newData;
-
-   const onInputChange = (e) => {
-      setNewData({ ...newData, [e.target.name]: e.target.value });
-   };
+   let history = useHistory();
 
    //CANCEL EVENT
    const cancelEvent = (id) => {
       Swal.fire({
-         title: `Are you sure you want to cancel this event?`,
+         title: `Are you sure you want to decline this request?`,
          showDenyButton: true,
 
          confirmButtonText: 'Yes',
          denyButtonText: `No`,
       }).then((result) => {
-         /* Read more about isConfirmed, isDenied below */
          if (result.isConfirmed) {
-            Axios.get(`http://localhost:5000/events/cancel_event/${id}`).then(
+            Axios.get(`http://localhost:5000/events/decline/${id}`).then(
                (response) => {
                   if (response.data.message === 'success') {
                      Swal.fire({
-                        title: 'Event cancelled!',
+                        title: 'Event declined!',
                         icon: 'success',
-                     });
-                     handleClose(true);
-                  } else if (response.data.message === 'today') {
-                     Swal.fire({
-                        title: 'Error!',
-                        text: "Today's event cannot be cancelled",
-                        icon: 'warning',
-                        confirmButtonText: 'Okay',
                      });
                   } else {
                      Swal.fire({
                         title: 'Error!',
-                        text: 'Event cannot be cancelled',
+                        text: 'Event not successful',
+                        icon: 'error',
+                        confirmButtonText: 'Okay',
+                     });
+                  }
+               }
+            );
+         } else {
+            if (result.isDenied) {
+               Swal.fire('No action ', '', 'info');
+            }
+         }
+      });
+   };
+
+   useEffect(() => {
+      Axios.get(`http://localhost:5000/events/pres/${chapter}`)
+         .then((response) => {
+            if (response) {
+               setEvent(response.data);
+            }
+         })
+
+         .catch((error) => console.log(error));
+   });
+
+   const accept = (id) => {
+      Swal.fire({
+         title: `Are you sure you want to accept this event request?`,
+         showDenyButton: true,
+
+         confirmButtonText: 'Yes',
+         denyButtonText: `No`,
+      }).then((result) => {
+         if (result.isConfirmed) {
+            Axios.get(`http://localhost:5000/events/accept/${id}`).then(
+               (response) => {
+                  if (response.data.message === 'success') {
+                     Swal.fire({
+                        title: 'Request accepted',
+                        icon: 'success',
+                     });
+                  } else {
+                     Swal.fire({
+                        title: 'Error!',
+                        text: 'Unsuccessful',
                         icon: 'error',
                         confirmButtonText: 'Okay',
                      });
@@ -101,66 +95,103 @@ const PresEvents = () => {
 
    return (
       <div>
-         <div className="container my-5">
-            <h5 className="text-pink">List of Events</h5>
-            <div className="mt-4 container shadow-sm p-5 rounded">
-               <Table striped>
-                  <thead className="text-center">
-                     <th>Event Name</th>
-                     <th>Event Date/Time</th>
-                     <th>Status</th>
-                     <th>Action</th>
+         <Navbar />
+         <div className=" main mx-5">
+            <div className="shadow-sm p-5 rounded">
+               <div className="row">
+                  <div className="col-sm">
+                     {' '}
+                     <h3 className="text-pink mb-5">List of Events</h3>
+                  </div>
+               </div>
+               <Table borderless hover>
+                  <thead className="text-center text-white bg-pink text-uppercase">
+                     <td>Event Name</td>
+                     <td>Event Date/Time</td>
+                     <td>Status</td>
+                     <td>Action</td>
                   </thead>
+
                   <tbody>
                      {event.map((row) => {
                         return (
-                           <tr className="text-center">
+                           <tr className="text-center border">
                               <td>{row.title}</td>
-                              <td>{row.start}</td>
+                              <td>
+                                 {dateFormat(
+                                    row.start,
+                                    'ddd, mmmm dS, yyyy, h:MM TT'
+                                 )}
+                              </td>
                               <td>
                                  {row.status === 'cancelled' ? (
                                     <span className="badge pill badge bg-danger">
                                        {row.status}
                                     </span>
+                                 ) : row.status === 'accepted' ? (
+                                    <span className="badge pill badge bg-success">
+                                       {row.status}
+                                    </span>
+                                 ) : row.status === 'declined' ? (
+                                    <span className="badge pill badge bg-warning">
+                                       {row.status}
+                                    </span>
                                  ) : (
-                                    <span className="badge pill badge bg-info">
+                                    <span className="badge pill badge bg-secondary">
                                        {row.status}
                                     </span>
                                  )}
                               </td>
+
                               <td>
-                                 <Button
-                                    variant="white"
-                                    onClick={() => {
-                                       getData(row.id);
-                                       handleShow();
-                                    }}
-                                    data-tip
-                                    data-for="view"
-                                    className="text-success"
-                                 >
-                                    <AiIcons.AiFillEye />
-                                 </Button>
+                                 {row.status === 'pending' ? (
+                                    <>
+                                       <Button
+                                          variant="white"
+                                          data-tip
+                                          data-for="view"
+                                          className="text-primary"
+                                       >
+                                          <AiIcons.AiFillEye />
+                                       </Button>
 
-                                 <Link
-                                    to="/sect/attendance"
-                                    className=" text-dark"
-                                    data-tip
-                                    data-for="check"
-                                 >
-                                    <AiIcons.AiFillCalendar />
-                                 </Link>
+                                       <Button
+                                          className="me-2"
+                                          variant="success"
+                                          onClick={() => {
+                                             accept(row.event_id);
+                                          }}
+                                          data-tip
+                                          data-for="cancel"
+                                       >
+                                          <AiIcons.AiFillCheckCircle />
+                                       </Button>
 
-                                 <Button
-                                    variant="white"
-                                    onClick={() => {
-                                       cancelEvent(row.id);
-                                    }}
-                                    data-tip
-                                    data-for="cancel"
-                                 >
-                                    <AiIcons.AiOutlineStop className="text-danger" />
-                                 </Button>
+                                       <Button
+                                          variant="danger"
+                                          onClick={() => {
+                                             cancelEvent(row.event_id);
+                                          }}
+                                          data-tip
+                                          data-for="decline"
+                                       >
+                                          <AiIcons.AiOutlineStop />
+                                       </Button>
+                                    </>
+                                 ) : row.status === 'accepted' ? (
+                                    <b>
+                                       <Button
+                                          variant="white"
+                                          data-tip
+                                          data-for="view"
+                                          className="text-primary"
+                                       >
+                                          <AiIcons.AiFillEye />
+                                       </Button>
+                                    </b>
+                                 ) : (
+                                    <b>--</b>
+                                 )}
 
                                  {/* view event */}
                                  <ReactTooltip
@@ -171,22 +202,22 @@ const PresEvents = () => {
                                     View event
                                  </ReactTooltip>
 
-                                 {/* Cancel event */}
+                                 {/* accept event */}
                                  <ReactTooltip
-                                    id="cancel"
-                                    place="right"
+                                    id="accept"
+                                    place="top"
                                     effect="solid"
                                  >
-                                    Cancel Event
+                                    Accept event
                                  </ReactTooltip>
 
                                  {/* Check Attendance */}
                                  <ReactTooltip
-                                    id="check"
+                                    id="decline"
                                     place="top"
                                     effect="solid"
                                  >
-                                    Check Attendance
+                                    Decline request
                                  </ReactTooltip>
                               </td>
                            </tr>
@@ -196,39 +227,8 @@ const PresEvents = () => {
                </Table>
             </div>
          </div>
-
-         <Modal
-            size="lg"
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-         >
-            <Modal.Header>View</Modal.Header>
-
-            <Modal.Body>
-               <Form>
-                  <Form.Group className="mb-3">
-                     <input
-                        className="form-control"
-                        type="text"
-                        name="title"
-                        value={newtitle}
-                        onChange={(e) => onInputChange(e)}
-                        required
-                     />
-                  </Form.Group>
-               </Form>
-            </Modal.Body>
-
-            <Modal.Footer>
-               <Button variant="danger" onClick={handleClose}>
-                  Close
-               </Button>
-            </Modal.Footer>
-         </Modal>
       </div>
    );
 };
 
-export default PresEvents;
+export default SectEvent;

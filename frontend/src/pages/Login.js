@@ -27,11 +27,10 @@ function Login() {
             setStatus(response.data.message);
          } else {
             if (response.data.role === 'Member') {
+               localStorage.setItem('member_id', member_id);
+               localStorage.setItem('chapter', response.data.chapter);
                history.push({
                   pathname: `/member/${member_id}`,
-                  state: {
-                     member_id: member_id,
-                  },
                });
             } else if (response.data.role === 'admin') {
                history.push('/admin');
@@ -42,18 +41,16 @@ function Login() {
                   pathname: `/secretary/${member_id}`,
                });
             } else if (response.data.role === 'President') {
+               localStorage.setItem('member_id', member_id);
+               localStorage.setItem('chapter', response.data.chapter);
                history.push({
                   pathname: `/president/${member_id}`,
-                  state: {
-                     member_id: member_id,
-                  },
                });
             } else if (response.data.role === 'Finance') {
+               localStorage.setItem('member_id', member_id);
+               localStorage.setItem('chapter', response.data.chapter);
                history.push({
                   pathname: `/finance/${member_id}`,
-                  state: {
-                     member_id: member_id,
-                  },
                });
             }
          }

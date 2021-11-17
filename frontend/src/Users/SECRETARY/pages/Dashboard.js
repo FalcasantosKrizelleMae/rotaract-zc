@@ -75,15 +75,7 @@ function Dashboard() {
             }
          })
          .then(() => {
-            setEvent([
-               ...event,
-               {
-                  title: title,
-                  start: start,
-                  end: end,
-                  chapter: chapter,
-               },
-            ]);
+            setEvent([...event]);
          });
    };
 
@@ -105,6 +97,7 @@ function Dashboard() {
                         icon: 'success',
                      });
                      handleClose(true);
+                     window.location.reload(true);
                   } else if (response.data.message === 'today') {
                      Swal.fire({
                         title: 'Error!',
@@ -177,7 +170,7 @@ function Dashboard() {
    }, [chapter]);
 
    useEffect(() => {
-      Axios.get(`http://localhost:5000/sect/cancelled/${chapter}`).then(
+      Axios.get(`http://localhost:5000/events/cancelled/${chapter}`).then(
          (response) => {
             if (response) {
                setCancelled(response.data);
@@ -440,9 +433,10 @@ function Dashboard() {
                      <Form.Group className="mb-3">
                         {/* chapter */}
                         <input
+                           type="disabled"
                            className="form-select mb-4"
-                           name="chapter"
                            defaultValue={chapter}
+                           disabled
                         />
                      </Form.Group>
                      <Form.Group className="mb-3">

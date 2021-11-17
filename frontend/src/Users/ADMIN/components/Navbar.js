@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Menu } from 'antd';
-import {
-   MailOutlined,
-   AppstoreOutlined,
-   SettingOutlined,
-} from '@ant-design/icons';
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
@@ -41,33 +36,50 @@ class Header extends Component {
                   />
                </Menu.Item>
 
-               <Menu.Item key="mail" icon={<MailOutlined />} className="item">
+               <Menu.Item
+                  key="dash"
+                  icon={<AiIcons.AiOutlineAppstore />}
+                  className="item"
+               >
                   <Link to="/admin" className="text-decoration-none">
                      Dashboard
                   </Link>
                </Menu.Item>
                <Menu.Item
-                  key="app"
-                  icon={<AppstoreOutlined />}
+                  key="funds"
+                  icon={<AiIcons.AiFillFund />}
                   className="item"
                >
-                  <Link to="/admin-events" className="text-decoration-none">
-                     Events
+                  <Link to="/admin" className="text-decoration-none">
+                     Funds
+                  </Link>
+               </Menu.Item>
+               <Menu.Item
+                  key="acc"
+                  icon={<AiIcons.AiOutlineAccountBook />}
+                  className="item"
+               >
+                  <Link to="/accounts" className="text-decoration-none">
+                     Accounts
                   </Link>
                </Menu.Item>
 
                <SubMenu
                   key="SubMenu"
-                  icon={<SettingOutlined />}
-                  title="Navigation Three - Submenu"
+                  icon={<AiIcons.AiOutlineGlobal />}
+                  title="Webpage"
                   className="item"
                >
-                  <Menu.Item key="setting:1">Option 1</Menu.Item>
-                  <Menu.Item key="setting:2">Option 2</Menu.Item>
+                  <Menu.Item key="setting:1">Details</Menu.Item>
+                  <Menu.Item key="setting:3">Gallery</Menu.Item>
                </SubMenu>
-               <Menu.Item key="alipay" icon={<MailOutlined />} className="item">
-                  <Link to="/accounts" className="text-decoration-none">
-                     Accounts
+               <Menu.Item
+                  key="alipay"
+                  icon={<AiIcons.AiOutlineSetting />}
+                  className="item"
+               >
+                  <Link to="/profile" className="text-decoration-none">
+                     Settings
                   </Link>
                </Menu.Item>
 

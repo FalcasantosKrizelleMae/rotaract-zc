@@ -18,11 +18,13 @@ function Accounts() {
    const [lastName, setLastName] = useState('');
    const [role, setRole] = useState('');
    const [chapter, setChapter] = useState('');
+   const [email, setEmail] = useState('');
    const [list, setList] = useState([]);
    const [dataList, setNewDataList] = useState({
       newmember_id: '',
       newfirstName: '',
       newlastName: '',
+      newemail: '',
       newrole: '',
       newchapter: '',
    });
@@ -36,8 +38,14 @@ function Accounts() {
       }
    };
 
-   const { newmember_id, newfirstname, newlastname, newrole, newchapter } =
-      dataList;
+   const {
+      newmember_id,
+      newfirstname,
+      newlastname,
+      newemail,
+      newrole,
+      newchapter,
+   } = dataList;
 
    const onInputChange = (e) => {
       setNewDataList({ ...dataList, [e.target.name]: e.target.value });
@@ -55,6 +63,7 @@ function Accounts() {
             newmember_id: result.data[0].member_id,
             newfirstname: result.data[0].first_name,
             newlastname: result.data[0].last_name,
+            newemail: result.data[0].email,
             newrole: result.data[0].role,
             newchapter: result.data[0].chapter,
          });
@@ -71,6 +80,7 @@ function Accounts() {
          qrcode: qrcode,
          firstName: firstName,
          lastName: lastName,
+         email: email,
          role: role,
          chapter: chapter,
       })
@@ -104,6 +114,7 @@ function Accounts() {
                   member_id: member_id,
                   first_name: firstName,
                   last_name: lastName,
+                  email: email,
                   role: role,
                   chapter: chapter,
                },
@@ -193,9 +204,13 @@ function Accounts() {
                <h5 className="m-0 text-white">ACCOUNTS</h5>
             </div>
             <div className="col-sm-7  py-5 ps-4 mt-5 bg-light shadow-sm">
-               <h5 className="ms-3 mb-4">ADD NEW USER</h5>
+               <h5 className="ms-5 mb-4">ADD NEW USER</h5>
                <div className="col-sm">
-                  <Form onSubmit={handleSubmit(onSubmit)} id="add-account-form">
+                  <Form
+                     onSubmit={handleSubmit(onSubmit)}
+                     id="add-account-form"
+                     className="mx-4"
+                  >
                      {/* Member id */}
                      <Form.Group className="mb-3">
                         {/* <Form.Label>Member ID</Form.Label> */}
@@ -227,13 +242,24 @@ function Accounts() {
                               className="form-control col"
                               type="text"
                               name="lastName"
-                              placeholder="Last Name"
+                              placeholder="Last name"
                               onChange={(e) => setLastName(e.target.value)}
                               required
                            />
                         </Form.Group>
                      </div>
                      {/* role */}
+
+                     <Form.Group className="mb-3 ">
+                        <input
+                           className="form-control"
+                           type="email"
+                           name="email"
+                           placeholder="Email"
+                           onChange={(e) => setEmail(e.target.value)}
+                           required
+                        />
+                     </Form.Group>
 
                      <select
                         className="form-select mb-3"
@@ -319,6 +345,7 @@ function Accounts() {
                      <tr>
                         <th>Member ID</th>
                         <th>Name</th>
+                        <th>Email</th>
                         <th>QR Code</th>
                         <th>Position</th>
                         <th>Chapter</th>
@@ -337,6 +364,7 @@ function Accounts() {
                               <tr>
                                  <td>{val.member_id}</td>
                                  <td>{val.first_name + ' ' + val.last_name}</td>
+                                 <td>{val.email}</td>
                                  <td>
                                     {' '}
                                     <Avatar
@@ -432,6 +460,18 @@ function Accounts() {
                            />
                         </Form.Group>
                      </div>
+
+                     <Form.Group className="mb-3">
+                        {/* <Form.Label>First name</Form.Label> */}
+                        <input
+                           className="form-control"
+                           type="email"
+                           name="newemail"
+                           placeholder="Email"
+                           value={newemail}
+                           onChange={(e) => onInputChange(e)}
+                        />
+                     </Form.Group>
                      {/* role */}
                      {/* <Form.Label>User type</Form.Label> */}
                      <select

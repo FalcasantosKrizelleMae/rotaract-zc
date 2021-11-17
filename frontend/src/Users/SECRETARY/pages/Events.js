@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Container } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import Axios from 'axios';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
@@ -41,7 +41,7 @@ const SectEvent = () => {
    // });
 
    useEffect(() => {
-      Axios.get(`http://localhost:5000/events/${chapter}`)
+      Axios.get(`http://localhost:5000/events/get/${chapter}`)
          .then((response) => {
             if (response) {
                setEvent(response.data);
@@ -208,6 +208,10 @@ const SectEvent = () => {
                                     </span>
                                  ) : row.status === 'accepted' ? (
                                     <span className="badge pill badge bg-success">
+                                       {row.status}
+                                    </span>
+                                 ) : row.status === 'declined' ? (
+                                    <span className="badge pill badge bg-warning">
                                        {row.status}
                                     </span>
                                  ) : (
@@ -391,8 +395,8 @@ const SectEvent = () => {
                         {/* chapter */}
                         <input
                            className="form-select mb-4"
-                           name="chapter"
-                           defaultValue={chapter}
+                           value={chapter}
+                           disabled
                         />
                      </Form.Group>
                      <Form.Group className="mb-3">

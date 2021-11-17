@@ -7,8 +7,7 @@ function Scan() {
    const location = useLocation();
    const { event_id, title, chapter } = location.state;
    const [data, setData] = useState([]);
-   const [member_id, setMember_id] = useState();
-   const [event, setEvent] = useState();
+
    const [scanResultWebCam, setScanResultWebCam] = useState('');
 
    const handleErrorWebCam = (error) => {
@@ -31,10 +30,10 @@ function Scan() {
                if (getchapter === chapter) {
                   setData(response.data);
 
-                  Axios.post(`http://localhost:5000/sect/add_attendance`, {
-                     event_id: event,
-                     member_id: member_id,
-                  }).then((result) => {});
+                  // Axios.post(`http://localhost:5000/sect/add_attendance`, {
+                  //    event_id: event,
+                  //    member_id: member_id,
+                  // }).then((result) => {});
                } else {
                   setData([
                      {
@@ -50,13 +49,14 @@ function Scan() {
    });
 
    return (
-      <div className="main mx-5 ">
+      <div className="">
          <div className="row">
-            <div className="col-lg">
+            <div className="col-lg-5 bg-light p-5">
+               <h3>Event ID: {event_id}</h3>
                <h3>Event title: {title}</h3>
 
                <QrReader
-                  className="col-sm-12 col-lg-12 col-md-10"
+                  className="col-lg"
                   delay={300}
                   style={{ width: '100%' }}
                   onError={handleErrorWebCam}
@@ -65,7 +65,7 @@ function Scan() {
                />
             </div>
 
-            <div className="col-lg mt- p-5 bg-white shadow">
+            <div className="col-lg m-5 p-5 bg-white">
                <h3>RESULT: </h3>
                {data.length === 0 ? (
                   <p></p>
@@ -73,7 +73,7 @@ function Scan() {
                   data.map((val) => {
                      return (
                         <div>
-                           <input
+                           {/* <input
                               type="hidden"
                               value={val.member_id}
                               onChange={(e) => setMember_id(e.target.value)}
@@ -83,7 +83,7 @@ function Scan() {
                               type="hidden"
                               value={event_id}
                               onChange={(e) => setEvent(e.target.value)}
-                           />
+                           /> */}
 
                            <h1>
                               {' '}

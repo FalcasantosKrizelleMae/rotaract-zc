@@ -22,7 +22,7 @@ function Attendance() {
    });
 
    return (
-      <div className="mt-5 container">
+      <div className="mt-5  mx-5">
          <div className="row bg-pink px-4 py-3 mx-1 rounded text-white">
             <div className="col-lg ">
                <h2 className="">{title}</h2>
@@ -37,7 +37,7 @@ function Attendance() {
             </div>
          </div>
 
-         <div className="container mt-3 bg-white p-5 shadow rounded">
+         <div className=" mt-3 bg-white p-5 shadow rounded">
             <div className="row">
                {' '}
                <div className="col">
@@ -72,6 +72,7 @@ function Attendance() {
                <thead className="bg-pink text-white text-uppercase">
                   <td>Member ID</td>
                   <td>Member name</td>
+                  <td>Email</td>
                   <td>Position</td>
                   <td>Chapter</td>
                </thead>
@@ -80,6 +81,7 @@ function Attendance() {
                      <tr className="border">
                         <td>{row.member_id}</td>
                         <td>{row.first_name + ' ' + row.last_name}</td>
+                        <td>{row.email}</td>
                         <td>{row.role}</td>
                         <td>{row.chapter}</td>
                         {/* <td>

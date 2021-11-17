@@ -1,0 +1,14 @@
+{
+   "name": "email-sample",
+   "version": "1.0.0",
+   "description": "email",
+   "main": "app.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "kriz",
+   "license": "ISC",
+   "dependencies": {
+      "nodemailer": "^6.7.1"
+   }
+}

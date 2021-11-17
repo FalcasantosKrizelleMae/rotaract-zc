@@ -58,20 +58,6 @@ sect.get('/byChapter/:chapter', (req, res) => {
    });
 });
 
-//CHECK AATTENDANCE
-sect.get('/scan/:member_id', (req, res) => {
-   const member_id = req.params.member_id;
-
-   const scan = 'SELECT * FROM members WHERE member_id = ?';
-   db.query(scan, member_id, (err, result) => {
-      if (err) {
-         res.send(err);
-      } else {
-         res.send(result);
-      }
-   });
-});
-
 sect.post('/add_attendance', (req, res) => {
    const member_id = req.body.member_id;
    const event_id = req.body.event_id;
@@ -83,6 +69,20 @@ sect.post('/add_attendance', (req, res) => {
          res.send({ message: 'invalid' });
       } else {
          res.send({ message: 'success' });
+      }
+   });
+});
+
+//CHECK AATTENDANCE
+sect.get('/scan/:member_id', (req, res) => {
+   const member_id = req.params.member_id;
+
+   const scan = 'SELECT * FROM members WHERE member_id = ?';
+   db.query(scan, member_id, (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.send(result);
       }
    });
 });
