@@ -25,7 +25,8 @@ let transporter = nodemailer.createTransport({
 
 //all events (admin)
 event.get('/all', (req, res) => {
-   const sqlSelect = 'SELECT * FROM events WHERE chapter = "all"';
+   const sqlSelect =
+      'SELECT * FROM events WHERE chapter = "all" and status = "pending"';
    db.query(sqlSelect, (err, result) => {
       if (err) {
          console.log(err);

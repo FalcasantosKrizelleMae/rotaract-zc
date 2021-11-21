@@ -56,11 +56,6 @@ function Login() {
          }
       });
    };
-   // useEffect(() => {
-   //    Axios.get('http://localhost:5000/auth/api/login').then((response) => {
-   //       console.log(response);
-   //    });
-   // }, []);
 
    const [isHidden, setHidden] = useState(true);
 
@@ -91,15 +86,13 @@ function Login() {
                            className: 'global-class-name',
                         }}
                      >
-                        {status ? (
-                           <div class="alert small alert-danger alert-dismissible fade show p-2 px-3">
-                              {status}
-                              <button
-                                 class="btn-close pt-2 px-2 mx-1 small text-danger"
-                                 data-bs-dismiss="alert"
-                              ></button>
-                           </div>
-                        ) : null}
+                        <div class="alert small alert-danger alert-dismissible fade show p-2 px-3">
+                           {status}
+                           <button
+                              class="btn-close pt-2 px-2 mx-1 small text-danger"
+                              data-bs-dismiss="alert"
+                           ></button>
+                        </div>
 
                         <Form.Group className="mb-4 mt-3">
                            <Form.Label className="text-secondary">

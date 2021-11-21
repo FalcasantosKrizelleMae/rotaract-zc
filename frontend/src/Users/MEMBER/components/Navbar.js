@@ -14,6 +14,10 @@ function Navbar() {
    const [sidebar, setSidebar] = useState(false);
 
    const showSidebar = () => setSidebar(!sidebar);
+   const logout = () => {
+      localStorage.clear();
+      window.location.href = '/login';
+   };
 
    return (
       <>
@@ -26,9 +30,6 @@ function Navbar() {
                      color="#d91b5c"
                   />
                </Link>
-               <div>
-                  <h3>My Account</h3>
-               </div>
 
                <div className="ms-auto">
                   <Avatar
@@ -80,11 +81,14 @@ function Navbar() {
                   })}
 
                   <li className="nav-text mt-5">
-                     <Link>
-                        <span className="list-icon">
-                           <BiIcons.BiLogOut />
-                        </span>
-                        LOGOUT
+                     <Link
+                        onClick={() => {
+                           localStorage.clear();
+                           window.location.href = '/login';
+                        }}
+                        className="list-icon"
+                     >
+                        Logout
                      </Link>
                   </li>
                </ul>

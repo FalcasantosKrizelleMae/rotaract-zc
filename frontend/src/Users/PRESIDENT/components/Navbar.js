@@ -81,9 +81,15 @@ class Header extends Component {
                <SubMenu key="SubMenu1" classname="m-0" title="PRESIDENT">
                   <Menu.Item key="profile">Profile</Menu.Item>
                   <Menu.Item key="logout">
-                     <Link to="/login" className="text-decoration-none">
+                     <button
+                        onClick={() => {
+                           localStorage.clear();
+                           window.location.href = '/login';
+                        }}
+                        className="btn"
+                     >
                         Logout
-                     </Link>
+                     </button>
                   </Menu.Item>
                </SubMenu>
             </Menu>

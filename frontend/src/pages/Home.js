@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import serve from '../images/logo.png';
+import serve from '../images/this.png';
 import Header from '../Header';
 import * as FaIcons from 'react-icons/fa';
 import Flickity from 'react-flickity-component';
@@ -9,26 +9,38 @@ import '../css/footer.css';
 
 function Home() {
    const flickityOptions = {
-      initialIndex: 1,
+      initialIndex: 2,
    };
 
    return (
       <>
          <Header />
          <div className=" px-5 py-5 mt-5">
-            <div className="row my-5">
-               <div className="col-sm my-auto">
-                  <div className="row banner">
-                     <h3>WELCOME TO ROTARACT </h3>
+            <div className="row my-5 banner">
+               <div className="col-sm-5 my-auto">
+                  <div className="row ">
+                     <h3 className="mb-4 text-pink">
+                        WELCOME TO ROTARY ZAMBOANGA{' '}
+                     </h3>
+                     <p className="mb-4 fs-6">
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis
+                        nostrud exercitation ullamco laboris nisi ut aliquip ex
+                        ea commodo consequat. "
+                     </p>
                   </div>
 
                   <div className="m-0 mt-3">
-                     <Link to="/about" className="btn btn-primary shadow">
+                     <Link
+                        to="/about"
+                        className="btn btn-outline-primary shadow-sm"
+                     >
                         {' '}
                         Learn More{' '}
                      </Link>
                      &nbsp; &nbsp;
-                     <Link to="/about" className="btn btn-primary shadow">
+                     <Link to="/about" className="btn btn-dark shadow-sm">
                         {' '}
                         Pay Now{' '}
                      </Link>
@@ -41,9 +53,9 @@ function Home() {
             </div>
          </div>
 
-         <div className="container-fluid bg-pink p-5 text-white">
-            <div className="col-sm-6">
-               <h3 className="text-white"> ABOUT US </h3>
+         <div className="container-fluid bg-light p-5 d-flex align-items-center">
+            <div className="col-sm-6 banner ">
+               <h3 className="mb-5"> ABOUT US </h3>
                <p>
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -55,9 +67,15 @@ function Home() {
                   mollit anim id est laborum."
                </p>
             </div>
+
+            <div className="col-sm-6 fs-1 mx-5">PHOTO HERE</div>
          </div>
 
-         <div className="mt-5 py-5">
+         <div className="mx-5 py-5 h-100 ">
+            <h3 className="mb-5 text-center text-pink">
+               {' '}
+               CLUBS IN ZAMBOANGA CHAPTER{' '}
+            </h3>
             <Flickity
                className={'carousel'} // default ''
                elementType={'div'} // default 'div'
@@ -68,13 +86,23 @@ function Home() {
             >
                <Card
                   title="Card Title"
-                  imageUrl=""
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        nisi ut aliquip ex ea commodo consequat."
+               />
+
+               <Card
+                  title="Card Title"
+                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        nisi ut aliquip ex ea commodo consequat."
+               />
+
+               <Card
+                  title="Card Title"
                   body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         nisi ut aliquip ex ea commodo consequat."
                />
                <Card
                   title="Card Title"
-                  imageUrl=""
                   body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         nisi ut aliquip ex ea commodo consequat."
                />
@@ -93,26 +121,26 @@ function Home() {
          </div>
          <div class="footer-dark ">
             <footer>
-               <div class="container">
+               <div class="container text-white">
                   <div class="row">
-                     <div class="col-sm-6 col-md-3 item">
-                        <h3>Services</h3>
+                     <div class="col-sm-6 col-md-3 ">
+                        <h3 className="text-white fs-5 mb-4">Services</h3>
                         <ul>
-                           <li>Web design</li>
-                           <li>Development</li>
-                           <li>Hosting</li>
+                           <li>LIST 1</li>
+                           <li>LIST 2</li>
+                           <li>LIST 3</li>
                         </ul>
                      </div>
-                     <div class="col-sm-6 col-md-3 item">
-                        <h3>About</h3>
+                     <div class="col-sm-6 col-md-3 ">
+                        <h3 className="text-white fs-5 mb-4">About</h3>
                         <ul>
-                           <li>Company</li>
-                           <li>Contact Us;</li>
-                           <li>Careers</li>
+                           <li>LIST 1</li>
+                           <li>LIST 2</li>
+                           <li>LIST 3</li>
                         </ul>
                      </div>
-                     <div class="col-md-6 item text">
-                        <h3>Rotaract Clubs</h3>
+                     <div class="col-md-6  ">
+                        <h3 className="text-white fs-5 mb-4">Rotaract Clubs</h3>
                         <p>
                            Praesent sed lobortis mi. Suspendisse vel placerat
                            ligula. Vivamus ac sem lacus. Ut vehicula rhoncus

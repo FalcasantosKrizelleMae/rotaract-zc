@@ -64,6 +64,16 @@ class Header extends Component {
                   </Link>
                </Menu.Item>
 
+               <Menu.Item
+                  key="events"
+                  icon={<AiIcons.AiOutlineCalendar />}
+                  className="item"
+               >
+                  <Link to="/admin-events" className="text-decoration-none">
+                     Events
+                  </Link>
+               </Menu.Item>
+
                <SubMenu
                   key="SubMenu"
                   icon={<AiIcons.AiOutlineGlobal />}

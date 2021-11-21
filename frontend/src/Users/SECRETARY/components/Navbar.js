@@ -90,7 +90,7 @@ class Header extends Component {
                >
                   <Menu.Item key="profile">Profile</Menu.Item>
                   <Menu.Item key="logout">
-                     <Button
+                     <button
                         onClick={() => {
                            localStorage.clear();
                            window.location.href = '/login';
@@ -98,7 +98,7 @@ class Header extends Component {
                         className="btn"
                      >
                         Logout
-                     </Button>
+                     </button>
                   </Menu.Item>
                </SubMenu>
             </Menu>
