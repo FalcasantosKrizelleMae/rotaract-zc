@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const moment = require('moment');
+const schedule = require('node-schedule');
 
 const db = require('./Config/db_connection');
 
@@ -23,7 +25,10 @@ const sectsRoute = require('./routes/sect');
 app.use('/sect', sectsRoute);
 
 const webRoute = require('./routes/web');
-app.use('/web', eventsRoute);
+app.use('/web', webRoute);
+
+const paymentRoute = require('./routes/payment');
+app.use('/payment', paymentRoute);
 
 //Display all data from table
 app.get('/api/list', (req, res) => {
@@ -41,8 +46,11 @@ app.delete('/api/delete', (req, res) => {
    db.query(sqlDelete, member_id, (err, result) => {});
 });
 
-app.get('/success', (req, res) => {
-   alert('Payment successful');
+app.get('/', (req, res) => {
+   const date = moment();
+   notifDate = date.subtract(1, 'hour').format('LLL');
+
+   console.log(notifDate);
 });
 
 https: app.listen(5000, () => console.log('Server is running'));

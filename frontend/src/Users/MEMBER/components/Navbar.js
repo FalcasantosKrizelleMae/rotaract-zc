@@ -1,101 +1,99 @@
-import React, { useState } from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as BiIcons from 'react-icons/bi';
+import React, { Component } from 'react';
+import 'antd/dist/antd.css';
+import { Menu } from 'antd';
+import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
-import { SidebarData } from './SidebarData';
-import '../css/navbar.css';
-import { IconContext } from 'react-icons';
-import { Avatar, Image } from 'antd';
-import { Button } from 'react-bootstrap';
+import * as AiIcons from 'react-icons/ai';
 
-function Navbar() {
-   //DROPDOWN
+const { SubMenu } = Menu;
+const member_id = localStorage.getItem('member_id');
 
-   const [sidebar, setSidebar] = useState(false);
+class Header extends Component {
+   state = {
+      current: 'mail',
+   };
 
-   const showSidebar = () => setSidebar(!sidebar);
-   const logout = () => {
+   handleClick = (e) => {
+      console.log('click ', e);
+      this.setState({ current: e.key });
+   };
+
+   logout = () => {
       localStorage.clear();
       window.location.href = '/login';
    };
 
-   return (
-      <>
-         <IconContext.Provider value={{ color: '' }}>
-            <div className="navbar bg-white shadow-sm w-100">
-               <Link className="menu-bar">
-                  <FaIcons.FaBars
-                     onClick={showSidebar}
-                     className=" fs-3 menu-icon"
-                     color="#d91b5c"
+   render() {
+      const { current } = this.state;
+      return (
+         <div className=" bg-white pb-0 fixed-top">
+            <Menu
+               onClick={this.handleClick}
+               selectedKeys={[current]}
+               mode="horizontal"
+               className=" mt-3 px-4"
+            >
+               <Menu.Item className="pb-3 me-auto " disabled>
+                  <img
+                     src={logo}
+                     height="40vh"
+                     className="img-responsive"
+                     alt="Rotaract logo"
                   />
-               </Link>
+               </Menu.Item>
 
-               <div className="ms-auto">
-                  <Avatar
-                     className="bg-white"
-                     size={50}
-                     src={
-                        <Image src="https://minimaltoolkit.com/images/randomdata/female/100.jpg" />
-                     }
-                  ></Avatar>
-                  {/* DROPDOWN */}
-               </div>
-            </div>
-            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-               <span className="close">
-                  <Button
-                     variant="none"
-                     onClick={showSidebar}
-                     className="menu-bars"
+               <Menu.Item
+                  key="dash"
+                  icon={<AiIcons.AiOutlineAppstore />}
+                  className="item"
+               >
+                  <Link to={{}}>Dashboard</Link>
+               </Menu.Item>
+               <Menu.Item
+                  key="events"
+                  icon={<AiIcons.AiOutlineCalendar />}
+                  className="item"
+               >
+                  <Link to={{}}>Events</Link>
+               </Menu.Item>
+
+               <Menu.Item
+                  key="alipay"
+                  icon={<AiIcons.AiOutlineAccountBook />}
+                  className="item"
+               >
+                  <Link
+                     to={{ pathname: `/transaction/${member_id}` }}
+                     className="text-decoration-none"
                   >
-                     <BiIcons.BiX className="bi-x" />
-                  </Button>
-               </span>
-               <ul className="nav-menu-items" onClick={showSidebar}>
-                  <div className="d-flex justify-content-center">
-                     <Avatar
-                        className="border bg-light"
-                        size={155}
-                        src={
-                           <Image src="https://minimaltoolkit.com/images/randomdata/female/100.jpg" />
-                        }
-                     ></Avatar>
-                  </div>
-                  <div className="name">
-                     <h2 className="text-center my-4 mb-5 text-white">
-                        {' '}
-                        Krizelle Mae Falcasantos
-                     </h2>
-                  </div>
+                     Transaction
+                  </Link>
+               </Menu.Item>
 
-                  {SidebarData.map((item, index) => {
-                     return (
-                        <li key={index} className={item.cName}>
-                           <Link to={item.path}>
-                              <span className="list-icon">{item.icon}</span>
-                              <span>{item.title}</span>
-                           </Link>
-                        </li>
-                     );
-                  })}
-
-                  <li className="nav-text mt-5">
-                     <Link
+               <Menu.Item className=" ms-auto me-0 pe-0"> </Menu.Item>
+               <SubMenu
+                  key="SubMenu1"
+                  icon={<AiIcons.AiOutlineCaretDown />}
+                  classname="m-0"
+                  title="MEMBER"
+               >
+                  <Menu.Item key="profile">Profile</Menu.Item>
+                  <Menu.Item key="logout">
+                     <button
                         onClick={() => {
                            localStorage.clear();
                            window.location.href = '/login';
                         }}
-                        className="list-icon"
+                        className="btn"
                      >
                         Logout
-                     </Link>
-                  </li>
-               </ul>
-            </nav>
-         </IconContext.Provider>
-      </>
-   );
+                     </button>
+                  </Menu.Item>
+               </SubMenu>
+            </Menu>
+         </div>
+      );
+   }
 }
 
-export default Navbar;
+export default Header;

@@ -1,18 +1,53 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Member from './pages/Profile';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
 
-const MemberPage = () => {
-   const location = useLocation();
-   // const { member_id } = location.state;
+function MemberPage() {
+   let history = useHistory();
+
+   const id = localStorage.getItem('member_id');
+   const name = localStorage.getItem('name');
+   const status = localStorage.getItem('status');
+
+   useEffect(() => {
+      if (status === 'new') {
+         confirm({
+            title: 'Welcome to Rotary Zamboanga ',
+            icon: <ExclamationCircleOutlined />,
+            content:
+               'Kindly change your password and input your personal details. Thank you!',
+            okText: 'Proceed',
+            onOk() {
+               return new Promise((resolve, reject) => {
+                  setTimeout(Math.random() > 0.6 ? resolve : reject, 1000);
+                  history.push({
+                     pathname: `/member-profile/${id}`,
+                     state: {
+                        status: status,
+                        name: name,
+                     },
+                  });
+               }).catch(() => console.log('Oops errors!'));
+            },
+            onCancel() {},
+         });
+      } else {
+         alert('old member');
+      }
+   }, []);
+
    return (
       <div>
          <Navbar />
-         <Member />
-         {/* <h1>{member_id}</h1> */}
+
+         <div className="main">
+            {name} <br /> {status}
+         </div>
       </div>
    );
-};
+}
 
 export default MemberPage;

@@ -3,11 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { customAlphabet } = require('nanoid');
 const nodemailer = require('nodemailer');
-
+const schedule = require('node-schedule');
 const event = require('express').Router();
 const cors = require('cors');
 const { response } = require('express');
-event.use(bodyParser.json());
+const moment = require('moment');
 
 event.use(
    cors({
@@ -108,30 +108,46 @@ event.post('/add_event', (req, res) => {
          db.query(
             sqlAdd,
             [event_id, title, start, end, description, chapter, code],
-            (err) => {
-               if (err) {
+            (error) => {
+               if (error) {
                   res.send({ message: 'invalid' });
                } else {
-                  // const sql = 'SELECT email FROM members';
-                  // db.query(sql, (err, response) => {
-                  //    if (err) {
-                  //       res.send({ message: 'invalid' });
-                  //    } else {
-                  //       let info = transporter.sendMail({
-                  //          from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
-                  //          to: response.data, // list of receivers
-                  //          subject:
-                  //             'A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
+                  const sql = 'SELECT email FROM members';
+                  db.query(sql, (err, response) => {
+                     if (err) {
+                        res.send({ message: 'invalid' });
+                     } else {
+                        const eventDate = moment(start);
+                        const emailList = JSON.parse(JSON.stringify(response));
+                        const notifDate = eventDate
+                           .subtract(1, 'hour')
+                           .format();
 
-                  //          html: `<h4> A new event is coming your way. </h4> <br/> Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${start}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+                        schedule.scheduleJob(notifDate, function () {
+                           emailList.forEach((element) => {
+                              let info = transporter.sendMail({
+                                 from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                                 to: element.email, // list of receivers
+                                 subject:
+                                    ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
 
-                  //          auth: {
-                  //             user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
-                  //             pass: 'rotaractzc', // generated ethereal password
-                  //          },
-                  //       });
+                                 html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
+                                    start
+                                 ).format(
+                                    'LLL'
+                                 )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
 
-                  res.send({ message: 'success' });
+                                 auth: {
+                                    user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                                    pass: 'rotaractzc', // generated ethereal password
+                                 },
+                              });
+                           });
+                        });
+
+                        res.send({ message: 'success' });
+                     }
+                  });
                }
             }
          );

@@ -14,8 +14,7 @@ function Login() {
    let history = useHistory();
    const [member_id, setMember_id] = useState('');
    const [password, setPassword] = useState('');
-
-   const [status, setStatus] = React.useState('');
+   const [data, setData] = React.useState('');
 
    // const [role, setRole] = useState("");
    const login = (member_id) => {
@@ -24,11 +23,14 @@ function Login() {
          password: password,
       }).then((response) => {
          if (response.data.message) {
-            setStatus(response.data.message);
+            setData(response.data.message);
          } else {
             if (response.data.role === 'Member') {
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
+               localStorage.setItem('name', response.data.name);
+               localStorage.setItem('status', response.data.status);
+
                history.push({
                   pathname: `/member/${member_id}`,
                });
@@ -37,18 +39,22 @@ function Login() {
             } else if (response.data.role === 'Secretary') {
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
+               localStorage.setItem('name', response.data.name);
+               localStorage.setItem('status', response.data.status);
                history.push({
                   pathname: `/secretary/${member_id}`,
                });
             } else if (response.data.role === 'President') {
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
+               localStorage.setItem('status', response.data.status);
                history.push({
                   pathname: `/president/${member_id}`,
                });
             } else if (response.data.role === 'Finance') {
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
+               localStorage.setItem('status', response.data.status);
                history.push({
                   pathname: `/finance/${member_id}`,
                });
@@ -87,7 +93,7 @@ function Login() {
                         }}
                      >
                         <div class="alert small alert-danger alert-dismissible fade show p-2 px-3">
-                           {status}
+                           {data}
                            <button
                               class="btn-close pt-2 px-2 mx-1 small text-danger"
                               data-bs-dismiss="alert"

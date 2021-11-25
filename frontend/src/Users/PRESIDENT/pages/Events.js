@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Container } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
+
 import * as AiIcons from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import dateFormat from 'dateformat';
@@ -11,7 +11,6 @@ import Navbar from '../components/Navbar';
 const SectEvent = () => {
    const chapter = localStorage.getItem('chapter');
    const [event, setEvent] = useState([]);
-   let history = useHistory();
 
    //CANCEL EVENT
    const cancelEvent = (id) => {
