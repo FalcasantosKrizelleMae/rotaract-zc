@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'flickity/dist/flickity.min.css';
 import 'antd/dist/antd.min.css';
+import 'antd/dist/antd.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

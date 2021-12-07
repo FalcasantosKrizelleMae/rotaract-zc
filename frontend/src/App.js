@@ -24,6 +24,7 @@ import PresDashboard from './Users/PRESIDENT/pages/Dashboard';
 import Transactions from './Users/MEMBER/pages/Transactions';
 import MemDashboard from './Users/MEMBER/';
 import MemProfile from './Users/MEMBER/pages/Profile';
+import Payments from './Users/FINANCE/pages/Payments';
 // import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -62,7 +63,6 @@ function App() {
             <Route path="/admin-events" component={Events}></Route>
 
             {/* SECRETARY */}
-
             <Route path="/sect-events" component={SectEvents}></Route>
             <Route path="/secretary" component={SectDashboard}></Route>
             <Route path="/sect/scan" component={Scan}></Route>
@@ -76,6 +76,9 @@ function App() {
             <Route path="/transaction" component={Transactions}></Route>
             <Route path="/member" component={MemDashboard}></Route>
             <Route path="/member-profile" component={MemProfile}></Route>
+
+            {/* FINANCE */}
+            <Route path="/payments" component={Payments}></Route>
          </Router>
       </div>
    );

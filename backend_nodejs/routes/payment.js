@@ -8,6 +8,11 @@ const paypal = require('paypal-rest-sdk');
 
 const express = require('express');
 
+const nodemailer = require('nodemailer');
+const schedule = require('node-schedule');
+
+const moment = require('moment');
+
 const payment = require('express').Router();
 const cors = require('cors');
 
@@ -15,6 +20,12 @@ payment.use(cors());
 
 payment.use(express.urlencoded({ extended: true }));
 payment.use(express.json());
+
+let transporter = nodemailer.createTransport({
+   host: 'smtp.gmail.com',
+   port: 587,
+   ssl: 465, // true for 465, false for other ports
+});
 
 paypal.configure({
    mode: 'sandbox', //sandbox or live
@@ -106,6 +117,96 @@ payment.get('/success', (req, res) => {
          }
       }
    );
+});
+
+//SET PAYMENT
+payment.post('/set_payment', (req, res) => {
+   const amount = req.body.amount;
+   const due_date = req.body.due_date;
+   const chapter = req.body.chapter;
+
+   const new_due = moment(due_date).subtract(12, 'hours').format();
+
+   const sqlSetPay =
+      'INSERT INTO payments (amount, due_date, chapter) VALUES (?, ?, ?)';
+   db.query(sqlSetPay, [amount, new_due, chapter], (err, result) => {
+      if (err) {
+         res.send({ message: 'error' });
+      } else {
+         const sql = 'SELECT email FROM members WHERE chapter = ?';
+         db.query(sql, chapter, (err, response) => {
+            if (err) {
+               res.send(err);
+            } else {
+               const emailList = JSON.parse(JSON.stringify(response));
+
+               emailList.forEach((element) => {
+                  let info = transporter.sendMail({
+                     from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                     to: element.email, // list of receivers
+                     subject: 'A reminder for your payment!', // Subject line
+
+                     html: `<b>REMINDER!!!! <br/> Monthly dues must be paid on time, thank you! </h4>  Event details: <br/> Amount: <b> ${amount}</b> <br/> <div classname="text-danger">Due date: <b>${moment(
+                        due_date
+                     ).format(
+                        'll'
+                     )}</b> </div> <br/> Other details: <br/><br/> <i>You can using Paypal and credit card</i>`,
+
+                     auth: {
+                        user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                        pass: 'rotaractzc', // generated ethereal password
+                     },
+                  });
+               });
+
+               schedule.scheduleJob(new_due, function () {
+                  emailList.forEach((element) => {
+                     let info = transporter.sendMail({
+                        from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                        to: element.email, // list of receivers
+                        subject: 'A reminder for your payment!', // Subject line
+
+                        html: `<b>Hi! Today is the due date for your monthly dues. <br/> Monthly dues must be paid on time, thank you! </h4>  Event details: <br/> Amount: <b> ${amount}</b> <br/> <div classname="text-danger">Due date: <b>${moment(
+                           due_date
+                        ).format(
+                           'll'
+                        )}</b> </div> <br/> Other details:  <br/><br/> <i>You can using Paypal and credit card</i>`,
+
+                        auth: {
+                           user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                           pass: 'rotaractzc', // generated ethereal password
+                        },
+                     });
+                  });
+               });
+
+               const setBal =
+                  'UPDATE members SET balance = ? WHERE chapter = ?';
+               db.query(setBal, [amount, chapter], (err, response) => {
+                  if (err) {
+                     res.send(err);
+                  } else {
+                     console.log('success');
+                  }
+               });
+               res.send({ message: 'success' });
+            }
+         });
+      }
+   });
+});
+
+payment.get(`/get_payment/:chapter`, (req, res) => {
+   const chapter = req.params.chapter;
+   const sqlGet =
+      'SELECT * from payments WHERE status = "current" AND chapter = ?';
+   db.query(sqlGet, chapter, (err, result) => {
+      if (err) {
+         res.send({ message: 'error' });
+      } else {
+         res.send(result);
+      }
+   });
 });
 
 module.exports = payment;

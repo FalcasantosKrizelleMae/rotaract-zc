@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar';
-import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { confirm } = Modal;
@@ -37,7 +37,7 @@ function MemberPage() {
       } else {
          alert('old member');
       }
-   }, []);
+   });
 
    return (
       <div>

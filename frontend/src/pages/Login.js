@@ -47,6 +47,7 @@ function Login() {
             } else if (response.data.role === 'President') {
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
+               localStorage.setItem('name', response.data.name);
                localStorage.setItem('status', response.data.status);
                history.push({
                   pathname: `/president/${member_id}`,
@@ -54,6 +55,7 @@ function Login() {
             } else if (response.data.role === 'Finance') {
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
+               localStorage.setItem('name', response.data.name);
                localStorage.setItem('status', response.data.status);
                history.push({
                   pathname: `/finance/${member_id}`,

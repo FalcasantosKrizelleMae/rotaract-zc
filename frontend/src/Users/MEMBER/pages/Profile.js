@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as BiIcons from 'react-icons/bi';
 import { Avatar, Image, Card, PageHeader } from 'antd';
+import { Form, Button, InputGroup } from 'react-bootstrap';
+// import { Input } from 'reactstrap';
+// import Axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 function Profile() {
+   useForm();
    let history = useHistory();
-   const location = useLocation();
    const chapter = localStorage.getItem('chapter');
    const id = localStorage.getItem('member_id');
    const name = localStorage.getItem('name');
-   // const status = localStorage.getItem('status');
+   const [newPassword, setNewPassword] = useState('');
+   const [confirmPassword, setConfirmPassword] = useState('');
+
+   const change_pass = (id) => {
+      alert(newPassword + confirmPassword);
+      // Axios.post(`http://localhost:5000/auth/change_password/${id}`, {
+      //    newPassword: newPassword,
+      //    confirmPassword: confirmPassword,
+      // }).then((response) => {
+      //    alert(response.data.message);
+      // });
+   };
+
    const tabListNoTitle = [
       {
          key: 'transactions',
@@ -25,9 +41,68 @@ function Profile() {
       },
    ];
 
+   const [isHidden, setHidden] = useState(true);
+   const [isHidden2, setHidden2] = useState(true);
+
+   const togglePasswordVisibility = () => {
+      setHidden(!isHidden);
+   };
+
+   const togglePasswordVisibility2 = () => {
+      setHidden2(!isHidden2);
+   };
+
    const contentListNoTitle = {
-      transactions: <p>transactiion content</p>,
-      account: <p>My account content</p>,
+      transactions: (
+         <div>
+            <h3>Transactions</h3>
+         </div>
+      ),
+      account: (
+         <div className="container mt-3 ps-4">
+            <h4>CHANGE PASSWORD</h4>
+            <div className="mt-5 col-sm-10 col-md-10 col-lg-6">
+               <Form action="">
+                  <InputGroup className="mb-3">
+                     <input
+                        className="form-control text-secondary border-end-0 "
+                        type={isHidden ? 'password' : 'text'}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                     />
+                     <InputGroup.Text className="bg-white ">
+                        <span className=" m-0 p-0 bg-white">
+                           <i
+                              className={!isHidden ? 'bi-eye' : 'bi-eye-slash'}
+                              onClick={togglePasswordVisibility}
+                           ></i>
+                        </span>
+                     </InputGroup.Text>
+                  </InputGroup>
+                  <InputGroup>
+                     <input
+                        className="form-control text-secondary border-end-0 "
+                        type={isHidden2 ? 'password' : 'text'}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                     />
+                     <InputGroup.Text className="bg-white ">
+                        <span className=" m-0 p-0 bg-white">
+                           <i
+                              className={!isHidden2 ? 'bi-eye' : 'bi-eye-slash'}
+                              onClick={togglePasswordVisibility2}
+                           ></i>
+                        </span>
+                     </InputGroup.Text>
+                  </InputGroup>
+                  <button className="mt-3 btn btn-outline-danger mr-3">
+                     Cancel
+                  </button>{' '}
+                  <Button type="submit" variant="primary" onClick={change_pass}>
+                     Change password
+                  </Button>
+               </Form>
+            </div>
+         </div>
+      ),
       history: <p>project content</p>,
    };
 
@@ -39,7 +114,7 @@ function Profile() {
 
    return (
       <div>
-         <div className="container my-2">
+         <div className="container my-2 ">
             <PageHeader
                className="site-page-header"
                onBack={() => history.push(`/member/${id}`)}
@@ -104,7 +179,7 @@ function Profile() {
                   </Card>
                </div>
             </div>
-            <div className="col px-0">
+            <div className="col px-0 pb-5 pt-2">
                <Card
                   className="rounded shadow-sm"
                   style={{ width: '100%', marginTop: 20 }}
