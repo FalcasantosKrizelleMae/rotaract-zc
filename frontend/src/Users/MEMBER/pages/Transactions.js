@@ -56,7 +56,7 @@ function Transactions() {
                         <h3>{item.balance} php</h3>
                         <Button
                            onClick={pay}
-                           type="primary"
+                           type="dark"
                            className="float-end"
                         >
                            Pay now

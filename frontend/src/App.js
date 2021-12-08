@@ -26,6 +26,14 @@ import MemDashboard from './Users/MEMBER/';
 import MemProfile from './Users/MEMBER/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
 // import ProtectedRoute from './ProtectedRoute';
+import West from './Clubs/West/';
+import East from './Clubs/East/';
+import Metro from './Clubs/Metro/';
+import North from './Clubs/North/';
+import Southern from './Clubs/Southern/';
+import Tolosa from './Clubs/Tolosa/';
+import UZ from './Clubs/UZ/';
+import Wmsu from './Clubs/Wmsu/';
 
 function App() {
    return (
@@ -50,6 +58,15 @@ function App() {
             <Route path="/finance" component={() => <Finance />} />
 
             <Route path="/president" component={() => <President />} />
+
+            <Route path="/West" component={() => <West />} />
+            <Route path="/East" component={() => <East />} />
+            <Route path="/Metro" component={() => <Metro />} />
+            <Route path="/North" component={() => <North />} />
+            <Route path="/Southern" component={() => <Southern />} />
+            <Route path="/Tolosa" component={() => <Tolosa />} />
+            <Route path="/UZ" component={() => <UZ />} />
+            <Route path="/Wmsu" component={() => <Wmsu />} />
 
             {/* <Route path="/accounts" component={Accounts}></Route> */}
             <Route path="/profile-admin" component={11207961}></Route>
