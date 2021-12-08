@@ -173,8 +173,8 @@ function Home() {
             </Flickity>
          </div>
          <div style={{ textAlign: 'center' }}>
-            <h2>React Carousel Minimal</h2>
-            <p>Rotaract Gallery</p>
+            <h2>GALLERY</h2>
+
             <div
                style={{
                   padding: '0 20px',

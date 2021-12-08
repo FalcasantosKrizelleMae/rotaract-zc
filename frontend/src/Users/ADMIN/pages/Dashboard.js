@@ -98,33 +98,33 @@ const Dashboard = () => {
       },
    ];
 
-   const getIntroOfPage = (label) => {
-      if (label === 'Zamboanga City West') {
-         return "Page A is about men's clothing";
-      }
-      if (label === 'Zamboanga City North') {
-         return "Page B is about women's dress";
-      }
-      if (label === 'Zamboanga City East ') {
-         return "Page C is about women's bag";
-      }
-      if (label === 'Metro Zamboanga') {
-         return 'Page D is about household goods';
-      }
-      if (label === 'Western Mindanao State Universisty ') {
-         return 'Page E is about food';
-      }
-      if (label === 'Universidad de Zamboanga') {
-         return 'Page F is about baby food';
-      }
-      if (label === 'Colosa Community') {
-         return 'Page F is about baby food';
-      }
-      if (label === 'Southern City Colleges') {
-         return 'Page F is about baby food';
-      }
-      return '';
-   };
+   //  const getIntroOfPage = (label) => {
+   //     if (label === 'Zamboanga City West') {
+   //        return "Page A is about men's clothing";
+   //     }
+   //     if (label === 'Zamboanga City North') {
+   //        return "Page B is about women's dress";
+   //     }
+   //     if (label === 'Zamboanga City East ') {
+   //        return "Page C is about women's bag";
+   //     }
+   //     if (label === 'Metro Zamboanga') {
+   //        return 'Page D is about household goods';
+   //     }
+   //     if (label === 'Western Mindanao State Universisty ') {
+   //        return 'Page E is about food';
+   //     }
+   //     if (label === 'Universidad de Zamboanga') {
+   //        return 'Page F is about baby food';
+   //     }
+   //     if (label === 'Colosa Community') {
+   //        return 'Page F is about baby food';
+   //     }
+   //     if (label === 'Southern City Colleges') {
+   //        return 'Page F is about baby food';
+   //     }
+   //     return '';
+   //  };
 
    //  const CustomTooltip = ({ active, payload, label }) => {
    //     if (active && payload && payload.length) {
