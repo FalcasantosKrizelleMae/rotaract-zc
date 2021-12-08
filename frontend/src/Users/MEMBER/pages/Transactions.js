@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
+
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import moment from 'moment';
 
+import PaymentButton from './Payment';
+
 function Transactions() {
+   // const [amountPay, setAmount] = useState('');
    const [list, setList] = useState([]);
    const [dataList, setDataList] = useState([]);
    const chapter = localStorage.getItem('chapter');
    const id = localStorage.getItem('member_id');
-   const pay = () => {
-      Axios.post('http://localhost:5000/payment/pay')
-         .then((response) => {
-            window.location.href = response.data;
-         })
-         .catch((error) => {
-            console.log({
-               error,
-            });
-            alert('Authentication failed');
-         });
-   };
 
    useEffect(() => {
+      Axios.get(`http://localhost:5000/auth/get_user/${id}`).then(
+         (response) => {
+            if (response) {
+               setList(response.data);
+            }
+         }
+      );
+
       Axios.get(`http://localhost:5000/payment/get_payment/${chapter}`)
          .then((response) => {
             if (response) {
+               // console.log(response.data);
                setDataList(response.data);
             }
          })
@@ -33,16 +34,30 @@ function Transactions() {
          .catch((error) => console.log(error));
    });
 
-   useEffect(() => {
-      Axios.get(`http://localhost:5000/auth/get_user/${id}`)
-         .then((response) => {
-            if (response) {
-               setList(response.data);
-            }
-         })
+   // const pay = () => {
+   //    Axios.post('http://localhost:5000/payment/pay')
+   //       .then((response) => {
+   //          window.location.href = response.data;
+   //       })
+   //       .catch((error) => {
+   //          console.log({
+   //             error,
+   //          });
+   //          alert('Authentication failed');
+   //       });
+   // };
 
-         .catch((error) => console.log(error));
-   });
+   const info = () => {
+      Modal.info({
+         title: 'Choose a payment Method',
+         content: (
+            <div className="container mx-auto">
+               <PaymentButton />
+            </div>
+         ),
+      });
+   };
+
    return (
       <div>
          <Navbar />
@@ -50,18 +65,18 @@ function Transactions() {
             <div className="container shadow-sm rounded border p-4">
                {list.map((item) => {
                   return (
-                     <h6>
+                     <>
                         BALANCE: {''} <br />
                         <br />
                         <h3>{item.balance} php</h3>
                         <Button
-                           onClick={pay}
-                           type="dark"
+                           onClick={info}
+                           type="primary"
                            className="float-end"
                         >
                            Pay now
                         </Button>
-                     </h6>
+                     </>
                   );
                })}
 
@@ -81,7 +96,7 @@ function Transactions() {
                   );
                })}
             </div>
-         </div>
+         </div>{' '}
       </div>
    );
 }

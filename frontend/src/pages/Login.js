@@ -30,6 +30,7 @@ function Login() {
                localStorage.setItem('chapter', response.data.chapter);
                localStorage.setItem('name', response.data.name);
                localStorage.setItem('status', response.data.status);
+               localStorage.setItem('balance', response.data.balance);
 
                history.push({
                   pathname: `/member/${member_id}`,

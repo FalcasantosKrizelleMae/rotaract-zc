@@ -376,7 +376,7 @@ function Events() {
                                           )}
                                        </small>
                                        <br />
-                                       <span class="badge rounded-pill bg-danger mb-3">
+                                       <span className="badge rounded-pill bg-danger mb-3">
                                           Cancelled
                                        </span>
                                        {/* badge */}

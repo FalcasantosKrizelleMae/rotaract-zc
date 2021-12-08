@@ -1,8 +1,8 @@
 const db = require('../Config/db_connection');
 
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv');
 
-dotenv.config({ path: './.env' });
+// dotenv.config({ path: './.env' });
 
 const paypal = require('paypal-rest-sdk');
 
@@ -27,32 +27,13 @@ let transporter = nodemailer.createTransport({
    ssl: 465, // true for 465, false for other ports
 });
 
-paypal.configure({
-   mode: 'sandbox', //sandbox or live
-   client_id: process.env.CLIENT_ID,
-   client_secret: process.env.CLIENT_SECRET,
-});
-
 //PAY
 payment.post('/pay', (req, res) => {
    const create_payment_json = {
-      intent: 'sale',
-      payer: {
-         payment_method: 'paypal',
-      },
       redirect_urls: {
          return_url: 'http://localhost:5000/payment/success',
          cancel_url: 'http://localhost:3000/cancel',
       },
-      transactions: [
-         {
-            amount: {
-               currency: 'USD',
-               total: '20.00',
-            },
-            description: 'Purchase',
-         },
-      ],
    };
 
    paypal.payment.create(create_payment_json, function (error, payment) {
@@ -204,6 +185,24 @@ payment.get(`/get_payment/:chapter`, (req, res) => {
       if (err) {
          res.send({ message: 'error' });
       } else {
+         res.send(result);
+      }
+   });
+});
+
+payment.post('/save', (req, res) => {
+   const name = req.body.name;
+   const amount = req.body.amount;
+   const chapter = req.body.chapter;
+   const order_id = req.body.order_id;
+
+   const save =
+      'INSERT INTO transaction (name, amount, chapter, order_id) VALUES (?,?,?,?)';
+   db.query(save, [name, amount, chapter, order_id], (err, result) => {
+      if (err) {
+         res.send({ message: 'error' });
+      } else {
+         res.send({ message: 'success' });
          res.send(result);
       }
    });

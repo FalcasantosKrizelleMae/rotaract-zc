@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Sample from './pages/Sample';
-import Payment from './pages/Payment';
+
 import Success from './pages/Success';
 import Secretary from './Users/SECRETARY';
 import Finance from './Users/FINANCE';
@@ -25,6 +25,8 @@ import Transactions from './Users/MEMBER/pages/Transactions';
 import MemDashboard from './Users/MEMBER/';
 import MemProfile from './Users/MEMBER/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
+
+import Payment from './Users/MEMBER/pages/Payment';
 // import ProtectedRoute from './ProtectedRoute';
 import West from './Clubs/West/';
 import East from './Clubs/East/';
@@ -69,7 +71,7 @@ function App() {
             <Route path="/Wmsu" component={() => <Wmsu />} />
 
             {/* <Route path="/accounts" component={Accounts}></Route> */}
-            <Route path="/profile-admin" component={11207961}></Route>
+            {/* <Route path="/profile-admin" component={11207961}></Route> */}
 
             <Route path="/pres/events" component={PresEvents}></Route>
 
@@ -96,6 +98,8 @@ function App() {
 
             {/* FINANCE */}
             <Route path="/payments" component={Payments}></Route>
+
+            <Route path="/pay-mem" component={Payment}></Route>
          </Router>
       </div>
    );

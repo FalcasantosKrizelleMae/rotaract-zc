@@ -60,6 +60,7 @@ auth.post('/api/login', (req, res) => {
                         name:
                            response[0].first_name + ' ' + response[0].last_name,
                         status: response[0].status,
+                        balance: response[0].balance,
                      });
                   }
                });
