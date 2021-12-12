@@ -67,21 +67,37 @@ class Header extends Component {
                      title="Clubs"
                      className="item"
                   >
-                     <Menu.Item key="setting:1">Zamboanga City West</Menu.Item>
-                     <Menu.Item key="setting:2">Zamboanga City North</Menu.Item>
-                     <Menu.Item key="setting:3">Zamboanga City East</Menu.Item>
-                     <Menu.Item key="setting:4">Metro Zamboanga</Menu.Item>
+                     <Menu.Item key="setting:1">   <Link to="/west" className="text-decoration-none">
+                     Zamboanga City West
+                     </Link></Menu.Item>
+                     <Menu.Item key="setting:2"><Link to="/north" className="text-decoration-none">
+                     Zamboanga City North
+                     </Link></Menu.Item>
+                     <Menu.Item key="setting:3"><Link to="/east" className="text-decoration-none">
+                     Zamboanga City East
+                     </Link></Menu.Item>
+                     <Menu.Item key="setting:4"><Link to="/metro" className="text-decoration-none">
+                     Zamboanga City Metro
+                     </Link></Menu.Item>
                      <Menu.Item key="setting:5">
-                        Western Mindanao State Universisty
+                     <Link to="/wmsu" className="text-decoration-none">
+                     Western Mindanao State University
+                     </Link>
                      </Menu.Item>
-                     <Menu.Item key="setting:6">
-                        Universidad de Zamboanga
+                     <Menu.Item key="setting:6"> <Link to="/uz" className="text-decoration-none">
+                     Universidad de Zamboanga CES
+                     </Link>
                      </Menu.Item>
-                     <Menu.Item key="setting:7">Colosa Community</Menu.Item>
+                     <Menu.Item key="setting:7"><Link to="/tolosa" className="text-decoration-none">
+                    Tolosa Community
+                     </Link></Menu.Item>
                      <Menu.Item key="setting:8">
-                        Southern City Colleges
+                     <Link to="/southern" className="text-decoration-none">
+                     Southern City Colleges
+                     </Link>
                      </Menu.Item>
                   </SubMenu>
+
 
                   <Menu.Item className=" ms-auto me-0 pe-0"> </Menu.Item>
 
