@@ -73,9 +73,9 @@ function Login() {
    };
 
    return (
-      <div>
-         <Row className="container mt-5 pt-5">
-            <Col md={9} lg={5} sm={12} className="ms-auto p-4 shadow-sm">
+      <div className="container ">
+         <Row className="mt-5 pt-5">
+            <Col md={9} lg={5} sm={12} className="m-auto">
                <Form className="">
                   <div className="text-center my-3 mb-5">
                      <Link to="/">
@@ -120,7 +120,7 @@ function Login() {
                            </InputGroup>
 
                            <small>
-                              Input the Member ID that was given by your Leader
+                              Input the Member ID that was sent in your Email
                            </small>
                            <Form.Text className="text-muted"></Form.Text>
                         </Form.Group>
@@ -140,7 +140,7 @@ function Login() {
                                  onChange={(e) => setPassword(e.target.value)}
                               ></Input>
                               <InputGroup.Text className="bg-white ">
-                                 <span className="btn m-0 p-0 bg-white">
+                                 <span className="btn-white m-0 p-0 bg-white">
                                     <i
                                        className={
                                           !isHidden ? 'bi-eye' : 'bi-eye-slash'

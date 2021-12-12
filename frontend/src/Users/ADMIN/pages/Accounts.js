@@ -209,7 +209,7 @@ function Accounts() {
             <div className="container-fluid bg-pink p-3  rounded">
                <h5 className="m-0 text-white">ACCOUNTS</h5>
             </div>
-            <div className="col-sm-7  py-5 ps-4 mt-5 bg-light shadow-sm">
+            <div className="col-sm-7  py-5 ps-4 mt-5 bg-white shadow-sm">
                <h5 className="ms-5 mb-4">ADD NEW USER</h5>
                <div className="col-sm">
                   <Form

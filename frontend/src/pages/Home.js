@@ -1,12 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import rotaractt from '../images/logo.png';
+import logo from '../images/logo.svg';
+import image1 from '../images/image1.svg';
+import image2 from '../images/image2.svg';
+import image3 from '../images/image3.svg';
+import svg from '../images/svg.png';
+import west from '../images/west.jpg';
+import east from '../images/east.jpg';
+import metro from '../images/metro.jpg';
+import uz from '../images/uz.png';
+import wmsuu from '../images/wmsuu.jpg';
+import tolosaa from '../images/tolosaa.jpg';
+import south from '../images/south.jpg';
+import north from '../images/north.png';
 import Header from '../Header';
 import * as FaIcons from 'react-icons/fa';
+import * as BiIcons from 'react-icons/bi';
 import Flickity from 'react-flickity-component';
-import Card from './Card';
 import '../css/footer.css';
 import Carousel from './Carousel';
+import '../css/card.css';
 
 function Home() {
    const flickityOptions = {
@@ -15,6 +28,7 @@ function Home() {
    const handleClick = () => {
       window.open('https://web.facebook.com/rotametzam');
    };
+
    const data = [
       {
          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg',
@@ -69,147 +83,329 @@ function Home() {
       <>
          <Header />
 
-         <div className=" px-5 py-5 mt-5">
+         <div className=" px-5 py-4 mt-5 mb-5">
             <div className="row my-3">
                <div className="col-sm my-auto">
-                  <div className="row banner">
-                     <h3>WELCOME TO ROTARACT </h3>
+                  <h1>WELCOME TO ZAMBOANGA CITY ROTARACT CLUB </h1>
+                  <p>Scroll, view, learn, and pay funds.</p>
+                  <div className="mt-5">
+                     <Link to="/about" className="btn btn-primary">
+                        {' '}
+                        Learn More{' '}
+                     </Link>
+                     &nbsp; &nbsp;
+                     <Link to="/about" className="btn bg-light px-3 text-pink">
+                        {' '}
+                        Pay Now <BiIcons.BiRightArrowAlt />
+                     </Link>
+                  </div>
+               </div>
+               <div className="col-sm mt-5">
+                  <img src={logo} width="100%" height="100%" alt="serve qr" />
+               </div>
+            </div>
+         </div>
 
-                     <div className="m-0 mt-3">
-                        <Link to="/about" className="btn btn-primary shadow">
+         <div
+            className="container-fluid py-5
+"
+            style={{
+               backgroundImage: 'url(' + svg + ')',
+               backgroundSize: 'cover',
+            }}
+         >
+            <div className=" text-center ">
+               ABOUT US
+               <h3 className="text-pink "> Zamboanga City Chapters </h3>
+            </div>
+
+            <div className="row">
+               <div className="col-lg p-5 mx-3 text-center text-white">
+                  <img src={image1} width="80%" height="70%" alt="serve qr" />
+                  <div className="mt-1 fs-5">Organization</div>
+                  <p>
+                     Rotary International is a non-profit organization whose
+                     main mission is to gather together corporate and
+                     professional leaders to perform humanitarian service and
+                     promote goodwill and peace around the world.{' '}
+                  </p>
+               </div>
+
+               <div className="col-lg p-5  mx-3 text-center text-white">
+                  <img src={image2} width="80%" height="70%" alt="serve qr" />
+                  <div className="mt-1 fs-5">Goal </div>
+                  <p>
+                     {' '}
+                     Provide humanitarian service, encourage high ethical
+                     standards in all vocations and help build goodwill and
+                     peace in the world.{' '}
+                  </p>
+               </div>
+
+               <div className="col-lg p-5  mx-3 text-center text-white">
+                  <img src={image3} width="80%" height="70%" alt="serve qr" />
+                  <div className="mt-1 fs-5">Zamboanga City clubs</div>
+                  <p>
+                     The Rotaract Clubs have a total of 8 clubs in Zamboanga
+                     City Chapter. Each club is composed of a President,
+                     treasurer, secretary followed by its members, and the total
+                     number of members varies per club.
+                  </p>
+               </div>
+            </div>
+         </div>
+
+         <div className="container ">
+            <div className="mt-5 py-5 ">
+               <h5 className="text-pink text-center col-lg p-1">
+                  {' '}
+                  Zamboanga City Clubs{' '}
+               </h5>
+               <p class="text-secondary text-center mb-5 pb-5">
+                  {' '}
+                  There are a total of 8 rotaract clubs here in Zamboanga City
+               </p>
+               <Flickity
+                  className={'carousel'} // default ''
+                  elementType={'div'} // default 'div'
+                  options={flickityOptions} // takes flickity options {}
+                  disableImagesLoaded={false} // default false
+                  reloadOnUpdate // default false
+                  static // default false
+               >
+                  <div className="card-container me-5 mb-5  ">
+                     <div class="card-body p-4 ">
+                        <h5 class="card-title text-center">WEST</h5>
+                        <img
+                           src={west}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/west"
+                           className="btn bg-light px-3 text-pink"
+                        >
                            {' '}
-                           Learn More{' '}
-                        </Link>
-                        &nbsp; &nbsp;
-                        <Link to="/about" className="btn btn-primary shadow">
-                           {' '}
-                           Pay Now{' '}
+                           Visit <BiIcons.BiRightArrowAlt />
                         </Link>
                      </div>
                   </div>
-               </div>
-               <div className="col-sm">
-                  <img
-                     src={rotaractt}
-                     width="80%"
-                     height="70%"
-                     alt="serve qr"
-                  />
-               </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">EAST</h5>
+                        <img
+                           src={east}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/east"
+                           className="btn bg-light px-3 text-pink"
+                        >
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">NORTH</h5>
+                        <img
+                           src={north}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/north"
+                           className="btn bg-light px-3 text-pink"
+                        >
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">METRO</h5>
+                        <img
+                           src={metro}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/metro"
+                           className="btn bg-light px-3 text-pink"
+                        >
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">UZ CES</h5>
+                        <img
+                           src={uz}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link to="/uz" className="btn bg-light px-3 text-pink">
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">TOLOSA COMMUNITY</h5>
+                        <img
+                           src={tolosaa}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/tolosa"
+                           className="btn bg-light px-3 text-pink"
+                        >
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">SOUTHERN</h5>
+                        <img
+                           src={south}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/southern"
+                           className="btn bg-light px-3 text-pink"
+                        >
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+
+                  <div className="card-container me-5 mb-5 ">
+                     <div class="card-body p-4">
+                        <h5 class="card-title text-center">WMSU</h5>
+                        <img
+                           src={wmsuu}
+                           width="100%"
+                           height="100%"
+                           alt="serve qr"
+                        />
+                        <p class="card-text">
+                           Some quick example text to build on the card title
+                           and make up the bulk of the card's content.
+                        </p>
+                        <Link
+                           to="/wmsu"
+                           className="btn bg-light px-3 text-pink"
+                        >
+                           {' '}
+                           Visit <BiIcons.BiRightArrowAlt />
+                        </Link>
+                     </div>
+                  </div>
+               </Flickity>
             </div>
          </div>
 
-         <div className=" container-fluid bg-pink p-5 text-white">
-            <div className="col-sm-6">
-               <h3 className="text-white"> ABOUT US </h3>
-               <p>
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum."
-               </p>
-            </div>
-         </div>
-
-         <div className="mt-5 py-5">
-            <Flickity
-               className={'carousel'} // default ''
-               elementType={'div'} // default 'div'
-               options={flickityOptions} // takes flickity options {}
-               disableImagesLoaded={false} // default false
-               reloadOnUpdate // default false
-               static // default false
-            >
-               <Card
-                  title="Card Title"
-                  imageUrl=""
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        nisi ut aliquip ex ea commodo consequat."
-               />
-               <Card
-                  title="Card Title"
-                  imageUrl=""
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        nisi ut aliquip ex ea commodo consequat."
-               />
-
-               <Card
-                  title="Card Title"
-                  imageUrl=""
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        nisi ut aliquip ex ea commodo consequat."
-               />
-               <Card
-                  title="Card Title"
-                  imageUrl=""
-                  body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        nisi ut aliquip ex ea commodo consequat."
-               />
-            </Flickity>
-         </div>
-         <div style={{ textAlign: 'center' }}>
-            <h2>GALLERY</h2>
-
-            <div
+         <div style={{ textAlign: 'center' }} className="mb-5 mt-5 pt-5">
+            <Carousel
+               data={data}
+               time={2000}
+               width="100%"
+               height="700px"
+               captionStyle={captionStyle}
+               slideNumber={true}
+               slideNumberStyle={slideNumberStyle}
+               captionPosition="bottom"
+               automatic={true}
+               dots={true}
+               pauseIconColor="white"
+               pauseIconSize="40px"
+               slideBackgroundColor="darkgrey"
+               slideImageFit="cover"
+               thumbnails={true}
+               thumbnailWidth="100px"
+               showNavBtn={true}
                style={{
-                  padding: '0 20px',
+                  textAlign: 'center',
+                  maxWidth: '100%',
+                  margin: '40px auto',
                }}
-            ></div>
-            <div className="container-fluid">
-               <Carousel
-                  data={data}
-                  time={2000}
-                  width="850px"
-                  height="500px"
-                  captionStyle={captionStyle}
-                  radius="10px"
-                  slideNumber={true}
-                  slideNumberStyle={slideNumberStyle}
-                  captionPosition="bottom"
-                  automatic={true}
-                  dots={true}
-                  pauseIconColor="white"
-                  pauseIconSize="40px"
-                  slideBackgroundColor="darkgrey"
-                  slideImageFit="cover"
-                  thumbnails={true}
-                  thumbnailWidth="100px"
-                  showNavBtn={true}
-                  style={{
-                     textAlign: 'center',
-                     maxWidth: '850px',
-                     margin: '40px auto',
-                  }}
-               />
-            </div>
+            />
          </div>
 
-         <div class="footer-dark ">
+         <div class="footer bg-light">
             <footer>
-               <div class="container">
+               <div class="container pb-5">
                   <div class="row">
-                     <div class="col-sm-6 col-md-3 item">
-                        <h3>Services</h3>
+                     <div class="col-sm-6 col-md-3 mt-5">
+                        <h4>Info</h4>
                         <ul>
-                           <li>Web design</li>
-                           <li>Development</li>
-                           <li>Hosting</li>
+                           <li>Info 1</li>
+                           <li>Info 1</li>
+                           <li>Info 1</li>
                         </ul>
                      </div>
-                     <div class="col-sm-6 col-md-3 item">
-                        <h3>About</h3>
+                     <div class="col-sm-6 col-md-3 mt-5">
+                        <h4>Contact Us</h4>
                         <ul>
-                           <li>Chapter</li>
-                           <li>Contact Us;</li>
-                           <li>Careers</li>
+                           <li>Email</li>
+                           <li>Phone</li>
+                           <li>Address</li>
                         </ul>
                      </div>
-                     <div class="col-md-6 item text">
-                        <h3>Rotaract Clubs</h3>
+                     <div class="col-md-6 mt-5">
+                        <h4>Rotaract Zamboanga City Chapter</h4>
                         <p>
                            Praesent sed lobortis mi. Suspendisse vel placerat
                            ligula. Vivamus ac sem lacus. Ut vehicula rhoncus
@@ -217,18 +413,29 @@ function Home() {
                            arcu eget velit pulvinar dictum vel in justo.
                         </p>
                      </div>
-                     <div class="  mt-5 text-center">
+                     <div class="mt-5 text-center">
                         <FaIcons.FaFacebook
-                           className="me-4"
+                           className="me-5"
                            onClick={handleClick}
-                           size="7vh"
+                           size="6vh"
                         />
-                        <FaIcons.FaTwitter className="me-4" size="7vh" />
-                        <FaIcons.FaInstagram className="me-4" size="7vh" />
+                        <FaIcons.FaTwitter
+                           className="me-5"
+                           onClick={handleClick}
+                           size="6vh"
+                        />
+                        <FaIcons.FaInstagram
+                           className=""
+                           onClick={handleClick}
+                           size="6vh"
+                        />
                      </div>
                   </div>
-                  <p className="copyright">Rotary Clubs of Zamboanga City </p>
                </div>
+
+               <p className="copyright bg-pink text-white text-center p-1">
+                  Rotary Clubs of Zamboanga City
+               </p>
             </footer>
          </div>
       </>

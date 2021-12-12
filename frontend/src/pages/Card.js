@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 function Card({ title, imageUrl, body }) {
    return (
-      <div className="card-container me-5 mb-5 ">
+      <div className="card-container me-5 mb-5  ">
          <div className="image-container">
             <img src={imageUrl} alt="" />
          </div>
@@ -13,7 +13,7 @@ function Card({ title, imageUrl, body }) {
             <div className="card-title">
                <h3> {title} </h3>
             </div>
-            <div className="card-body">
+            <div className="card-body p-4">
                <p> {body} </p>
             </div>
             <div className="btn">

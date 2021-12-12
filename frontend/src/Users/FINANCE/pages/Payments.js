@@ -10,8 +10,10 @@ import { Form } from 'react-bootstrap';
 import Axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import { useHistory } from 'react-router-dom';
 
 const Payments = () => {
+   let history = useHistory();
    const [amount, setAmount] = useState(0);
    const [list, setList] = useState([]);
    const chapter = localStorage.getItem('chapter');
@@ -82,6 +84,11 @@ const Payments = () => {
 
          .catch((error) => console.log(error));
    });
+
+   const logout = () => {
+      localStorage.clear();
+      history.push('/login');
+   };
 
    return (
       <div className="container mt-5">
@@ -187,6 +194,10 @@ const Payments = () => {
                </div>
             </Form>
          </Modal>
+
+         <Button onClick={logout} type="primary" className="mt-5">
+            Logout
+         </Button>
       </div>
    );
 };
