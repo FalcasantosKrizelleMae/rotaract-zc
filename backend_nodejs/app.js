@@ -30,6 +30,9 @@ app.use('/web', webRoute);
 const paymentRoute = require('./routes/payment');
 app.use('/payment', paymentRoute);
 
+const fundsRoute = require('./routes/funds');
+app.use('/funds', fundsRoute);
+
 //Display all data from table
 app.get('/api/list', (req, res) => {
    const sqlSelect = 'SELECT * FROM members';

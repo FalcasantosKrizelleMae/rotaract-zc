@@ -50,7 +50,7 @@ class Header extends Component {
                   icon={<AiIcons.AiFillFund />}
                   className="item"
                >
-                  <Link to="/admin" className="text-decoration-none">
+                  <Link to="/admin-funds" className="text-decoration-none">
                      Funds
                   </Link>
                </Menu.Item>
@@ -100,7 +100,6 @@ class Header extends Component {
                   classname="m-0"
                   title="ADMIN"
                >
-                  <Menu.Item key="profile">Profile</Menu.Item>
                   <Menu.Item key="logout">
                      <Link to="/login" className="text-decoration-none">
                         Logout

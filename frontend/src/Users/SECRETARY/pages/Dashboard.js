@@ -18,14 +18,23 @@ function Dashboard() {
 
    const [event, setEvent] = useState([]);
    const [cancelled, setCancelled] = useState([]);
-   const [code, setCode] = useState();
 
    const [show, setShow] = useState(false);
+   const [title, setTitle] = useState('N/A');
+   const [start, setStart] = useState('N/A');
+   const [end, setEnd] = useState('N/A');
+   const [description, setDescription] = useState('N/A');
+   const [type, setType] = useState('virtual');
 
-   const [title, setTitle] = useState();
-   const [start, setStart] = useState();
-   const [end, setEnd] = useState();
-   const [description, setDescription] = useState();
+   const [platform, setPlatform] = useState('N/A');
+   const [link, setLink] = useState('N/A');
+   const [email, setEmail] = useState('N/A');
+   const [host, setHost] = useState('N/A');
+   const [venue, setVenue] = useState('N/A');
+   const [source, setSource] = useState('N/A');
+   const [total, setTotal] = useState('N/A');
+   const [chairperson, setChairperson] = useState('N/A');
+   const [preparedby, setPreparedby] = useState('N/A');
 
    useForm();
 
@@ -47,8 +56,17 @@ function Dashboard() {
          start: start,
          end: end,
          description: description,
+         type: type,
+         platform: platform,
+         link: link,
+         host: host,
+         venue: venue,
+         source: source,
+         total: total,
+         email: email,
+         chairperson: chairperson,
+         preparedby: preparedby,
          chapter: chapter,
-         code: code,
       })
          .then((response) => {
             if (response.data.message === 'success') {
@@ -183,14 +201,16 @@ function Dashboard() {
       <div>
          <Navbar />
          <div className="main mx-5">
-            <div className="container-fluid bg-pink p-4 mb-4 px-5 rounded">
-               <div className="row t">
+            <div className="container-fluid bg-pink p-3 px-5 rounded mb-4">
+               <div className="row d-flex align-items-center">
                   <div className="col-sm ">
-                     <h3 className="m-0 text-white">EVENTS</h3>
+                     <h5 className="m-0 text-white ">DASHBOARD</h5>
                   </div>
 
-                  <div className="col-sm text-right ">
-                     <h5 className="text-white text-uppercase">{chapter}</h5>
+                  <div className="col-sm text-right mb-0">
+                     <h6 className="text-white text-uppercase pb-0 mb-0">
+                        {chapter}
+                     </h6>
                   </div>
                </div>
             </div>
@@ -278,7 +298,7 @@ function Dashboard() {
                                        <br />
                                        {/* badge */}
                                        <p className="text-dark">
-                                          EVENT CODE:
+                                          EVENT ID: {val.event_id}
                                           <button
                                              className="btn btn-outline-danger float-end"
                                              onClick={() => {
@@ -378,11 +398,34 @@ function Dashboard() {
                onSubmit={handleSubmit(onSubmit)}
                id="add-event-form"
             >
-               <Modal.Header className=" bg-pink text-white">
+               {/* <Modal.Header className=" bg-pink text-white">
                   <Modal.Title className="ms-4">ADD NEW EVENT</Modal.Title>
-               </Modal.Header>
+               </Modal.Header> */}
                <Modal.Body className="m-3">
                   <Container className="">
+                     <Form.Group className="mb-3 fs-6">
+                        <Form.Label>Event type</Form.Label>
+                        <br />
+                        <input
+                           type="radio"
+                           placeholder="Event title"
+                           value="virtual"
+                           name="type"
+                           defaultChecked
+                           onChange={(e) => setType(e.target.value)}
+                           required
+                        />{' '}
+                        Virtual <br />
+                        <input
+                           type="radio"
+                           name="type"
+                           value="actual"
+                           placeholder="Event title"
+                           onChange={(e) => setType(e.target.value)}
+                           required
+                        />{' '}
+                        Actual/Field
+                     </Form.Group>
                      <Form.Group className="mb-3">
                         {/* <Form.Label>Member ID</Form.Label> */}
                         <input
@@ -408,7 +451,7 @@ function Dashboard() {
                         </Form.Group>
 
                         {/* end date */}
-                        <Form.Group className="mb-4 col-sm">
+                        <Form.Group className="mb-3 col-sm">
                            <Form.Label>End date and time</Form.Label>
                            <input
                               type="datetime-local"
@@ -419,18 +462,9 @@ function Dashboard() {
                            />
                         </Form.Group>
                         {/*desc */}
-                        <Form.Group className="mb-4">
-                           <Form.Control
-                              as="textarea"
-                              name="description"
-                              placeholder="Event description"
-                              rows={2}
-                              onChange={(e) => setDescription(e.target.value)}
-                              required
-                           />
-                        </Form.Group>
                      </div>
                      <Form.Group className="mb-3">
+                        <Form.Label>Club name</Form.Label>
                         {/* chapter */}
                         <input
                            type="disabled"
@@ -439,17 +473,148 @@ function Dashboard() {
                            disabled
                         />
                      </Form.Group>
-                     <Form.Group className="mb-3">
-                        {/* event */}
-                        <input
-                           className="form-control"
-                           type="text"
-                           name="code"
-                           placeholder="Event code"
-                           onChange={(e) => setCode(e.target.value)}
+                     <Form.Group className="mb-4">
+                        <Form.Control
+                           as="textarea"
+                           name="description"
+                           placeholder="Event description"
+                           rows={2}
+                           onChange={(e) => setDescription(e.target.value)}
                            required
                         />
                      </Form.Group>
+
+                     {type === 'virtual' ? (
+                        <>
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Host name"
+                                    onChange={(e) => setHost(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="email"
+                                    placeholder="Contact Email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 <select
+                                    className="form-select"
+                                    name="platform"
+                                    onChange={(e) =>
+                                       setPlatform(e.target.value)
+                                    }
+                                    required
+                                 >
+                                    <option value="">Select Platform</option>
+                                    <option value="Google Meet">
+                                       Google Meet
+                                    </option>
+                                    <option value="Zoom">Zoom</option>
+                                    <option value="Skype">Skype</option>
+                                 </select>
+                              </Form.Group>
+                              <Form.Group className="col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="url"
+                                    placeholder="https://example.com"
+                                    onChange={(e) => setLink(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+                        </>
+                     ) : (
+                        <>
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 <select
+                                    className="form-select"
+                                    name="source"
+                                    onChange={(e) => setSource(e.target.value)}
+                                    required
+                                 >
+                                    <option value="">Select Source</option>
+                                    <option value="Funds">Club Funds</option>
+                                    <option value="Donation">Donation</option>
+                                 </select>
+                              </Form.Group>
+                              <Form.Group className="mb-4 col-sm-4">
+                                 <input
+                                    className="form-control"
+                                    type="number"
+                                    placeholder="Total cost"
+                                    onChange={(e) => setTotal(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Venue"
+                                    onChange={(e) => setVenue(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="email"
+                                    placeholder="Email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Chairperson"
+                                    onChange={(e) =>
+                                       setChairperson(e.target.value)
+                                    }
+                                    required
+                                 />
+                              </Form.Group>
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Prepared by"
+                                    onChange={(e) =>
+                                       setPreparedby(e.target.value)
+                                    }
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+                        </>
+                     )}
                   </Container>
                </Modal.Body>
                <Modal.Footer className="px-5">

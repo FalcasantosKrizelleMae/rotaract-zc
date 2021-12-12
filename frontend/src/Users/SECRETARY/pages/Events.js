@@ -15,12 +15,22 @@ const SectEvent = () => {
    let history = useHistory();
 
    const [show, setShow] = useState(false);
+   const [title, setTitle] = useState('N/A');
+   const [start, setStart] = useState('N/A');
+   const [end, setEnd] = useState('N/A');
+   const [description, setDescription] = useState('N/A');
+   const [type, setType] = useState('virtual');
 
-   const [title, setTitle] = useState();
-   const [start, setStart] = useState();
-   const [end, setEnd] = useState();
-   const [description, setDescription] = useState();
-   const [code, setCode] = useState();
+   const [platform, setPlatform] = useState('N/A');
+   const [link, setLink] = useState('N/A');
+   const [email, setEmail] = useState('N/A');
+   const [host, setHost] = useState('N/A');
+   const [venue, setVenue] = useState('N/A');
+   const [source, setSource] = useState('N/A');
+   const [total, setTotal] = useState('N/A');
+   const [chairperson, setChairperson] = useState('N/A');
+   const [preparedby, setPreparedby] = useState('N/A');
+
    useForm();
 
    const handleClose = () => {
@@ -73,8 +83,17 @@ const SectEvent = () => {
          start: start,
          end: end,
          description: description,
+         type: type,
+         platform: platform,
+         link: link,
+         host: host,
+         venue: venue,
+         source: source,
+         total: total,
+         email: email,
+         chairperson: chairperson,
+         preparedby: preparedby,
          chapter: chapter,
-         code: code,
       })
          .then((response) => {
             if (response.data.message === 'success') {
@@ -101,15 +120,7 @@ const SectEvent = () => {
             }
          })
          .then(() => {
-            setEvent([
-               ...event,
-               {
-                  title: title,
-                  start: start,
-                  end: end,
-                  chapter: chapter,
-               },
-            ]);
+            setEvent([...event]);
          });
    };
 
@@ -185,6 +196,8 @@ const SectEvent = () => {
                </div>
                <Table borderless hover>
                   <thead className="text-center text-white bg-pink text-uppercase">
+                     <td>EVENT ID</td>
+                     <td>EVENT TYPE</td>
                      <td>Event Name</td>
                      <td>Event Date/Time</td>
                      <td>Status</td>
@@ -194,6 +207,10 @@ const SectEvent = () => {
                      {event.map((row) => {
                         return (
                            <tr className="text-center border">
+                              <td>{row.event_id}</td>
+                              <td className="text-uppercase">
+                                 <div className="text-bolder">{row.type}</div>{' '}
+                              </td>
                               <td>{row.title}</td>
                               <td>
                                  {dateFormat(
@@ -203,19 +220,19 @@ const SectEvent = () => {
                               </td>
                               <td>
                                  {row.status === 'cancelled' ? (
-                                    <span className="badge pill badge bg-danger">
+                                    <span className="badge rounded-pill badge bg-danger">
                                        {row.status}
                                     </span>
                                  ) : row.status === 'accepted' ? (
-                                    <span className="badge pill badge bg-success">
+                                    <span className="badge rounded-pill badge bg-success">
                                        {row.status}
                                     </span>
                                  ) : row.status === 'declined' ? (
-                                    <span className="badge pill badge bg-warning">
+                                    <span className="badge rounded-pill badge bg-warning">
                                        {row.status}
                                     </span>
                                  ) : (
-                                    <span className="badge pill badge bg-secondary">
+                                    <span className="badge rounded-pill badge bg-secondary">
                                        {row.status}
                                     </span>
                                  )}
@@ -228,7 +245,7 @@ const SectEvent = () => {
                                           variant="white"
                                           data-tip
                                           data-for="view"
-                                          className="text-primary"
+                                          className="text-dark"
                                        >
                                           <AiIcons.AiFillEye />
                                        </Button>
@@ -250,7 +267,7 @@ const SectEvent = () => {
                                           variant="white"
                                           data-tip
                                           data-for="view"
-                                          className="text-success"
+                                          className="text-dark"
                                        >
                                           <AiIcons.AiFillEye />
                                        </Button>
@@ -268,23 +285,12 @@ const SectEvent = () => {
                                              })
                                           }
                                           type="link"
-                                          className=" text-dark"
+                                          className=" text-primary"
                                           variant="white"
                                           data-tip
                                           data-for="check"
                                        >
                                           <AiIcons.AiFillCalendar />
-                                       </Button>
-
-                                       <Button
-                                          variant="white"
-                                          onClick={() => {
-                                             cancelEvent(row.event_id);
-                                          }}
-                                          data-tip
-                                          data-for="cancel"
-                                       >
-                                          <AiIcons.AiOutlineStop className="text-danger" />
                                        </Button>
                                     </>
                                  ) : (
@@ -339,11 +345,34 @@ const SectEvent = () => {
                onSubmit={handleSubmit(onSubmit)}
                id="add-event-form"
             >
-               <Modal.Header className=" bg-pink text-white">
+               {/* <Modal.Header className=" bg-pink text-white">
                   <Modal.Title className="ms-4">ADD NEW EVENT</Modal.Title>
-               </Modal.Header>
+               </Modal.Header> */}
                <Modal.Body className="m-3">
                   <Container className="">
+                     <Form.Group className="mb-3 fs-6">
+                        <Form.Label>Event type</Form.Label>
+                        <br />
+                        <input
+                           type="radio"
+                           placeholder="Event title"
+                           value="virtual"
+                           name="type"
+                           defaultChecked
+                           onChange={(e) => setType(e.target.value)}
+                           required
+                        />{' '}
+                        Virtual <br />
+                        <input
+                           type="radio"
+                           name="type"
+                           value="actual"
+                           placeholder="Event title"
+                           onChange={(e) => setType(e.target.value)}
+                           required
+                        />{' '}
+                        Actual/Field
+                     </Form.Group>
                      <Form.Group className="mb-3">
                         {/* <Form.Label>Member ID</Form.Label> */}
                         <input
@@ -369,7 +398,7 @@ const SectEvent = () => {
                         </Form.Group>
 
                         {/* end date */}
-                        <Form.Group className="mb-4 col-sm">
+                        <Form.Group className="mb-3 col-sm">
                            <Form.Label>End date and time</Form.Label>
                            <input
                               type="datetime-local"
@@ -380,36 +409,160 @@ const SectEvent = () => {
                            />
                         </Form.Group>
                         {/*desc */}
-                        <Form.Group className="mb-4">
-                           <Form.Control
-                              as="textarea"
-                              name="description"
-                              placeholder="Event description"
-                              rows={2}
-                              onChange={(e) => setDescription(e.target.value)}
-                              required
-                           />
-                        </Form.Group>
                      </div>
                      <Form.Group className="mb-3">
+                        <Form.Label>Club name</Form.Label>
                         {/* chapter */}
                         <input
+                           type="disabled"
                            className="form-select mb-4"
-                           value={chapter}
+                           defaultValue={chapter}
                            disabled
                         />
                      </Form.Group>
-                     <Form.Group className="mb-3">
-                        {/* event */}
-                        <input
-                           className="form-control"
-                           type="text"
-                           name="code"
-                           placeholder="Event code"
-                           onChange={(e) => setCode(e.target.value)}
+                     <Form.Group className="mb-4">
+                        <Form.Control
+                           type
+                           as="textarea"
+                           name="description"
+                           placeholder="Event description"
+                           rows={2}
+                           onChange={(e) => setDescription(e.target.value)}
                            required
                         />
                      </Form.Group>
+
+                     {type === 'virtual' ? (
+                        <>
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Host name"
+                                    onChange={(e) => setHost(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="email"
+                                    placeholder="Contact Email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 <select
+                                    className="form-select"
+                                    name="platform"
+                                    onChange={(e) =>
+                                       setPlatform(e.target.value)
+                                    }
+                                    required
+                                 >
+                                    <option value="">Select Platform</option>
+                                    <option value="Google Meet">
+                                       Google Meet
+                                    </option>
+                                    <option value="Zoom">Zoom</option>
+                                    <option value="Skype">Skype</option>
+                                 </select>
+                              </Form.Group>
+                              <Form.Group className="col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="url"
+                                    placeholder="https://example.com"
+                                    onChange={(e) => setLink(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+                        </>
+                     ) : (
+                        <>
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 <select
+                                    className="form-select"
+                                    name="source"
+                                    onChange={(e) => setSource(e.target.value)}
+                                    required
+                                 >
+                                    <option value="">Select Source</option>
+                                    <option value="Funds">Club Funds</option>
+                                    <option value="Donation">Donation</option>
+                                 </select>
+                              </Form.Group>
+                              <Form.Group className="mb-4 col-sm-4">
+                                 <input
+                                    className="form-control"
+                                    type="number"
+                                    placeholder="Total cost"
+                                    onChange={(e) => setTotal(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Venue"
+                                    onChange={(e) => setVenue(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="email"
+                                    placeholder="Email"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+
+                           <div className="row">
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Chairperson"
+                                    onChange={(e) =>
+                                       setChairperson(e.target.value)
+                                    }
+                                    required
+                                 />
+                              </Form.Group>
+                              <Form.Group className="mb-4 col">
+                                 {/* event */}
+                                 <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Prepared by"
+                                    onChange={(e) =>
+                                       setPreparedby(e.target.value)
+                                    }
+                                    required
+                                 />
+                              </Form.Group>
+                           </div>
+                        </>
+                     )}
                   </Container>
                </Modal.Body>
                <Modal.Footer className="px-5">

@@ -12,6 +12,8 @@ import President from './Users/PRESIDENT';
 import Accounts from './Users/ADMIN/pages/Accounts';
 
 import SectEvents from './Users/SECRETARY/pages/Events';
+import SectAccounts from './Users/SECRETARY/pages/Accounts';
+import SectReports from './Users/SECRETARY/pages/Reports';
 import Attendance from './Users/SECRETARY/pages/Attendance';
 import SectDashboard from './Users/SECRETARY/pages/Dashboard';
 import PresEvents from './Users/PRESIDENT/pages/Events';
@@ -36,6 +38,7 @@ import Southern from './Clubs/Southern/';
 import Tolosa from './Clubs/Tolosa/';
 import UZ from './Clubs/UZ/';
 import Wmsu from './Clubs/Wmsu/';
+import Funds from './Users/ADMIN/pages/Funds';
 
 function App() {
    return (
@@ -80,12 +83,15 @@ function App() {
             <Route path="/accounts" component={Accounts}></Route>
             <Route path="/profile" component={ProfileAdmin}></Route>
             <Route path="/admin-events" component={Events}></Route>
+            <Route path="/admin-funds" component={Funds}></Route>
 
             {/* SECRETARY */}
             <Route path="/sect-events" component={SectEvents}></Route>
             <Route path="/secretary" component={SectDashboard}></Route>
             <Route path="/sect/scan" component={Scan}></Route>
             <Route path="/sect/attendance" component={Attendance}></Route>
+            <Route path="/sect-accounts" component={SectAccounts}></Route>
+            <Route path="/sect-reports" component={SectReports}></Route>
 
             {/* PRESIDENT */}
             <Route path="/pres-events" component={PresEvents}></Route>

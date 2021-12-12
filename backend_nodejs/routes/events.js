@@ -87,30 +87,57 @@ event.get(`/pres/:chapter`, (req, res) => {
 });
 
 //ADD EVENT
-event.post('/add_event', (req, res) => {
+event.post('/add_event-admin', (req, res) => {
    const title = req.body.title;
    const start = req.body.start;
    const end = req.body.end;
    const description = req.body.description;
+   const type = req.body.type;
+   const platform = req.body.platform;
+   const link = req.body.link;
+   const host = req.body.host;
+   const venue = req.body.venue;
+   const source = req.body.source;
+   const total = req.body.total;
+   const email = req.body.email;
+   const chairperson = req.body.chairperson;
+   const preparedby = req.body.preparedby;
    const chapter = req.body.chapter;
+   const status = 'admin';
 
    const id = customAlphabet('1234567890', 6);
    const event_id = id();
-
-   const event_code = customAlphabet('1234567890abcdefghijk', 10);
-   const code = event_code();
 
    const checkId = 'SELECT start FROM events WHERE start = ?';
    db.query(checkId, start, (err, result) => {
       if (result.length === 0) {
          const sqlAdd =
-            'INSERT INTO events (event_id, title, start, end, description, chapter, event_code) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            'INSERT INTO events (event_id, title, start, end, description, type, platform, link, participants, host, venue, source, total_cost, email, chairperson, prepared_by, chapter) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
          db.query(
             sqlAdd,
-            [event_id, title, start, end, description, chapter, code],
+            [
+               event_id,
+               title,
+               start,
+               end,
+               description,
+               type,
+               platform,
+               link,
+               0,
+               host,
+               venue,
+               source,
+               total,
+               email,
+               chairperson,
+               preparedby,
+               chapter,
+            ],
             (error) => {
                if (error) {
                   res.send({ message: 'invalid' });
+                  console.log(err);
                } else {
                   const sql = 'SELECT email FROM members';
                   db.query(sql, (err, response) => {
@@ -118,34 +145,56 @@ event.post('/add_event', (req, res) => {
                         res.send({ message: 'invalid' });
                      } else {
                         const eventDate = moment(start);
+                        const today = eventDate.format();
                         const emailList = JSON.parse(JSON.stringify(response));
                         const notifDate = eventDate
                            .subtract(1, 'hour')
                            .format();
 
-                        schedule.scheduleJob(notifDate, function () {
-                           emailList.forEach((element) => {
-                              let info = transporter.sendMail({
-                                 from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
-                                 to: element.email, // list of receivers
-                                 subject:
-                                    ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
+                        emailList.forEach((element) => {
+                           let info = transporter.sendMail({
+                              from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                              to: element.email, // list of receivers
+                              subject:
+                                 ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
 
-                                 html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
-                                    start
-                                 ).format(
-                                    'LLL'
-                                 )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+                              html: `<h4>A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
+                                 start
+                              ).format(
+                                 'LLL'
+                              )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
 
-                                 auth: {
-                                    user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
-                                    pass: 'rotaractzc', // generated ethereal password
-                                 },
-                              });
+                              auth: {
+                                 user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                                 pass: 'rotaractzc', // generated ethereal password
+                              },
                            });
                         });
+                        console.log('success');
 
                         res.send({ message: 'success' });
+
+                        // schedule.scheduleJob(notifDate, function () {
+                        //    emailList.forEach((element) => {
+                        //       let info = transporter.sendMail({
+                        //          from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                        //          to: element.email, // list of receivers
+                        //          subject:
+                        //             ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
+
+                        //          html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
+                        //             start
+                        //          ).format(
+                        //             'LLL'
+                        //          )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+
+                        //          auth: {
+                        //             user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                        //             pass: 'rotaractzc', // generated ethereal password
+                        //          },
+                        //       });
+                        //    });
+                        // });
                      }
                   });
                }
@@ -155,6 +204,72 @@ event.post('/add_event', (req, res) => {
    });
 });
 
+//ADD EVENT
+event.post('/add_event', (req, res) => {
+   const title = req.body.title;
+   const start = req.body.start;
+   const end = req.body.end;
+   const description = req.body.description;
+   const type = req.body.type;
+   const platform = req.body.platform;
+   const link = req.body.link;
+   const host = req.body.host;
+   const venue = req.body.venue;
+   const source = req.body.source;
+   const total = req.body.total;
+   const email = req.body.email;
+   const chairperson = req.body.chairperson;
+   const preparedby = req.body.preparedby;
+   const chapter = req.body.chapter;
+
+   const id = customAlphabet('1234567890', 6);
+   const event_id = id();
+
+   const checkId = 'SELECT start FROM events WHERE start = ?';
+   db.query(checkId, start, (err, result) => {
+      if (result.length === 0) {
+         const sqlAdd =
+            'INSERT INTO events (event_id, title, start, end, description, type, platform, link, participants, host, venue, source, total_cost, email, chairperson, prepared_by, chapter) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+         db.query(
+            sqlAdd,
+            [
+               event_id,
+               title,
+               start,
+               end,
+               description,
+               type,
+               platform,
+               link,
+               0,
+               host,
+               venue,
+               source,
+               total,
+               email,
+               chairperson,
+               preparedby,
+               chapter,
+            ],
+            (error) => {
+               if (error) {
+                  res.send({ message: 'invalid' });
+                  console.log(err);
+               } else {
+                  const sql = 'SELECT email FROM members';
+                  db.query(sql, (err, response) => {
+                     if (err) {
+                        res.send({ message: 'invalid' });
+                     } else {
+                        res.send({ message: 'success' });
+                     }
+                  });
+               }
+            }
+         );
+      }
+   });
+});
 //UPDATE
 event.get('/cancel_event/:id', (req, res) => {
    const id = req.params.id;
@@ -296,7 +411,36 @@ event.get('/accept/:id', (req, res) => {
       if (err) {
          res.send(err);
       } else {
-         res.send({ message: 'success' });
+         const sqlAll = 'SELECT * FROM events WHERE event_id = ?';
+         db.query(sqlAll, id, (err, result) => {
+            const eventDate = moment(start);
+            const emailList = JSON.parse(JSON.stringify(response));
+            const notifDate = eventDate.subtract(1, 'hour').format();
+
+            schedule.scheduleJob(notifDate, function () {
+               emailList.forEach((element) => {
+                  let info = transporter.sendMail({
+                     from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                     to: element.email, // list of receivers
+                     subject: ' A NEW EVENT FOR YOU!', // Subject line
+
+                     html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${
+                        result.data.title
+                     }</b> <br/> When: <b>${moment(result.data.start).format(
+                        'LLL'
+                     )}</b> <br/> Other details: <b> ${
+                        result.data.description
+                     }</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+
+                     auth: {
+                        user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                        pass: 'rotaractzc', // generated ethereal password
+                     },
+                  });
+               });
+            });
+            res.send({ message: 'success' });
+         });
       }
    });
 });

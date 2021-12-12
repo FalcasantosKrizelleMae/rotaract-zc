@@ -71,11 +71,30 @@ class Header extends Component {
                </Menu.Item>
 
                <Menu.Item
-                  key="alipay"
+                  key="reports"
+                  icon={<AiIcons.AiOutlinePaperClip />}
+                  className="item"
+               >
+                  <Link
+                     to={{
+                        pathname: `/sect-reports/${chapter}`,
+                     }}
+                  >
+                     Reports
+                  </Link>
+               </Menu.Item>
+
+               <Menu.Item
+                  key="accounts"
                   icon={<AiIcons.AiOutlineAccountBook />}
                   className="item"
                >
-                  <Link to="/sect-accounts" className="text-decoration-none">
+                  <Link
+                     to={{
+                        pathname: `/sect-accounts/${chapter}`,
+                     }}
+                     className="text-decoration-none"
+                  >
                      Accounts
                   </Link>
                </Menu.Item>

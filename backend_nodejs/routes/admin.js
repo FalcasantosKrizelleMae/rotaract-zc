@@ -8,6 +8,7 @@ const admin = require('express').Router();
 const cors = require('cors');
 admin.use(bodyParser.json());
 const nodemailer = require('nodemailer');
+const { response } = require('express');
 
 admin.use(
    cors({
@@ -32,16 +33,26 @@ admin.post('/add_account', (req, res) => {
    const email = req.body.email;
    const role = req.body.role;
    const chapter = req.body.chapter;
+   const date_joined = req.body.date_joined;
 
    const checkId = 'SELECT member_id FROM members WHERE member_id = ?';
    db.query(checkId, member_id, (err, result) => {
       if (result.length === 0) {
          //new user logic
          const sqlRegister =
-            'INSERT INTO members (member_id, qrcode, first_name, last_name, email,role, chapter) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            'INSERT INTO members (member_id, qrcode, first_name, last_name, date_started, email, role, chapter) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
          db.query(
             sqlRegister,
-            [member_id, qrcode, firstName, lastName, email, role, chapter],
+            [
+               member_id,
+               qrcode,
+               firstName,
+               lastName,
+               date_joined,
+               email,
+               role,
+               chapter,
+            ],
             (err) => {
                if (err) {
                   res.send({ message: 'invalid' });
@@ -110,12 +121,13 @@ admin.put('/update_account/:member_id', (req, res) => {
    const email = req.body.newemail;
    const role = req.body.newrole;
    const chapter = req.body.newchapter;
+   const date_started = req.body.date_started;
 
    const sqlEdit =
-      'UPDATE members SET first_name = ?,last_name = ?, email = ?, role = ?, chapter = ? WHERE member_id = ?';
+      'UPDATE members SET first_name = ?,last_name = ?, date_started = ?, email = ?, role = ?, chapter = ? WHERE member_id = ?';
    db.query(
       sqlEdit,
-      [firstName, lastName, email, role, chapter, member_id],
+      [firstName, lastName, date_started, email, role, chapter, member_id],
       (err) => {
          if (err) {
             res.send(err);
@@ -166,6 +178,15 @@ admin.delete('/delete_account/:member_id', (req, res) => {
 admin.get('/list', (req, res) => {
    const sqlSelect = 'SELECT * FROM members';
    db.query(sqlSelect, (err, result) => {
+      res.send(result);
+   });
+});
+
+//Display all data from table
+admin.get('/list/:chapter', (req, res) => {
+   const chapter = req.params.chapter;
+   const sqlSelect = 'SELECT * FROM members where chapter = ?';
+   db.query(sqlSelect, chapter, (err, result) => {
       res.send(result);
    });
 });

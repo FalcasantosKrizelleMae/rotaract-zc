@@ -7,6 +7,7 @@ const express = require('express');
 
 const sect = require('express').Router();
 const cors = require('cors');
+const moment = require('moment');
 
 sect.use(
    cors({
@@ -87,4 +88,24 @@ sect.get('/scan/:member_id', (req, res) => {
    });
 });
 
+//send reports
+sect.post('/send_report', (req, res) => {
+   const id = customAlphabet('1234567890', 6);
+   const report_id = id();
+});
+
+// Getevemt by chapter
+sect.get('/getEvent/:chapter', (req, res) => {
+   const chapter = req.params.chapter;
+   const sqlGetData = 'SELECT * from events WHERE chapter = ?;';
+   db.query(sqlGetData, chapter, (err, result) => {
+      if (err) {
+         res.send({ message: ' no data found' });
+      } else {
+         res.send(result);
+      }
+   });
+});
+
+sect.get('get_report');
 module.exports = sect;

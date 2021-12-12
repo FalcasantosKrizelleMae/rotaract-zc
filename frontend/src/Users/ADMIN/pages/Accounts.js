@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import QrCode from 'qrcode';
 import { Avatar, Image } from 'antd';
 import Navbar from '../components/Navbar';
+import moment from 'moment';
 
 function Accounts() {
    const [qrcode, setQrcode] = useState('');
@@ -20,6 +21,7 @@ function Accounts() {
    const [chapter, setChapter] = useState('');
    const [email, setEmail] = useState('');
    const [list, setList] = useState([]);
+   const [date_joined, setDateJoined] = useState('');
    const [dataList, setNewDataList] = useState({
       newmember_id: '',
       newfirstName: '',
@@ -27,6 +29,7 @@ function Accounts() {
       newemail: '',
       newrole: '',
       newchapter: '',
+      date_started: '',
    });
 
    const generateQrCode = async () => {
@@ -45,6 +48,7 @@ function Accounts() {
       newemail,
       newrole,
       newchapter,
+      date_started,
    } = dataList;
 
    const onInputChange = (e) => {
@@ -66,6 +70,7 @@ function Accounts() {
             newemail: result.data[0].email,
             newrole: result.data[0].role,
             newchapter: result.data[0].chapter,
+            date_started: moment(result.data[0].date_started).format(),
          });
       });
    };
@@ -83,6 +88,7 @@ function Accounts() {
          email: email,
          role: role,
          chapter: chapter,
+         date_joined: date_joined,
       })
          .then((response) => {
             if (response.data.message === 'success') {
@@ -220,6 +226,7 @@ function Accounts() {
                            placeholder="Member ID"
                            pattern="[0-9]{8}"
                            onChange={(e) => setMember_id(e.target.value)}
+                           required
                         />
                      </Form.Group>
 
@@ -308,13 +315,25 @@ function Accounts() {
                         <option value="Universidad De Zamboanga - CES">
                            Universidad De Zamboanga - CES
                         </option>
-                        <option value="Colosa Community">
-                           Colosa Community
+                        <option value="Tolosa Community">
+                           Tolosa Community
                         </option>
                         <option value="Southern City Colleges">
                            Southern City Colleges
                         </option>
                      </select>
+
+                     <Form.Group className="mb-3 ">
+                        <Form.Label>Date started</Form.Label>
+                        <input
+                           className="form-control"
+                           type="date"
+                           name="date_joined"
+                           placeholder="Date Joined"
+                           onChange={(e) => setDateJoined(e.target.value)}
+                           required
+                        />
+                     </Form.Group>
 
                      <div className="d-flex justify-content-end ">
                         <Button variant="outline-danger" onClick={clear}>
@@ -338,13 +357,14 @@ function Accounts() {
                <div className="col-sm"></div>
             </div>
 
-            <div className=" mt-5 bg-light p-5 col">
+            <div className=" mt-5 shadow-sm rounded p-5 col">
                <h5 className="text-uppercase mb-4">List of Users</h5>
                <Table responsive="lg">
-                  <thead height="60" className="bg-secondary text-white">
+                  <thead height="60" className="bg-pink text-white">
                      <tr>
                         <th>Member ID</th>
                         <th>Name</th>
+                        <th>Date started</th>
                         <th>Email</th>
                         <th>QR Code</th>
                         <th>Position</th>
@@ -364,6 +384,9 @@ function Accounts() {
                               <tr>
                                  <td>{val.member_id}</td>
                                  <td>{val.first_name + ' ' + val.last_name}</td>
+                                 <td>
+                                    {moment(val.date_started).format('ll')}
+                                 </td>
                                  <td>{val.email}</td>
                                  <td>
                                     {' '}
@@ -472,6 +495,7 @@ function Accounts() {
                            onChange={(e) => onInputChange(e)}
                         />
                      </Form.Group>
+
                      {/* role */}
                      {/* <Form.Label>User type</Form.Label> */}
                      <select
@@ -530,6 +554,17 @@ function Accounts() {
                            Southern City Colleges
                         </option>
                      </select>
+
+                     <Form.Group className="mb-3">
+                        <Form.Label>Date started</Form.Label>
+                        <input
+                           className="form-control"
+                           type="date"
+                           name="date_started"
+                           value={date_started}
+                           onChange={(e) => onInputChange(e)}
+                        />
+                     </Form.Group>
                   </Container>
                </Form>
             </Modal.Body>
