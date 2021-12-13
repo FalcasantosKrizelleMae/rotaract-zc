@@ -193,14 +193,14 @@ function Login() {
                               LOGIN
                            </Button>
                         </div>
-                        <div className="row text-center mt">
+                        {/* <div className="row text-center mt">
                            <Link
                               to="./register"
                               className="text-dark text-decoration-none"
                            >
                               Forgot Password?
                            </Link>
-                        </div>
+                        </div> */}
                      </IconContext.Provider>
                   </Container>
                </Form>

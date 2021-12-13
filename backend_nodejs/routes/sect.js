@@ -97,12 +97,56 @@ sect.post('/send_report', (req, res) => {
 // Getevemt by chapter
 sect.get('/getEvent/:chapter', (req, res) => {
    const chapter = req.params.chapter;
-   const sqlGetData = 'SELECT * from events WHERE chapter = ?;';
+   const sqlGetData = 'SELECT * from events WHERE  chapter = ?;';
    db.query(sqlGetData, chapter, (err, result) => {
       if (err) {
          res.send({ message: ' no data found' });
       } else {
          res.send(result);
+      }
+   });
+});
+
+sect.get('/check/:chapter', (req, res) => {
+   const chapter = req.params.chapter;
+   const member_id = req.query.member_id;
+
+   const check = 'SELECT * from members WHERE member_id = ? AND chapter = ?';
+   db.query(check, [member_id, chapter], (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.send(result);
+         console.log(result);
+      }
+   });
+});
+
+sect.post('/addAttendance', (req, res) => {
+   const member_id = req.body.member_id;
+   const event_id = req.body.event_id;
+   const mark = req.body.mark;
+
+   const check =
+      'SELECT * FROM attendance WHERE member_id = ? AND event_id = ?';
+   db.query(check, [member_id, event_id], (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         if (result.length === 0) {
+            const insert =
+               'INSERT INTO attendance (member_id, event_id, status) VALUES (?, ?, ?)';
+            db.query(insert, [member_id, event_id, mark], (err, response) => {
+               if (err) {
+                  res.send(err);
+               } else {
+                  console.log('success');
+                  res.send({ message: 'success' });
+               }
+            });
+         } else {
+            res.send({ message: 'exist' });
+         }
       }
    });
 });

@@ -53,23 +53,26 @@ class Header extends Component {
                   </Link>
                </Menu.Item>
 
-               <Menu.Item key="setting:1">Reports</Menu.Item>
-               <Menu.Item key="setting:2">
-                  <Link
-                     to={{
-                        pathname: `/pres-events/${member_id}`,
-                     }}
-                     className="text-decoration-none"
-                  >
-                     Events
-                  </Link>
-               </Menu.Item>
+               <SubMenu key="SubMenu3" classname="m-0" title="Requests">
+                  <Menu.Item key="setting:1">Reports</Menu.Item>
+                  <Menu.Item key="setting:2">
+                     <Link
+                        to={{
+                           pathname: `/pres-events/${member_id}`,
+                        }}
+                        className="text-decoration-none"
+                     >
+                        Events
+                     </Link>
+                  </Menu.Item>
+               </SubMenu>
+
                <Menu.Item key="setting:3">Funds</Menu.Item>
 
                <Menu.Item key="alipay" className="item">
                   <Link
                      to={{
-                        pathname: `/pres/${member_id}`,
+                        pathname: `/pres-accounts/${member_id}`,
                      }}
                      className="text-decoration-none"
                   >

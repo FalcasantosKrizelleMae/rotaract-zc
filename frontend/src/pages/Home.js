@@ -23,7 +23,7 @@ import '../css/card.css';
 
 function Home() {
    const flickityOptions = {
-      initialIndex: 1,
+      initialIndex: 2,
    };
    const handleClick = () => {
       window.open('https://web.facebook.com/rotametzam');
@@ -83,11 +83,16 @@ function Home() {
       <>
          <Header />
 
-         <div className=" px-5 py-4 mt-5 mb-5">
-            <div className="row my-3">
-               <div className="col-sm my-auto">
-                  <h1>WELCOME TO ZAMBOANGA CITY ROTARACT CLUB </h1>
-                  <p>Scroll, view, learn, and pay funds.</p>
+         <div className=" px-5 py-4 mt-5 mb-5 mx-5">
+            <div className="row my-5">
+               <div className="col-sm my-auto ">
+                  <h4>WELCOME TO </h4>
+                  <h1 className="text-pink">ZAMBOANGA CITY ROTARACT CLUB </h1>
+                  <p className="row col-sm-8 mt-5">
+                     Together, we see a world where people unite and take action
+                     to create lasting change – across the globe, in our
+                     communities, and in ourselves.{' '}
+                  </p>
                   <div className="mt-5">
                      <Link to="/about" className="btn btn-primary">
                         {' '}
@@ -114,15 +119,18 @@ function Home() {
                backgroundSize: 'cover',
             }}
          >
-            <div className=" text-center ">
-               ABOUT US
-               <h3 className="text-pink "> Zamboanga City Chapters </h3>
+            <div className=" text-center mb-5">
+               <p className="text-secondary">ABOUT US</p>
+               <h3 className="text-pink text-uppercase ">
+                  {' '}
+                  Zamboanga City Chapters{' '}
+               </h3>
             </div>
 
             <div className="row">
                <div className="col-lg p-5 mx-3 text-center text-white">
                   <img src={image1} width="80%" height="70%" alt="serve qr" />
-                  <div className="mt-1 fs-5">Organization</div>
+                  <h4 className="my-4 fw-bolder text-white ">ORGRANIZATION</h4>
                   <p>
                      Rotary International is a non-profit organization whose
                      main mission is to gather together corporate and
@@ -133,7 +141,7 @@ function Home() {
 
                <div className="col-lg p-5  mx-3 text-center text-white">
                   <img src={image2} width="80%" height="70%" alt="serve qr" />
-                  <div className="mt-1 fs-5">Goal </div>
+                  <h4 className="my-4 fw-bolder text-white ">GOAL </h4>
                   <p>
                      {' '}
                      Provide humanitarian service, encourage high ethical
@@ -144,8 +152,10 @@ function Home() {
 
                <div className="col-lg p-5  mx-3 text-center text-white">
                   <img src={image3} width="80%" height="70%" alt="serve qr" />
-                  <div className="mt-1 fs-5">Zamboanga City clubs</div>
-                  <p>
+                  <h4 className="my-4 fw-bolder text-white ">
+                     ZAMBOANGA CITY CLUBS
+                  </h4>
+                  <p className="">
                      The Rotaract Clubs have a total of 8 clubs in Zamboanga
                      City Chapter. Each club is composed of a President,
                      treasurer, secretary followed by its members, and the total
@@ -155,16 +165,17 @@ function Home() {
             </div>
          </div>
 
-         <div className="container ">
-            <div className="mt-5 py-5 ">
-               <h5 className="text-pink text-center col-lg p-1">
+         <div className="container-fluid ">
+            <div className="mt-5 py-5 mb-5">
+               <p className="text-secondary text-center mt-3">ROTARY CLUBS</p>
+               <h3 className="text-pink text-center col-lg p-1 text-uppercase fw-bolder  mb-5 pb-5">
                   {' '}
                   Zamboanga City Clubs{' '}
-               </h5>
-               <p class="text-secondary text-center mb-5 pb-5">
+               </h3>
+               {/* <p class="text-secondary text-center mb-5 pb-5">
                   {' '}
                   There are a total of 8 rotaract clubs here in Zamboanga City
-               </p>
+               </p> */}
                <Flickity
                   className={'carousel'} // default ''
                   elementType={'div'} // default 'div'
@@ -173,16 +184,16 @@ function Home() {
                   reloadOnUpdate // default false
                   static // default false
                >
-                  <div className="card-container me-5 mb-5  ">
+                  <div className="card-container me-5 mb-5 pb-4">
                      <div class="card-body p-4 ">
                         <h5 class="card-title text-center">WEST</h5>
                         <img
                            src={west}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -202,10 +213,10 @@ function Home() {
                         <img
                            src={east}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -225,10 +236,10 @@ function Home() {
                         <img
                            src={north}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -248,10 +259,10 @@ function Home() {
                         <img
                            src={metro}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -271,10 +282,10 @@ function Home() {
                         <img
                            src={uz}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -291,10 +302,10 @@ function Home() {
                         <img
                            src={tolosaa}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -314,10 +325,10 @@ function Home() {
                         <img
                            src={south}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -337,10 +348,10 @@ function Home() {
                         <img
                            src={wmsuu}
                            width="100%"
-                           height="100%"
+                           height="130px"
                            alt="serve qr"
                         />
-                        <p class="card-text">
+                        <p class="card-text my-4">
                            Some quick example text to build on the card title
                            and make up the bulk of the card's content.
                         </p>
@@ -362,7 +373,7 @@ function Home() {
                data={data}
                time={2000}
                width="100%"
-               height="700px"
+               height="790px"
                captionStyle={captionStyle}
                slideNumber={true}
                slideNumberStyle={slideNumberStyle}
@@ -379,12 +390,12 @@ function Home() {
                style={{
                   textAlign: 'center',
                   maxWidth: '100%',
-                  margin: '40px auto',
+                  margin: '100px auto',
                }}
             />
          </div>
 
-         <div class="footer bg-light">
+         <div class="footer pt-5 mt-5 bg-light">
             <footer>
                <div class="container pb-5">
                   <div class="row">
@@ -413,7 +424,7 @@ function Home() {
                            arcu eget velit pulvinar dictum vel in justo.
                         </p>
                      </div>
-                     <div class="mt-5 text-center">
+                     <div class="mt-5 py-5 text-center">
                         <FaIcons.FaFacebook
                            className="me-5"
                            onClick={handleClick}

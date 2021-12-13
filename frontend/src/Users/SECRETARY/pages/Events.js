@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import dateFormat from 'dateformat';
 import Navbar from '../components/Navbar';
+import { Dropdown, Menu } from 'antd';
+import { BiCaptions } from 'react-icons/bi';
 
 const SectEvent = () => {
    const chapter = localStorage.getItem('chapter');
@@ -267,31 +269,64 @@ const SectEvent = () => {
                                           variant="white"
                                           data-tip
                                           data-for="view"
-                                          className="text-dark"
+                                          className="text-primary me-3"
                                        >
                                           <AiIcons.AiFillEye />
                                        </Button>
 
-                                       <Button
-                                          onClick={() =>
-                                             history.push({
-                                                pathname: `/sect/attendance/${row.event_id}`,
-                                                state: {
-                                                   event_id: row.event_id,
-                                                   title: row.title,
-                                                   chapter: chapter,
-                                                   start: row.start,
-                                                },
-                                             })
+                                       <Dropdown
+                                          trigger={['click']}
+                                          overlay={
+                                             <Menu>
+                                                <Menu.Item key="0">
+                                                   <a
+                                                      href
+                                                      onClick={() =>
+                                                         history.push({
+                                                            pathname: `/sect/attendance/${row.event_id}`,
+                                                            state: {
+                                                               event_id:
+                                                                  row.event_id,
+                                                               title: row.title,
+                                                               chapter: chapter,
+                                                               start: row.start,
+                                                            },
+                                                         })
+                                                      }
+                                                   >
+                                                      Scan QR Code
+                                                   </a>
+                                                </Menu.Item>
+                                                <Menu.Item key="1">
+                                                   <a
+                                                      href
+                                                      onClick={() =>
+                                                         history.push({
+                                                            pathname: `/sect/manual/${row.event_id}`,
+                                                            state: {
+                                                               event_id:
+                                                                  row.event_id,
+                                                               title: row.title,
+                                                               chapter: chapter,
+                                                               start: row.start,
+                                                            },
+                                                         })
+                                                      }
+                                                   >
+                                                      Manual
+                                                   </a>
+                                                </Menu.Item>
+                                             </Menu>
                                           }
-                                          type="link"
-                                          className=" text-primary"
-                                          variant="white"
-                                          data-tip
-                                          data-for="check"
                                        >
-                                          <AiIcons.AiFillCalendar />
-                                       </Button>
+                                          <a
+                                             href
+                                             onClick={(e) => e.preventDefault()}
+                                          >
+                                             CHECK {''}
+                                             <AiIcons.AiFillCaretDown />
+                                          </a>
+                                       </Dropdown>
                                     </>
                                  ) : (
                                     <b>--</b>

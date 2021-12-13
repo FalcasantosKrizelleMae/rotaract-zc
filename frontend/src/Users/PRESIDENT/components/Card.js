@@ -1,10 +1,9 @@
 import React from 'react';
 import '../../../css/card.css';
-import { Button } from 'react-bootstrap';
 
 function Card({ title, imageUrl, body }) {
    return (
-      <div className="card-container me-5 mb-5 ">
+      <div className="container mb-5 bg-light">
          <div className="image-container">
             <img src={imageUrl} alt="" />
          </div>
@@ -16,7 +15,6 @@ function Card({ title, imageUrl, body }) {
             <div className="card-body">
                <h1> {body} </h1>
             </div>
-           
          </div>
       </div>
    );

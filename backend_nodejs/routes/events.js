@@ -413,7 +413,7 @@ event.get('/accept/:id', (req, res) => {
       } else {
          const sqlAll = 'SELECT * FROM events WHERE event_id = ?';
          db.query(sqlAll, id, (err, result) => {
-            const eventDate = moment(start);
+            const eventDate = moment(result[0].start);
             const emailList = JSON.parse(JSON.stringify(response));
             const notifDate = eventDate.subtract(1, 'hour').format();
 

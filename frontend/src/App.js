@@ -21,6 +21,7 @@ import Scan from './Users/SECRETARY/pages/Scan';
 import ProfileAdmin from './Users/ADMIN/pages/Profile';
 import Dashboard from './Users/ADMIN/pages/Dashboard';
 import Events from './Users/ADMIN/pages/Events';
+import PresAccounts from './Users/PRESIDENT/pages/Accounts';
 
 import PresDashboard from './Users/PRESIDENT/pages/Dashboard';
 import Transactions from './Users/MEMBER/pages/Transactions';
@@ -39,6 +40,7 @@ import Tolosa from './Clubs/Tolosa/';
 import UZ from './Clubs/UZ/';
 import Wmsu from './Clubs/Wmsu/';
 import Funds from './Users/ADMIN/pages/Funds';
+import Manual from './Users/SECRETARY/pages/Manual';
 
 function App() {
    return (
@@ -92,10 +94,12 @@ function App() {
             <Route path="/sect/attendance" component={Attendance}></Route>
             <Route path="/sect-accounts" component={SectAccounts}></Route>
             <Route path="/sect-reports" component={SectReports}></Route>
+            <Route path="/sect/manual" component={Manual}></Route>
 
             {/* PRESIDENT */}
             <Route path="/pres-events" component={PresEvents}></Route>
             <Route path="/president" component={PresDashboard}></Route>
+            <Route path="/pres-accounts" component={PresAccounts}></Route>
 
             {/* MEMBER */}
             <Route path="/transaction" component={Transactions}></Route>
