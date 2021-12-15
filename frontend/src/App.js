@@ -41,6 +41,7 @@ import UZ from './Clubs/UZ/';
 import Wmsu from './Clubs/Wmsu/';
 import Funds from './Users/ADMIN/pages/Funds';
 import Manual from './Users/SECRETARY/pages/Manual';
+import AttendanceList from './Users/SECRETARY/pages/AttendanceList';
 
 function App() {
    return (
@@ -108,7 +109,7 @@ function App() {
 
             {/* FINANCE */}
             <Route path="/payments" component={Payments}></Route>
-
+            <Route path="/attendance" component={AttendanceList}></Route>
             <Route path="/pay-mem" component={Payment}></Route>
          </Router>
       </div>

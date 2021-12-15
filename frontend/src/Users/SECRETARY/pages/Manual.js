@@ -1,19 +1,23 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Form, Table } from 'react-bootstrap';
-import { Button } from 'antd';
+import { PageHeader, Button } from 'antd';
 import Axios from 'axios';
-import { useLocation } from 'react-router-dom';
+
+import { useLocation, useHistory, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { wholeDivideDurations } from '@fullcalendar/react';
 
 const Manual = () => {
    const location = useLocation();
    const chapter = localStorage.getItem('chapter');
    const [list, setList] = useState([]);
-   const { event_id } = location.state;
+   const { event_id, title } = location.state;
    const [member_id, setMemberId] = useState();
    const [isTrue, setIsTrue] = useState(false);
    const [status, setStatus] = useState('Input the member id in the field');
+   const id = localStorage.getItem('member_id');
+   let history = useHistory();
    const [mark, setMark] = useState('present');
 
    useEffect(() => {
@@ -58,7 +62,31 @@ const Manual = () => {
    return (
       <>
          <div className="container mt-5">
-            <h4 className="text-center">Manual Checking attendance</h4>
+            <PageHeader
+               className="site-page-header"
+               onBack={() => history.push(`/secretary/${id}`)}
+               title="Back to Dashboard"
+               // subTitle="View and update account"
+            />{' '}
+            <h4 className="text-center my-5 text-uppercase">
+               Manual Checking attendance
+            </h4>
+            <div className="bg-light pt-4 pb-3 px-5 rounded container col-lg-6">
+               <wholeDivideDurations classname="col">
+                  <h5 className="text-pink">
+                     EVENT: {''}
+                     {title} - {event_id}
+                  </h5>{' '}
+                  <Link
+                     to={{
+                        pathname: `/attendance/${chapter}`,
+                     }}
+                     classname="btn"
+                  >
+                     View attendance
+                  </Link>{' '}
+               </wholeDivideDurations>
+            </div>
             <div className="container bg-white shadow-sm border p-5 mt-4 col-lg-6">
                <Form.Group>
                   <Form.Label>
@@ -116,11 +144,13 @@ const Manual = () => {
                                        <td>
                                           {val.first_name + ' ' + val.last_name}
                                        </td>
-                                       <td>
-                                          <span className="badge bg-info pill rounded">
-                                             unchecked
-                                          </span>
-                                       </td>
+                                       {
+                                          <td>
+                                             <span className="badge bg-info pill rounded">
+                                                unchecked
+                                             </span>
+                                          </td>
+                                       }
                                     </tr>
                                  </tbody>
                               </Table>

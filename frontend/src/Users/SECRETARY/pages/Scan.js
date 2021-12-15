@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import QrReader from 'react-qr-reader';
 import Axios from 'axios';
-import { useLocation } from 'react-router-dom';
-
+import { useLocation, useHistory } from 'react-router-dom';
+import { Button, Table, Form } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import { PageHeader } from 'antd';
 function Scan() {
    const location = useLocation();
    const { event_id, title, chapter } = location.state;
    const [data, setData] = useState([]);
-
+   const [member_id, setMemberId] = useState();
+   const [mark, setMark] = useState('present');
+   const id = localStorage.getItem('member_id');
+   let history = useHistory();
    const [scanResultWebCam, setScanResultWebCam] = useState('');
 
    const handleErrorWebCam = (error) => {
@@ -20,6 +25,28 @@ function Scan() {
       }
    };
 
+   const check = () => {
+      Axios.post(`http://localhost:5000/sect/addAttendance`, {
+         member_id: member_id,
+         event_id: event_id,
+         mark: mark,
+      }).then((response) => {
+         if (response.data.message === 'success') {
+            Swal.fire({
+               title: 'Attendance checked!',
+               icon: 'success',
+            });
+         } else if (response.data.message === 'exist') {
+            Swal.fire({
+               title: 'Error!',
+               text: 'Attendance already checked',
+               icon: 'error',
+               confirmButtonText: 'Okay',
+            });
+         }
+         setMemberId('');
+      });
+   };
    //Display all data
    useEffect(() => {
       Axios.get(`http://localhost:5000/sect/scan/${scanResultWebCam}`).then(
@@ -49,7 +76,13 @@ function Scan() {
    });
 
    return (
-      <div className="">
+      <div className="container mt-5">
+         <PageHeader
+            className="site-page-header"
+            onBack={() => history.push(`/secretary/${id}`)}
+            title="Scan QR Code"
+            // subTitle="View and update account"
+         />{' '}
          <div className="row">
             <div className="col-lg-5 bg-light p-5">
                <h3>Event ID: {event_id}</h3>
@@ -72,30 +105,83 @@ function Scan() {
                ) : (
                   data.map((val) => {
                      return (
-                        <div>
-                           {/* <input
-                              type="hidden"
-                              value={val.member_id}
-                              onChange={(e) => setMember_id(e.target.value)}
-                           />
-
-                           <input
-                              type="hidden"
-                              value={event_id}
-                              onChange={(e) => setEvent(e.target.value)}
-                           /> */}
-
-                           <h1>
-                              {' '}
-                              <br />
-                              {val.member_id}
-                           </h1>
-                           <h3> {val.first_name + ' ' + val.last_name}</h3>
-
-                           <span className="badge pill badge bg-success">
-                              {val.status}
-                           </span>
-                        </div>
+                        <>
+                           <div className="container bg-light rounded p-2 pb-0">
+                              <Table
+                                 size="sm"
+                                 className="fs-6"
+                                 responsive
+                                 borderless
+                              >
+                                 <tbody>
+                                    <tr>
+                                       <td width="30%">
+                                          {' '}
+                                          <input
+                                             type="type"
+                                             name="member_id"
+                                             className="form-control "
+                                             value={val.member_id}
+                                             onChange={(e) =>
+                                                setMemberId(val.member_id)
+                                             }
+                                          />
+                                       </td>
+                                       <td>
+                                          <b className="ps-5">
+                                             {val.first_name +
+                                                ' ' +
+                                                val.last_name}
+                                          </b>
+                                       </td>
+                                       {val.member_id !== 'Invalid QR code' ? (
+                                          <div className="row mx-0">
+                                             <Form.Group className="mb-3 fs-6 col">
+                                                <input
+                                                   type="radio"
+                                                   value="present"
+                                                   name="status"
+                                                   defaultChecked
+                                                   onChange={(e) =>
+                                                      setMark(e.target.value)
+                                                   }
+                                                   required
+                                                />{' '}
+                                                Present
+                                             </Form.Group>
+                                             <Form.Group className="mb-3 fs-6 col">
+                                                <input
+                                                   name="status"
+                                                   type="radio"
+                                                   value="late"
+                                                   onChange={(e) =>
+                                                      setMark(e.target.value)
+                                                   }
+                                                   //  required
+                                                />{' '}
+                                                Late
+                                             </Form.Group>
+                                          </div>
+                                       ) : (
+                                          ''
+                                       )}
+                                    </tr>
+                                 </tbody>
+                              </Table>
+                           </div>
+                           <Button
+                              type="primary"
+                              style={{
+                                 background: 'green',
+                                 borderColor: 'green',
+                                 borderRadius: 50,
+                                 marginTop: 30,
+                              }}
+                              onClick={check}
+                           >
+                              Mark attendance
+                           </Button>
+                        </>
                      );
                   })
                )}

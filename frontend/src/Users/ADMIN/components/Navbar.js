@@ -74,7 +74,7 @@ class Header extends Component {
                   </Link>
                </Menu.Item>
 
-               <SubMenu
+               {/* <SubMenu
                   key="SubMenu"
                   icon={<AiIcons.AiOutlineGlobal />}
                   title="Webpage"
@@ -82,7 +82,7 @@ class Header extends Component {
                >
                   <Menu.Item key="setting:1">Details</Menu.Item>
                   <Menu.Item key="setting:3">Gallery</Menu.Item>
-               </SubMenu>
+               </SubMenu> */}
                <Menu.Item
                   key="alipay"
                   icon={<AiIcons.AiOutlineSetting />}

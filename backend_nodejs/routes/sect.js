@@ -140,7 +140,15 @@ sect.post('/addAttendance', (req, res) => {
                if (err) {
                   res.send(err);
                } else {
-                  console.log('success');
+                  const sqlAdd =
+                     'UPDATE events SET participants = participants + 1 WHERE event_id = ?';
+                  db.query(sqlAdd, event_id, (err) => {
+                     if (err) {
+                        res.send(err);
+                     } else {
+                        console.log(result);
+                     }
+                  });
                   res.send({ message: 'success' });
                }
             });
