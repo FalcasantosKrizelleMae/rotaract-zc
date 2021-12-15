@@ -7,6 +7,7 @@ import * as AiIcons from 'react-icons/ai';
 
 const { SubMenu } = Menu;
 const member_id = localStorage.getItem('member_id');
+const name = localStorage.getItem('name');
 
 class Header extends Component {
    state = {
@@ -75,7 +76,7 @@ class Header extends Component {
                   key="SubMenu1"
                   icon={<AiIcons.AiOutlineCaretDown />}
                   classname="m-0"
-                  title="MEMBER"
+                  title={name}
                >
                   <Menu.Item key="profile">Profile</Menu.Item>
                   <Menu.Item key="logout">

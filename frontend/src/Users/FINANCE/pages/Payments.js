@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 import * as GrIcons from 'react-icons/gr';
 import * as BiIcons from 'react-icons/bi';
 import { Modal, Button } from 'antd';
-import { Form } from 'react-bootstrap';
+import { Form, Table } from 'react-bootstrap';
 import Axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
@@ -21,7 +21,8 @@ const Payments = () => {
    const id = localStorage.getItem('member_id');
    const chapter = localStorage.getItem('chapter');
    const { handleSubmit } = useForm();
-
+   const [showList, setShowList] = useState(false);
+   const [dataList, setDataList] = useState([]);
    //Current time
    const [dateState, setDateState] = useState(new Date());
 
@@ -91,6 +92,23 @@ const Payments = () => {
    const logout = () => {
       localStorage.clear();
       history.push('/login');
+   };
+
+   const getList = () => {
+      setShowList(true);
+
+      Axios.get(`http://localhost:5000/payment/get_transaction/${chapter}`)
+         .then((response) => {
+            if (response) {
+               setDataList(response.data);
+            }
+         })
+
+         .catch((error) => console.log(error));
+   };
+
+   const hideList = () => {
+      setShowList(false);
    };
 
    return (
@@ -205,10 +223,44 @@ const Payments = () => {
             <Button onClick={logout} type="primary" className="mt-5">
                Logout
             </Button>{' '}
-            {''}
-            <Button onClick={logout} type="primary" className="mt-5">
-               View payees
-            </Button>
+            {showList === true ? (
+               <>
+                  {' '}
+                  <Button onClick={hideList} type="danger" className="mt-5">
+                     Hide list
+                  </Button>
+                  <div className="mt-5">
+                     <Table>
+                        <thead>
+                           <tr>
+                              <th>Order ID</th>
+                              <th>Name</th>
+                              <th>Amount</th>
+                              <th>Date</th>
+                              <th>Status</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {dataList.map((val) => {
+                              return (
+                                 <tr>
+                                    <td>{val.order_id}</td>
+                                    <td>{val.name}</td>
+                                    <td>{val.amount}</td>
+                                    <td>{val.date}</td>
+                                    <td>{val.status}</td>
+                                 </tr>
+                              );
+                           })}
+                        </tbody>
+                     </Table>
+                  </div>
+               </>
+            ) : (
+               <Button onClick={getList} type="primary" className="mt-5">
+                  View payees
+               </Button>
+            )}
          </div>
       </>
    );

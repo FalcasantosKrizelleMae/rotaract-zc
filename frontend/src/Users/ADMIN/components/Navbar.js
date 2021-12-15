@@ -101,9 +101,15 @@ class Header extends Component {
                   title="ADMIN"
                >
                   <Menu.Item key="logout">
-                     <Link to="/login" className="text-decoration-none">
+                     <button
+                        onClick={() => {
+                           localStorage.clear();
+                           window.location.href = '/login';
+                        }}
+                        className="btn"
+                     >
                         Logout
-                     </Link>
+                     </button>
                   </Menu.Item>
                </SubMenu>
             </Menu>

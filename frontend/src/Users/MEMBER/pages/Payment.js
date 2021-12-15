@@ -1,45 +1,17 @@
 import { PayPalButton } from 'react-paypal-button-v2';
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
+import moment from 'moment';
+import { PageHeader } from 'antd';
 
 export default function Payment() {
+   let history = useHistory();
    const chapter = localStorage.getItem('chapter');
    const amount = localStorage.getItem('balance');
+   const member_id = localStorage.getItem('member_id');
    const balance = '' + amount;
-
-   let history = useHistory();
-   // const [orderID, setOrderID] = useState(false);
-   // const [billingDetails, setBillingDetails] = useState('');
-
-   // const createOrder = (data, actions) => {
-   //    return actions.order
-   //       .create({
-   //          purchase_units: [
-   //             {
-   //                description: `paymen for ${chapter}`,
-   //                amount: {
-   //                   // charge users $499 per order
-   //                   value: amountPay,
-   //                   currency: 'PHP',
-   //                },
-   //             },
-   //          ],
-   //          // remove the applicaiton_context object if you need your users to add a shipping address
-   //          application_context: {
-   //             shipping_preference: 'NO_SHIPPING',
-   //          },
-   //       })
-   //       .then((orderID) => {
-   //          setOrderID(orderID);
-   //          return orderID;
-   //       });
-   // };
-
-   // // handles when a payment is confirmed for paypal
-   // const
-   // // handles payment errors
 
    const initialOptions = {
       'client-id':
@@ -52,11 +24,16 @@ export default function Payment() {
             : '',
    };
 
-   // var src = `https://paypal.com/sdk/js?client-id=${initialOptions['client-id']}`;
-   console.log(balance);
    return (
       <div className="container">
-         {/* <script src={src}></script> */}
+         <div className="my-5">
+            <PageHeader
+               className="site-page-header"
+               onBack={() => history.goBack()}
+               title="Back to Payment"
+               // subTitle="View and update account"
+            />
+         </div>
 
          <PayPalButton
             options={{
@@ -65,10 +42,13 @@ export default function Payment() {
             }}
             amount={balance}
             onSuccess={(details, data) => {
-               console.log(details);
-
-               Axios.post('http://localhost:5000/payment/test', {
+               Axios.post('http://localhost:5000/payment/save_payment', {
                   details: details,
+                  member_id: member_id,
+                  chapter: chapter,
+                  amount: balance,
+               }).then((response) => {
+                  history.goBack();
                });
             }}
             onError={() =>

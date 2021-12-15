@@ -39,8 +39,8 @@ function Login() {
                   pathname: `/member/${member_id}`,
                });
             } else if (response.data.role === 'admin') {
-               localStorage.setItem('role', response.data.role);
                history.push('/admin');
+               localStorage.setItem('role', response.data.role);
             } else if (response.data.role === 'Secretary') {
                localStorage.setItem('auth', true);
                localStorage.setItem('member_id', member_id);
@@ -164,10 +164,11 @@ function Login() {
                         <style type="text/css">
                            {`
                   .btn-pink {
-                      background-color:white;
+                      background-color:#d91b5c;
                     color: #d91b5c;
                     border: 2px solid #d91b5c;
                         border-radius: 100px;
+                        color: white;
                   }
 
                   .bg-pink{
@@ -175,9 +176,9 @@ function Login() {
                   }
 
                   .btn-pink:hover {
-                     
-                    background-color: #d91b5c;
-                    color: white !important;
+                     background-color: rgb(217, 27, 92,0.8);
+                    
+                     color: white;
                   }
 
                   .btn-close{

@@ -190,26 +190,67 @@ payment.get(`/get_payment/:chapter`, (req, res) => {
    });
 });
 
-payment.post('/save', (req, res) => {
-   const name = req.body.name;
-   const amount = req.body.amount;
-   const chapter = req.body.chapter;
-   const order_id = req.body.order_id;
-
-   const save =
-      'INSERT INTO transaction (name, amount, chapter, order_id) VALUES (?,?,?,?)';
-   db.query(save, [name, amount, chapter, order_id], (err, result) => {
+payment.get(`/get_transaction/:chapter`, (req, res) => {
+   const chapter = req.params.chapter;
+   const sqlGet = 'SELECT * from transaction WHERE chapter = ?';
+   db.query(sqlGet, chapter, (err, result) => {
       if (err) {
          res.send({ message: 'error' });
       } else {
-         res.send({ message: 'success' });
          res.send(result);
       }
    });
 });
 
-payment.post('/test', (req, res) => {
-   console.log(req.body.details);
+payment.post('/save_payment', (req, res) => {
+   const order_id = req.body.details.id;
+   const name =
+      req.body.details.payer.name.given_name +
+      ' ' +
+      req.body.details.payer.name.surname;
+   const amount = req.body.amount;
+   const date = req.body.details.update_time;
+   const chapter = req.body.chapter;
+   const status = req.body.details.status;
+   const member_id = req.body.member_id;
+
+   const save =
+      'INSERT INTO transaction (order_id, name, amount, date, chapter, status, member_id) VALUES (?, ?, ?, ?, ?, ?, ?);';
+   db.query(
+      save,
+      [order_id, name, amount, date, chapter, status, member_id],
+      (err, result) => {
+         if (err) {
+            console.log(err);
+         } else {
+            const setBal =
+               'UPDATE members SET balance = balance - ? WHERE member_id = ?';
+            db.query(setBal, [amount, member_id], (err) => {
+               if (err) {
+                  res.send(err);
+               } else {
+                  const set =
+                     'UPDATE funds SET total_funds = total_funds + ? WHERE club_name = ?';
+                  db.query(set, [amount, chapter], (err) => {
+                     if (err) {
+                        res.send(err);
+                     } else {
+                        const sql =
+                           'UPDATE payments SET no_of_payers = no_of_payers + 1 WHERE chapter = ? AND status = "current"';
+                        db.query(sql, chapter, (err) => {
+                           if (err) {
+                              res.send(err);
+                           } else {
+                              console.log('success');
+                           }
+                        });
+                     }
+                  });
+               }
+            });
+         }
+      }
+   );
 });
 
 module.exports = payment;

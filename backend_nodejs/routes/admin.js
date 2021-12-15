@@ -107,7 +107,7 @@ admin.post('/add_account', (req, res) => {
 
 //Display all data from table
 admin.get('/list', (req, res) => {
-   const sqlSelect = 'SELECT * FROM members';
+   const sqlSelect = 'SELECT * FROM members WHERE member_id != 12345678';
    db.query(sqlSelect, (err, result) => {
       res.send(result);
    });

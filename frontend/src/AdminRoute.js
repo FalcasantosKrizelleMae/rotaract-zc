@@ -5,12 +5,12 @@ const AdminRoute = ({ component: Component, ...rest }) => {
    let history = useHistory();
    const auth = localStorage.getItem('auth') ?? false;
    const role = localStorage.getItem('role');
-   console.log(auth);
+
    return (
       <Route
          {...rest}
          render={(props) => {
-            if (role === 'admin') {
+            if (auth && role === 'admin') {
                return <Component {...props} />;
             } else if (auth && role !== 'admin') {
                history.goBack();

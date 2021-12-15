@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
-import { Button, Modal } from 'antd';
+import { Button } from 'antd';
 import moment from 'moment';
-
-import PaymentButton from './Payment';
+import { useHistory } from 'react-router-dom';
 
 function Transactions() {
    // const [amountPay, setAmount] = useState('');
+   let history = useHistory();
    const [list, setList] = useState([]);
    const [dataList, setDataList] = useState([]);
    const chapter = localStorage.getItem('chapter');
@@ -50,7 +50,7 @@ function Transactions() {
    return (
       <div>
          <Navbar />
-         <div className="main mx-5">
+         <div className="main">
             <div className="container shadow-sm rounded border p-4">
                {list.map((item) => {
                   return (
@@ -70,7 +70,7 @@ function Transactions() {
                         {item.amount} php
                         <br />
                         <br />
-                        Due Date:
+                        Due Date: <br />
                         {moment(item.due_date).format('llll')}
                         <br />
                         <br />
@@ -78,7 +78,14 @@ function Transactions() {
                   );
                })}
 
-               <PaymentButton />
+               <Button
+                  type="primary"
+                  onClick={() => {
+                     history.push('/pay-mem');
+                  }}
+               >
+                  Pay now
+               </Button>
             </div>
          </div>{' '}
       </div>
