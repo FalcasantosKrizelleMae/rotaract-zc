@@ -31,6 +31,7 @@ import Payments from './Users/FINANCE/pages/Payments';
 
 import Payment from './Users/MEMBER/pages/Payment';
 // import ProtectedRoute from './ProtectedRoute';
+import AdminRoute from './AdminRoute';
 import West from './Clubs/West/';
 import East from './Clubs/East/';
 import Metro from './Clubs/Metro/';
@@ -82,7 +83,8 @@ function App() {
             <Route path="/pres/events" component={PresEvents}></Route>
 
             {/* ADMIN */}
-            <Route path="/admin" component={Dashboard}></Route>
+            <AdminRoute path="/admin" component={Dashboard} />
+
             <Route path="/accounts" component={Accounts}></Route>
             <Route path="/profile" component={ProfileAdmin}></Route>
             <Route path="/admin-events" component={Events}></Route>

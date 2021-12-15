@@ -1,15 +1,20 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+const AdminRoute = ({ component: Component, ...rest }) => {
+   let history = useHistory();
    const auth = localStorage.getItem('auth') ?? false;
+   const role = localStorage.getItem('role');
    console.log(auth);
    return (
       <Route
          {...rest}
          render={(props) => {
-            if (auth) return <Component {...props} />;
-            if (!auth)
+            if (role === 'admin') {
+               return <Component {...props} />;
+            } else if (auth && role !== 'admin') {
+               history.goBack();
+            } else {
                return (
                   <Redirect
                      to={{
@@ -18,9 +23,10 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
                      }}
                   />
                );
+            }
          }}
       />
    );
 };
 
-export default ProtectedRoute;
+export default AdminRoute;

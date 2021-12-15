@@ -47,17 +47,6 @@ function Transactions() {
    //       });
    // };
 
-   const info = () => {
-      Modal.info({
-         title: 'Choose a payment Method',
-         content: (
-            <div className="container mx-auto">
-               <PaymentButton />
-            </div>
-         ),
-      });
-   };
-
    return (
       <div>
          <Navbar />
@@ -69,13 +58,6 @@ function Transactions() {
                         BALANCE: {''} <br />
                         <br />
                         <h3>{item.balance} php</h3>
-                        <Button
-                           onClick={info}
-                           type="primary"
-                           className="float-end"
-                        >
-                           Pay now
-                        </Button>
                      </>
                   );
                })}
@@ -95,6 +77,8 @@ function Transactions() {
                      </h6>
                   );
                })}
+
+               <PaymentButton />
             </div>
          </div>{' '}
       </div>
