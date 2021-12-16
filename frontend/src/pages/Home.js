@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.svg';
 import image1 from '../images/image1.svg';
@@ -16,16 +16,21 @@ import north from '../images/north.png';
 import Header from '../Header';
 import * as FaIcons from 'react-icons/fa';
 import * as BiIcons from 'react-icons/bi';
+import * as FiIcons from 'react-icons/fi';
 import Flickity from 'react-flickity-component';
 import '../css/footer.css';
 import Carousel from './Carousel';
 import '../css/card.css';
 
 function Home() {
+   const [click, setClick] = useState(false);
+   const handleClick = () => setClick(!click);
+   const closeMenu = () => setClick(false);
+
    const flickityOptions = {
       initialIndex: 2,
    };
-   const handleClick = () => {
+   const handleClick1 = () => {
       window.open('https://web.facebook.com/rotametzam');
    };
 
@@ -83,7 +88,7 @@ function Home() {
       <>
          <Header />
 
-         <div className=" px-5 py-4 mt-5 mb-5 mx-3">
+         <div className=" px-5 py-4 mt-5 mb-5 mx-5">
             <div className="row my-5">
                <div className="col-sm my-auto ">
                   <h4>WELCOME TO </h4>
@@ -94,10 +99,13 @@ function Home() {
                      communities, and in ourselves.{' '}
                   </p>
                   <div className="mt-5">
-                     <Link to="/about" className="btn btn-primary">
-                        {' '}
-                        Learn More{' '}
-                     </Link>
+                     <a
+                        href="#about"
+                        onClick={closeMenu}
+                        className="btn btn-primary"
+                     >
+                        Explore{' '}
+                     </a>
                      &nbsp; &nbsp;
                      <Link to="/about" className="btn bg-light px-3 text-pink">
                         {' '}
@@ -112,55 +120,75 @@ function Home() {
          </div>
 
          <div
-            className="container-fluid py-5
-"
+            className="container-fluid py-5"
             style={{
                backgroundImage: 'url(' + svg + ')',
                backgroundSize: 'cover',
             }}
          >
             <div className=" text-center mb-5">
-               <p className="text-secondary">ABOUT US</p>
-               <h3 className="text-pink text-uppercase ">
-                  {' '}
-                  Zamboanga City Chapters{' '}
-               </h3>
-            </div>
-
-            <div className="row">
-               <div className="col-lg p-5 mx-3 text-center text-white">
-                  <img src={image1} width="80%" height="70%" alt="serve qr" />
-                  <h4 className="my-4 fw-bolder text-white ">ORGRANIZATION</h4>
-                  <p>
-                     Rotary International is a non-profit organization whose
-                     main mission is to gather together corporate and
-                     professional leaders to perform humanitarian service and
-                     promote goodwill and peace around the world.{' '}
-                  </p>
-               </div>
-
-               <div className="col-lg p-5  mx-3 text-center text-white">
-                  <img src={image2} width="80%" height="70%" alt="serve qr" />
-                  <h4 className="my-4 fw-bolder text-white ">GOAL </h4>
-                  <p>
+               <div className="about" id="about">
+                  <p className="text-secondary">ABOUT US</p>
+                  <h3 className="text-pink text-uppercase ">
                      {' '}
-                     Provide humanitarian service, encourage high ethical
-                     standards in all vocations and help build goodwill and
-                     peace in the world.{' '}
-                  </p>
-               </div>
+                     Zamboanga City Chapters{' '}
+                  </h3>
 
-               <div className="col-lg p-5  mx-3 text-center text-white">
-                  <img src={image3} width="80%" height="70%" alt="serve qr" />
-                  <h4 className="my-4 fw-bolder text-white ">
-                     ZAMBOANGA CITY CLUBS
-                  </h4>
-                  <p className="">
-                     The Rotaract Clubs have a total of 8 clubs in Zamboanga
-                     City Chapter. Each club is composed of a President,
-                     treasurer, secretary followed by its members, and the total
-                     number of members varies per club.
-                  </p>
+                  <div className="row">
+                     <div className="col-lg p-5 mx-3 text-center text-white">
+                        <img
+                           src={image1}
+                           width="80%"
+                           height="70%"
+                           alt="serve qr"
+                        />
+                        <h4 className="my-4 fw-bolder text-white ">
+                           ORGRANIZATION
+                        </h4>
+                        <p>
+                           Rotary International is a non-profit organization
+                           whose main mission is to gather together corporate
+                           and professional leaders to perform humanitarian
+                           service and promote goodwill and peace around the
+                           world.{' '}
+                        </p>
+                     </div>
+
+                     <div className="col-lg p-5  mx-3 text-center text-white">
+                        <img
+                           src={image2}
+                           width="80%"
+                           height="70%"
+                           alt="serve qr"
+                        />
+                        <h4 className="my-4 fw-bolder text-white ">GOAL </h4>
+                        <p>
+                           {' '}
+                           Provide humanitarian service, encourage high ethical
+                           standards in all vocations and help build goodwill
+                           and peace in the world.{' '}
+                        </p>
+                     </div>
+
+                     <div className="col-lg p-5  mx-3 text-center text-white">
+                        <img
+                           src={image3}
+                           width="80%"
+                           height="70%"
+                           alt="serve qr"
+                        />
+                        <h4 className="my-4 fw-bolder text-white ">
+                           ZAMBOANGA CITY CLUBS
+                        </h4>
+                        <p className="">
+                           The Rotaract Clubs have a total of 8 clubs in
+                           Zamboanga City Chapter. Each club is composed of a
+                           President, treasurer, secretary followed by its
+                           members, and the total number of members varies per
+                           club.
+                        </p>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
@@ -194,8 +222,9 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           The Rotaract Club of Zamboanga City West of RI
+                           District 3850 is composed of Rotaractors from
+                           Zamboanga City.
                         </p>
                         <Link
                            to="/west"
@@ -217,8 +246,10 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           The Rotaract Club of Zamboanga City West of RI
+                           District 3850 is composed of Rotaractors from
+                           Zamboanga City, Western Mindanao ages 18-30 years
+                           old.
                         </p>
                         <Link
                            to="/east"
@@ -240,8 +271,12 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           A Youth Community Service Club based on Zamboanga
+                           City.
+                           <br />
+                           <br />
+                           <br />
+                           <br />
                         </p>
                         <Link
                            to="/north"
@@ -263,8 +298,9 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           The Rotaract Club of Metro Zamboanga is a community
+                           based nonprofit organization sponsored by the Rotary
+                           Club of Metro Zamboanga.
                         </p>
                         <Link
                            to="/metro"
@@ -286,8 +322,11 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           An Organization aims to help the community through
+                           perseverance and selfless service.
+                           <br />
+                           <br />
+                           <br />
                         </p>
                         <Link to="/uz" className="btn bg-light px-3 text-pink">
                            {' '}
@@ -306,8 +345,11 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           An Organization aims to help the community through
+                           perseverance and selfless service.
+                           <br />
+                           <br />
+                           <br />
                         </p>
                         <Link
                            to="/tolosa"
@@ -329,8 +371,11 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           It was on September 16, 2011 when the Rotaract Club
+                           of Southern City Colleges was formed. As one of the
+                           active school-based organizations.
+                           <br />
+                           <br />
                         </p>
                         <Link
                            to="/southern"
@@ -352,8 +397,12 @@ function Home() {
                            alt="serve qr"
                         />
                         <p class="card-text my-4">
-                           Some quick example text to build on the card title
-                           and make up the bulk of the card's content.
+                           Est. Sept 30, 2012, Chartered Jan. 9, 2014. Our
+                           legacy of Leadership and Service to Humanity
+                           continues.
+                           <br />
+                           <br />
+                           <br />
                         </p>
                         <Link
                            to="/wmsu"
@@ -367,80 +416,62 @@ function Home() {
                </Flickity>
             </div>
          </div>
-
-         <div style={{ textAlign: 'center' }} className="mb-5 mt-5 pt-5">
-            <Carousel
-               data={data}
-               time={2000}
-               width="100%"
-               height="790px"
-               captionStyle={captionStyle}
-               slideNumber={true}
-               slideNumberStyle={slideNumberStyle}
-               captionPosition="bottom"
-               automatic={true}
-               dots={true}
-               pauseIconColor="white"
-               pauseIconSize="40px"
-               slideBackgroundColor="darkgrey"
-               slideImageFit="cover"
-               thumbnails={true}
-               thumbnailWidth="100px"
-               showNavBtn={true}
-               style={{
-                  textAlign: 'center',
-                  maxWidth: '100%',
-                  margin: '100px auto',
-               }}
-            />
+         <div className="gallery" id="gallery">
+            <div style={{ textAlign: 'center' }} className="mb-5 mt-5 pt-5">
+               <Carousel
+                  data={data}
+                  time={2000}
+                  width="100%"
+                  height="790px"
+                  captionStyle={captionStyle}
+                  slideNumber={true}
+                  slideNumberStyle={slideNumberStyle}
+                  captionPosition="bottom"
+                  automatic={true}
+                  dots={true}
+                  pauseIconColor="white"
+                  pauseIconSize="40px"
+                  slideBackgroundColor="darkgrey"
+                  slideImageFit="cover"
+                  thumbnails={true}
+                  thumbnailWidth="100px"
+                  showNavBtn={true}
+                  style={{
+                     textAlign: 'center',
+                     maxWidth: '100%',
+                     margin: '100px auto',
+                  }}
+               />
+            </div>
          </div>
-
          <div class="footer pt-5 mt-5 bg-light">
             <footer>
-               <div class="container pb-5">
-                  <div class="row">
-                     <div class="col-sm-6 col-md-3 mt-5">
-                        <h4>Info</h4>
-                        <ul>
-                           <li>Info 1</li>
-                           <li>Info 1</li>
-                           <li>Info 1</li>
-                        </ul>
-                     </div>
-                     <div class="col-sm-6 col-md-3 mt-5">
-                        <h4>Contact Us</h4>
-                        <ul>
-                           <li>Email</li>
-                           <li>Phone</li>
-                           <li>Address</li>
-                        </ul>
-                     </div>
-                     <div class="col-md-6 mt-5">
-                        <h4>Rotaract Zamboanga City Chapter</h4>
-                        <p>
-                           Praesent sed lobortis mi. Suspendisse vel placerat
-                           ligula. Vivamus ac sem lacus. Ut vehicula rhoncus
-                           elementum. Etiam quis tristique lectus. Aliquam in
-                           arcu eget velit pulvinar dictum vel in justo.
-                        </p>
-                     </div>
-                     <div class="mt-5 py-5 text-center">
-                        <FaIcons.FaFacebook
-                           className="me-5"
-                           onClick={handleClick}
-                           size="6vh"
-                        />
-                        <FaIcons.FaTwitter
-                           className="me-5"
-                           onClick={handleClick}
-                           size="6vh"
-                        />
-                        <FaIcons.FaInstagram
-                           className=""
-                           onClick={handleClick}
-                           size="6vh"
-                        />
-                     </div>
+               <div class="row">
+                  <div class="col-sm-4 col-md-2 mt-2"></div>
+                  <div class="mt-2 py-2 col-sm">
+                     <h4>Rotaract Zamboanga City Chapter</h4>
+                     <p>
+                        Rotaract clubs bring together people ages 18 and older,
+                        Zamboanga City has a total of 8 Rotaract Clubs, which
+                        aims to develop leadership and professional skills, and
+                        have fun through service.
+                     </p>
+                  </div>
+
+                  <div class="mt-2 py-2 col-sm">
+                     <h5>Contact and Follow us: </h5>
+                     <FaIcons.FaFacebook
+                        className="me-1"
+                        onClick={handleClick1}
+                        size="5vh"
+                     />
+                     <FaIcons.FaInstagram
+                        className="me-1"
+                        onClick={handleClick1}
+                        size="5vh"
+                     />
+                     <FiIcons.FiPhoneCall className="me-1" size="5vh" />
+                     +639673654339
                   </div>
                </div>
 

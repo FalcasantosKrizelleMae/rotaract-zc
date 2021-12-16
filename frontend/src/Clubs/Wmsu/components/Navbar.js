@@ -1,86 +1,78 @@
-import React, { Component } from 'react';
+import React, {  useState } from 'react';
 import 'antd/dist/antd.css';
 import { Menu } from 'antd';
-import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
-import { Button } from 'react-bootstrap';
+
+import logo from './../../../images/logo.png';
+
+
 
 const { SubMenu } = Menu;
-const member_id = localStorage.getItem('member_id');
-const chapter = localStorage.getItem('chapter');
 
-class Header extends Component {
-   state = {
-      current: 'mail',
-   };
 
-   handleClick = (e) => {
-      console.log('click ', e);
-      this.setState({ current: e.key });
-   };
+const Header = () => {
+  
+  
+  
+   const [click, setClick] = useState(false)
+   const handleClick = () => setClick(!click)
 
-   logout = () => {
-      localStorage.clear();
-      window.location.href = '/login';
-   };
-
-   render() {
-      const { current } = this.state;
+   const closeMenu = () => setClick(false)
+   
       return (
-         <div className=" bg-white pb-0 fixed-top">
-            <Menu
-               onClick={this.handleClick}
-               selectedKeys={[current]}
-               mode="horizontal"
-               className=" mt-3 px-4"
+         
+         <>
+            <div
+               className=" bg-white pb-0 fixed-top
+         "
             >
-               <Menu.Item className="pb-3 me-auto " disabled>
-                  <img
-                     src={logo}
-                     height="40vh"
-                     className="img-responsive"
-                     alt="Rotaract logo"
-                  />
-               </Menu.Item>
+               
+               <Menu
 
-               <Menu.Item
+                  mode="horizontal"
+                  className=" mt-3
+                px-4"
+               >
+                  <Menu.Item className="pb-3 me-auto ">
+                     <Link to="/">
+                        <img
+                           src={logo}
+                           height={45}
+                           className="img-responsive"
+                           alt="Rotaract logo"
+                        />
+                     </Link>
+                  </Menu.Item>
+
+                  <Menu.Item
                      key="home"
                      icon={<AiIcons.AiFillHome />}
                      className="item"
                   >
-                   <Link to="/" >
-                     Home
-                  </Link>
+                   <a href='/' onClick={closeMenu}>Home</a>
                   </Menu.Item>
 
-               <Menu.Item
-                  key="events"
-                  icon={<AiIcons.AiOutlineCalendar />}
-                  className="item"
-               >
-                 <Link to=" " className="text-decoration-none">
-                     Events
-                  </Link>
-                  
-               </Menu.Item>
+                  <Menu.Item
+                     key="abt"
+                     icon={<AiIcons.AiFillInfoCircle />}
+                     className="item"
+                  >
+                        <a href='#about' onClick={closeMenu}>About</a>
+                  </Menu.Item>
+               
+                  <Menu.Item className=" ms-auto me-0 pe-0"> </Menu.Item>
 
-               <Menu.Item
-                  key="alipay"
-                  icon={<AiIcons.AiOutlineAccountBook />}
-                  className="item"
-               >
-                  <Link to=" " className="text-decoration-none">
-                     About 
-                  </Link>
-               </Menu.Item>
-
-               <Menu.Item className=" ms-auto me-0 pe-0"> </Menu.Item>
-              
-            </Menu>
-         </div>
+                  <Menu.Item key="logout" icon={<AiIcons.AiOutlineLogin />}>
+                     <Link to="/login" className="text-decoration-none">
+                        Login
+                     </Link>
+                  </Menu.Item>
+               </Menu>
+            </div>
+         </> 
       );
    }
-}
+
 
 export default Header;

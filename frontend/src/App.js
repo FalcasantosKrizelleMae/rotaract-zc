@@ -43,6 +43,7 @@ import Wmsu from './Clubs/Wmsu/';
 import Funds from './Users/ADMIN/pages/Funds';
 import Manual from './Users/SECRETARY/pages/Manual';
 import AttendanceList from './Users/SECRETARY/pages/AttendanceList';
+import Donate from './Clubs/West/pages/Donate';
 
 function App() {
    return (
@@ -67,6 +68,8 @@ function App() {
             <Route path="/finance" component={() => <Finance />} />
 
             <Route path="/president" component={() => <President />} />
+
+            <Route path="/donate" component={() => <Donate />} />
 
             <Route path="/West" component={() => <West />} />
             <Route path="/East" component={() => <East />} />

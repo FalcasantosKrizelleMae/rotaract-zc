@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import dateFormat from 'dateformat';
 import Navbar from '../components/Navbar';
 import { Dropdown, Menu } from 'antd';
-import { BiCaptions } from 'react-icons/bi';
 
 const SectEvent = () => {
    const chapter = localStorage.getItem('chapter');
