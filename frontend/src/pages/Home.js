@@ -83,7 +83,7 @@ function Home() {
       <>
          <Header />
 
-         <div className=" px-5 py-4 mt-5 mb-5 mx-5">
+         <div className=" px-5 py-4 mt-5 mb-5 mx-3">
             <div className="row my-5">
                <div className="col-sm my-auto ">
                   <h4>WELCOME TO </h4>

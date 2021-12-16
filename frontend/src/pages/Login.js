@@ -12,18 +12,18 @@ import { Input } from 'reactstrap';
 
 function Login() {
    let history = useHistory();
-   const [member_id, setMember_id] = useState('');
-   const [password, setPassword] = useState('');
-   const [data, setData] = React.useState('');
+   const [member_id, setMember_id] = useState();
+   const [password, setPassword] = useState();
+   const [status, setStatus] = useState('');
 
    // const [role, setRole] = useState("");
-   const login = (member_id) => {
+   const login = () => {
       Axios.post('http://localhost:5000/auth/api/login', {
          member_id: member_id,
          password: password,
       }).then((response) => {
          if (response.data.message) {
-            setData(response.data.message);
+            setStatus(response.data.message);
          } else {
             localStorage.setItem('auth', true);
 
@@ -105,13 +105,19 @@ function Login() {
                            className: 'global-class-name',
                         }}
                      >
-                        <div class="alert small alert-danger alert-dismissible fade show p-2 px-3">
-                           {data}
-                           <button
-                              class="btn-close pt-2 px-2 mx-1 small text-danger"
-                              data-bs-dismiss="alert"
-                           ></button>
-                        </div>
+                        {status === '' ? (
+                           ' '
+                        ) : (
+                           <>
+                              <div class="alert small alert-danger alert-dismissible fade show p-2 px-3">
+                                 {status}
+                                 <button
+                                    class="btn-close pt-2 px-2 mx-1 small text-danger"
+                                    data-bs-dismiss="alert"
+                                 ></button>
+                              </div>
+                           </>
+                        )}
 
                         <Form.Group className="mb-4 mt-3">
                            <Form.Label className="text-secondary">
@@ -199,7 +205,7 @@ function Login() {
                            <Button
                               variant="pink"
                               className="w-75 py-2 btn-login"
-                              onClick={login(member_id)}
+                              onClick={login}
                            >
                               LOGIN
                            </Button>

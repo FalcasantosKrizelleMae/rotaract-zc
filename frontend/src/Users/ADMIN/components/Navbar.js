@@ -88,7 +88,7 @@ class Header extends Component {
                   icon={<AiIcons.AiOutlineSetting />}
                   className="item"
                >
-                  <Link to="/profile" className="text-decoration-none">
+                  <Link to="/admin-profile" className="text-decoration-none">
                      Settings
                   </Link>
                </Menu.Item>

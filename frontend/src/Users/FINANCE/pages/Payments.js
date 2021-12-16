@@ -36,10 +36,10 @@ const Payments = () => {
       setIsModalVisible(true);
    };
 
+   //MODAL SETTINGS
    const handleCancel = () => {
       setIsModalVisible(false);
    };
-   //MODAL SETTINGS
 
    const due_date = moment().add(1, 'month');
    const due = due_date.toISOString();

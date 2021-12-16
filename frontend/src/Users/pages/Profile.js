@@ -61,7 +61,7 @@ function Profile() {
       account: (
          <div className="container mt-3 ps-4">
             <h4>CHANGE PASSWORD</h4>
-            <div className="mt-5 col-sm-10 col-md-10 col-lg-6">
+            <div className="mt-5 col-sm-10 col-md-10 col-lg-7">
                <Form action="">
                   <InputGroup className="mb-3">
                      <input
@@ -93,10 +93,15 @@ function Profile() {
                         </span>
                      </InputGroup.Text>
                   </InputGroup>
-                  <button className="mt-3 btn btn-outline-danger mr-3">
+                  <button className="my-5 btn btn-outline-danger mr-3">
                      Cancel
                   </button>{' '}
-                  <Button type="submit" variant="primary" onClick={change_pass}>
+                  <Button
+                     type="submit"
+                     className="my-5 "
+                     variant="primary"
+                     onClick={change_pass}
+                  >
                      Change password
                   </Button>
                </Form>
@@ -114,7 +119,7 @@ function Profile() {
 
    return (
       <div>
-         <div className="container my-2 ">
+         <div className="container my-5 ">
             <PageHeader
                className="site-page-header"
                onBack={() => history.push(`/member/${id}`)}
@@ -123,7 +128,7 @@ function Profile() {
             />
             ,
             <div className="row">
-               <div className="col mt-2">
+               <div className="col-lg-4 mt-3">
                   {' '}
                   <Card
                      className="rounded shadow-sm"
@@ -150,8 +155,21 @@ function Profile() {
                      </div>
                   </Card>
                </div>
-
-               <div className="col-lg-8  d-flex justify-content-center mt-2">
+               <div className="col px-4 py-0 mt-0">
+                  <Card
+                     className="rounded shadow-sm"
+                     style={{ width: '100%', marginTop: 20 }}
+                     bordered={false}
+                     tabList={tabListNoTitle}
+                     activeTabKey={activeTabKey}
+                     onTabChange={(key) => {
+                        onTabChange(key);
+                     }}
+                  >
+                     {contentListNoTitle[activeTabKey]}
+                  </Card>
+               </div>
+               {/* <div className="col-lg-8  d-flex justify-content-center mt-2">
                   <Card style={{ width: '100%' }} className="rounded shadow-sm">
                      <Card.Grid hoverable={false} style={{ width: '100%' }}>
                         <br />
@@ -177,21 +195,7 @@ function Profile() {
                         <br />
                      </Card.Grid>
                   </Card>
-               </div>
-            </div>
-            <div className="col px-0 pb-5 pt-2">
-               <Card
-                  className="rounded shadow-sm"
-                  style={{ width: '100%', marginTop: 20 }}
-                  bordered={false}
-                  tabList={tabListNoTitle}
-                  activeTabKey={activeTabKey}
-                  onTabChange={(key) => {
-                     onTabChange(key);
-                  }}
-               >
-                  {contentListNoTitle[activeTabKey]}
-               </Card>
+               </div> */}
             </div>
          </div>
       </div>

@@ -26,7 +26,7 @@ import PresAccounts from './Users/PRESIDENT/pages/Accounts';
 import PresDashboard from './Users/PRESIDENT/pages/Dashboard';
 import Transactions from './Users/MEMBER/pages/Transactions';
 import MemDashboard from './Users/MEMBER/';
-import MemProfile from './Users/MEMBER/pages/Profile';
+import MemProfile from './Users/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
 
 import Payment from './Users/MEMBER/pages/Payment';
@@ -86,7 +86,7 @@ function App() {
             <AdminRoute path="/admin" component={Dashboard} />
 
             <Route path="/accounts" component={Accounts}></Route>
-            <Route path="/profile" component={ProfileAdmin}></Route>
+            <Route path="/admin-profile" component={ProfileAdmin}></Route>
             <Route path="/admin-events" component={Events}></Route>
             <Route path="/admin-funds" component={Funds}></Route>
 
@@ -107,7 +107,7 @@ function App() {
             {/* MEMBER */}
             <Route path="/transaction" component={Transactions}></Route>
             <Route path="/member" component={MemDashboard}></Route>
-            <Route path="/member-profile" component={MemProfile}></Route>
+            <Route path="/profile" component={MemProfile}></Route>
 
             {/* FINANCE */}
             <Route path="/payments" component={Payments}></Route>

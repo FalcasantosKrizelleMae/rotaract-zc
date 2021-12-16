@@ -43,7 +43,7 @@ auth.post('/api/login', (req, res) => {
    const sqlLogin = 'SELECT * from users WHERE member_id = ?;';
    db.query(sqlLogin, member_id, (err, result) => {
       if (err) {
-         console.log({ err: err });
+         console.log(err);
       }
 
       if (result.length > 0) {
@@ -52,7 +52,7 @@ auth.post('/api/login', (req, res) => {
                const sqlname = 'SELECT * from members WHERE member_id = ?;';
                db.query(sqlname, member_id, (err, response) => {
                   if (err) {
-                     console.log({ err: err });
+                     console.log(err);
                   } else {
                      res.send({
                         role: result[0].role,

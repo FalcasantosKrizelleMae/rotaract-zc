@@ -24,7 +24,7 @@ function MemberPage() {
                return new Promise((resolve, reject) => {
                   setTimeout(Math.random() > 0.6 ? resolve : reject, 1000);
                   history.push({
-                     pathname: `/member-profile/${id}`,
+                     pathname: `/profile/${id}`,
                      state: {
                         status: status,
                         name: name,
