@@ -29,7 +29,7 @@ import MemDashboard from './Users/MEMBER/';
 import MemProfile from './Users/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
 
-import Payment from './Users/MEMBER/pages/Payment';
+import Payment from './Users/pages/Payment';
 // import ProtectedRoute from './ProtectedRoute';
 import AdminRoute from './AdminRoute';
 import West from './Clubs/West/';

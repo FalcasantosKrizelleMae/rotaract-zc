@@ -12,53 +12,80 @@ const Donate = () => {
    let history = useHistory();
 
    return (
-      <div>
-         <div className="container">
-            <div className="my-5 ">
+      <>
+         <div className="container col-lg-6">
+            <div className="my-4">
                <PageHeader
                   className="site-page-header"
                   onBack={() => history.goBack()}
-                  title="Back to Payment"
+                  title="Back to Previous page"
                   // subTitle="View and update account"
                />
             </div>
-            <h5>Donate Amount</h5>
-            <input
-               type="text"
-               onChange={(e) => setAmount(e.target.value)}
-               className="form-control col-sm-3"
-            />
-            <div className="mt-5">
-               Donate with: <br />
-               <br />
-               <PayPalButton
-                  options={{
-                     clientId:
-                        'AcltDSmw1GGXyyHYnoH95j59iCfCH9isXlKAZRXwkYw83wFL2VMkQ9Pze-xWcnpH9Wu8r0__ME8VNbAX',
-                     currency: 'PHP',
-                  }}
-                  amount={amount}
-                  onSuccess={(details, data) => {
-                     Axios.post('http://localhost:5000/payment/save_payment', {
-                        details: details,
-                        chapter: chapter,
-                        amount: amount,
-                     }).then((response) => {
-                        history.goBack();
-                     });
-                  }}
-                  onError={() =>
-                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Error',
-                        icon: 'error',
-                        confirmButtonText: 'Okay',
-                     })
-                  }
-               />
+            <div className="container shadow-sm rounded p-5">
+               <h3>DONATION PAGE</h3>
+               <h6 className="mb-5">{chapter}</h6>
+               <p>Enter the amount you want to donate: </p>
+               <input
+                  type="text"
+                  name="amount"
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="form-control col-lg-6 mb-2
+                  "
+               />{' '}
+               <div className="mt-5">
+                  <br />
+                  {amount !== '' ? (
+                     <>
+                        <h6>
+                           Donate with: <br />{' '}
+                        </h6>
+                        <PayPalButton
+                           style={{
+                              color: 'gold',
+                              shape: 'pill',
+                           }}
+                           options={{
+                              clientId:
+                                 'AcltDSmw1GGXyyHYnoH95j59iCfCH9isXlKAZRXwkYw83wFL2VMkQ9Pze-xWcnpH9Wu8r0__ME8VNbAX',
+                              currency: 'PHP',
+                           }}
+                           amount={amount}
+                           onSuccess={(details, data) => {
+                              Axios.post(
+                                 'http://localhost:5000/payment/save_payment',
+                                 {
+                                    details: details,
+                                    chapter: chapter,
+                                    amount: amount,
+                                 }
+                              ).then((response) => {
+                                 history.goBack();
+                              });
+                           }}
+                           onError={() => {
+                              Swal.fire({
+                                 title: 'Error!',
+                                 text: 'Error',
+                                 icon: 'error',
+                                 confirmButtonText: 'Okay',
+                              });
+                           }}
+                        />
+                        <button
+                           onClick={() => history.goBack()}
+                           className="text-danger col-sm btn-white btn"
+                        >
+                           Cancel
+                        </button>
+                     </>
+                  ) : (
+                     ''
+                  )}
+               </div>
             </div>
          </div>
-      </div>
+      </>
    );
 };
 

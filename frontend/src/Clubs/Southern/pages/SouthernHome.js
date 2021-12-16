@@ -5,7 +5,6 @@ import * as BiIcons from 'react-icons/bi';
 
 import image6 from './../../../images/image6.svg';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 import Carousel from './Carousel';
 
