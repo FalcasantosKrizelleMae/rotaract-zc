@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Container } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
@@ -41,7 +41,7 @@ const SectEvent = () => {
 
    //CLEAR FORM
    function clear(e) {
-      document.getElementById('add-event-form').reset();
+      // document.getElementById('add-event-form').reset();
    }
 
    // const [newData, setNewData] = useState({
@@ -174,10 +174,39 @@ const SectEvent = () => {
       });
    };
 
+   const add_report = (event_id) => {
+      Axios.post('http://localhost:5000/reports/add_report', {
+         event_id: event_id,
+      }).then((response) => {
+         if (response.data.message === 'success') {
+            Swal.fire({
+               title: 'Event added to reports',
+               icon: 'success',
+            });
+            clear();
+            handleClose();
+         } else if (response.data.message === 'exist') {
+            Swal.fire({
+               title: 'Info!',
+               text: 'Report with this event already exist',
+               icon: 'warning',
+               confirmButtonText: 'Okay',
+            });
+         } else {
+            Swal.fire({
+               title: 'Error!',
+               text: 'Unsuccesful',
+               icon: 'error',
+               confirmButtonText: 'Okay',
+            });
+         }
+      });
+   };
+
    return (
       <div>
          <Navbar />
-         <div className=" main mx-5">
+         <div className=" container main">
             <div className="shadow p-5 rounded">
                <div className="row">
                   <div className="col-sm">
@@ -197,12 +226,15 @@ const SectEvent = () => {
                </div>
                <Table borderless hover>
                   <thead className="text-center text-white bg-pink text-uppercase">
-                     <td>EVENT ID</td>
-                     <td>EVENT TYPE</td>
-                     <td>Event Name</td>
-                     <td>Event Date/Time</td>
-                     <td>Status</td>
-                     <td>Action</td>
+                     <tr>
+                        {' '}
+                        <td>EVENT ID</td>
+                        <td>EVENT TYPE</td>
+                        <td>Event Name</td>
+                        <td>Event Date/Time</td>
+                        <td>Status</td>
+                        <td>Action</td>
+                     </tr>
                   </thead>
                   <tbody>
                      {event.map((row) => {
@@ -273,6 +305,16 @@ const SectEvent = () => {
                                           <AiIcons.AiFillEye />
                                        </Button>
 
+                                       <Button
+                                          variant="white"
+                                          onClick={() => {
+                                             add_report(row.event_id);
+                                          }}
+                                          className="text-success me-3"
+                                       >
+                                          Done
+                                       </Button>
+
                                        <Dropdown
                                           trigger={['click']}
                                           overlay={
@@ -282,7 +324,7 @@ const SectEvent = () => {
                                                       href
                                                       onClick={() =>
                                                          history.push({
-                                                            pathname: `/sect/attendance/${row.event_id}`,
+                                                            pathname: `/sect/scan/${row.event_id}`,
                                                             state: {
                                                                event_id:
                                                                   row.event_id,
@@ -322,7 +364,7 @@ const SectEvent = () => {
                                              href
                                              onClick={(e) => e.preventDefault()}
                                           >
-                                             CHECK {''}
+                                             Check Attendance
                                              <AiIcons.AiFillCaretDown />
                                           </a>
                                        </Dropdown>
@@ -607,9 +649,9 @@ const SectEvent = () => {
                   >
                      Close
                   </Button>
-                  <Button variant="outline-danger" onClick={clear}>
+                  {/* <Button variant="outline-danger" onClick={clear}>
                      Clear
-                  </Button>
+                  </Button> */}
 
                   <input
                      type="submit"

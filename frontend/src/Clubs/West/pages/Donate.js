@@ -53,14 +53,18 @@ const Donate = () => {
                            amount={amount}
                            onSuccess={(details, data) => {
                               Axios.post(
-                                 'http://localhost:5000/payment/save_payment',
+                                 'http://localhost:5000/donations/save_donation',
                                  {
                                     details: details,
                                     chapter: chapter,
                                     amount: amount,
                                  }
                               ).then((response) => {
-                                 history.goBack();
+                                 if (response) {
+                                    alert(response.data[0].status);
+                                 } else {
+                                    alert('error');
+                                 }
                               });
                            }}
                            onError={() => {

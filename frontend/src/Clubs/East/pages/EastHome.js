@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import './../css/index.css';
 import * as FaIcons from 'react-icons/fa';
 import * as SiIcons from 'react-icons/si';
@@ -8,12 +8,10 @@ import image8 from './../../../images/image8.svg';
 import Carousel from './Carousel';
 
 function Home() {
+   const [click, setClick] = useState(false);
+   const handleClick = () => setClick(!click);
+   const closeMenu = () => setClick(false);
 
-   const [click, setClick] = useState(false)
-   const handleClick = () => setClick(!click)
-   const closeMenu = () => setClick(false)
-
-  
    const handleClick2 = () => {
       window.open('https://web.facebook.com/RACEastZambo');
    };
@@ -22,17 +20,12 @@ function Home() {
    };
 
    const data = [
-      
       {
          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
-         
       },
-         {
+      {
          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
-         
       },
-     
-     
    ];
 
    const captionStyle = {
@@ -44,44 +37,58 @@ function Home() {
       fontWeight: 'bold',
    };
 
-  
+   const chapter = 'Zamboanga City East';
    return (
       <>
-          <div className=" px-5 py-4 mt-5 mb-5 mx-5">
+         <div className=" px-5 py-4 mt-5 mb-5 mx-5">
             <div className="row my-5">
                <div className="col-sm my-auto ">
                   <h4>WELCOME TO </h4>
-                  <h1 className="text-pink"> ROTARACT CLUB OF ZAMBOANGA CITY EAST </h1>
+                  <h1 className="text-pink">
+                     {' '}
+                     ROTARACT CLUB OF ZAMBOANGA CITY EAST{' '}
+                  </h1>
                   <p className="row col-sm-8 mt-5">
-                  The Rotaract Club of Zamboanga City West of RI District 3850 is composed of Rotaractors from Zamboanga City, Western Mindanao ages 18-30 years old.
-{' '}
+                     The Rotaract Club of Zamboanga City West of RI District
+                     3850 is composed of Rotaractors from Zamboanga City,
+                     Western Mindanao ages 18-30 years old.{' '}
                   </p>
                   <div className="mt-5">
-                     <Link to="/about" className="btn btn-primary">
+                     <Link
+                        to={{
+                           pathname: `/donate/${chapter}`,
+                           state: {
+                              chapter: chapter,
+                           },
+                        }}
+                        className="btn btn-primary me-3"
+                     >
                         {' '}
-                        Donate{' '}
+                        Donate
                      </Link>
                      &nbsp; &nbsp;
+                     <a
+                        href="#about"
+                        onClick={closeMenu}
+                        className="btn bg-light px-3 text-pink"
+                     >
+                        Explore{' '}
+                     </a>
+                     <BiIcons.BiRightArrowAlt />{' '}
+                  </div>
+               </div>
 
-                        <a href='#about' onClick={closeMenu}className="btn bg-light px-3 text-pink">Explore </a>
-                        <BiIcons.BiRightArrowAlt />
-                        {' '}
-                  </div>
-                  </div>
-           
                <div className="col-sm mt-5">
-                  <img src={image8} width="100%" height="100%" alt="serve qr" />
+                  <img src={image8} width="90%" height="90%" alt="serve qr" />
                </div>
             </div>
-        
          </div>
 
          <div className="container">
-         <div className='about' id='about'>
-       
+            <div className="about" id="about">
                <div class="row">
-                   <div className="col  mx-2 mb-3 ">
-                     <div style={{ textAlign: 'center' }}  >
+                  <div className="col  mx-2 mb-3 ">
+                     <div style={{ textAlign: 'center' }}>
                         <Carousel
                            data={data}
                            time={2000}
@@ -104,33 +111,34 @@ function Home() {
                               textAlign: 'center',
                               maxWidth: '100%',
                            }}
-                        />  
+                        />
                      </div>
-                   </div>
-                
-                        <div className="col  p-4 mx-2 mb-3" >
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <h4>About</h4>
-                  <h2 className="text-pink">  Rotaract Club of Zamboanga City East</h2>
-                           <p className="row col-sm-10 mt-5">
-                     Together, we see a world where people unite and take action
-                     to create lasting change – across the globe, in our
-                     communities, and in ourselves.{' '}
-                  </p>
-                        </div>
-                        </div>                      
-             </div>
+                  </div>
+
+                  <div className="col  p-4 mx-2 mb-3">
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <h4>About</h4>
+                     <h2 className="text-pink">
+                        {' '}
+                        Rotaract Club of Zamboanga City East
+                     </h2>
+                     <p className="row col-sm-10 mt-5">
+                        Together, we see a world where people unite and take
+                        action to create lasting change – across the globe, in
+                        our communities, and in ourselves.{' '}
+                     </p>
+                  </div>
+               </div>
+            </div>
          </div>
-            
-          
-            
+
          <div class="footer-dark ">
             <footer>
                <div class="container">

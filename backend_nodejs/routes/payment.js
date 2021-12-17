@@ -230,8 +230,8 @@ payment.post('/save_payment', (req, res) => {
                   res.send(err);
                } else {
                   const set =
-                     'UPDATE funds SET total_funds = total_funds + ? WHERE club_name = ?';
-                  db.query(set, [amount, chapter], (err) => {
+                     'UPDATE funds SET total_funds = total_funds + ?, collections = collections + ?  WHERE club_name = ?';
+                  db.query(set, [amount, amount, chapter], (err) => {
                      if (err) {
                         res.send(err);
                      } else {

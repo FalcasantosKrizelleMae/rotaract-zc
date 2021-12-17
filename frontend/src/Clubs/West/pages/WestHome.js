@@ -5,7 +5,7 @@ import * as SiIcons from 'react-icons/si';
 import * as BiIcons from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import image13 from './../../../images/image13.svg';
-import { PayPalButton } from 'react-paypal-button-v2';
+
 import Carousel from './Carousel';
 
 function Home() {
@@ -41,6 +41,8 @@ function Home() {
       fontWeight: 'bold',
    };
 
+   const chapter = 'Zamboanga City West';
+
    return (
       <>
          <div className=" px-5 py-4 mt-5 mb-5 mx-5">
@@ -57,6 +59,18 @@ function Home() {
                      Western Mindanao ages 18-30 years old.{' '}
                   </p>
                   <div className="mt-5">
+                     <Link
+                        to={{
+                           pathname: `/donate/${chapter}`,
+                           state: {
+                              chapter: chapter,
+                           },
+                        }}
+                        className="btn btn-primary me-3"
+                     >
+                        {' '}
+                        Donate
+                     </Link>
                      &nbsp; &nbsp;
                      <a
                         href="#about"
@@ -68,12 +82,7 @@ function Home() {
                   </div>
                </div>
                <div className="col-sm mt-5">
-                  <img
-                     src={image13}
-                     width="100%"
-                     height="100%"
-                     alt="serve qr"
-                  />
+                  <img src={image13} width="90%" height="90%" alt="serve qr" />
                </div>
             </div>
          </div>

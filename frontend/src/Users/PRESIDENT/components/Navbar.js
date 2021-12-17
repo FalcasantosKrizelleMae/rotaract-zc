@@ -10,7 +10,7 @@ const member_id = localStorage.getItem('member_id');
 
 class Header extends Component {
    state = {
-      current: 'mail',
+      current: 'dash',
    };
 
    handleClick = (e) => {
@@ -54,7 +54,16 @@ class Header extends Component {
                </Menu.Item>
 
                <SubMenu key="SubMenu3" classname="m-0" title="Requests">
-                  <Menu.Item key="setting:1">Reports</Menu.Item>
+                  <Menu.Item key="setting:1">
+                     <Link
+                        to={{
+                           pathname: `/pres-reports/${member_id}`,
+                        }}
+                        className="text-decoration-none"
+                     >
+                        Reports
+                     </Link>
+                  </Menu.Item>
                   <Menu.Item key="setting:2">
                      <Link
                         to={{

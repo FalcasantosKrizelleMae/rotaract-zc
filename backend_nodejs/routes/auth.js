@@ -23,18 +23,6 @@ auth.use(cookieParser());
 auth.use(express.urlencoded({ extended: true }));
 auth.use(express.json());
 
-auth.use(
-   session({
-      key: 'userID',
-      secret: 'rotaract',
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-         expires: 60 * 60 * 24,
-      },
-   })
-);
-
 //Login POST
 auth.post('/api/login', (req, res) => {
    const member_id = req.body.member_id;

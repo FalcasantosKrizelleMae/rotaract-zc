@@ -44,6 +44,7 @@ import Funds from './Users/ADMIN/pages/Funds';
 import Manual from './Users/SECRETARY/pages/Manual';
 import AttendanceList from './Users/SECRETARY/pages/AttendanceList';
 import Donate from './Clubs/West/pages/Donate';
+import PresReports from './Users/PRESIDENT/pages/Reports';
 
 function App() {
    return (
@@ -106,6 +107,7 @@ function App() {
             <Route path="/pres-events" component={PresEvents}></Route>
             <Route path="/president" component={PresDashboard}></Route>
             <Route path="/pres-accounts" component={PresAccounts}></Route>
+            <Route path="/pres-reports" component={PresReports}></Route>
 
             {/* MEMBER */}
             <Route path="/transaction" component={Transactions}></Route>

@@ -69,6 +69,19 @@ class Header extends Component {
                      Events
                   </Link>
                </Menu.Item>
+               <Menu.Item
+                  key="attendance"
+                  icon={<AiIcons.AiOutlineOrderedList />}
+                  className="item"
+               >
+                  <Link
+                     to={{
+                        pathname: `/attendance/${chapter}`,
+                     }}
+                  >
+                     Attendance
+                  </Link>
+               </Menu.Item>
 
                <Menu.Item
                   key="reports"

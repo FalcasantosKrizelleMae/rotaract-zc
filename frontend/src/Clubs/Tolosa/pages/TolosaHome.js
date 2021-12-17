@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import './../css/index.css';
 import * as FaIcons from 'react-icons/fa';
 import * as BiIcons from 'react-icons/bi';
@@ -8,29 +8,21 @@ import image10 from './../../../images/image10.svg';
 import Carousel from './Carousel';
 
 function Home() {
-   const [click, setClick] = useState(false)
-   const handleClick = () => setClick(!click)
-   const closeMenu = () => setClick(false)
+   const [click, setClick] = useState(false);
+   const handleClick = () => setClick(!click);
+   const closeMenu = () => setClick(false);
 
-  
    const handleClick2 = () => {
-      window.open("https://web.facebook.com/rotametzam");
-    };
-    
+      window.open('https://web.facebook.com/rotametzam');
+   };
 
    const data = [
-      
-   
       {
          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
-         
       },
-         {
+      {
          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
-         
       },
-     
-     
    ];
 
    const captionStyle = {
@@ -42,41 +34,58 @@ function Home() {
       fontWeight: 'bold',
    };
 
+   const chapter = 'Tolosa Community';
+
    return (
       <>
-          <div className=" px-5 py-4 mt-5 mb-5 mx-5">
+         <div className=" px-5 py-4 mt-5 mb-5 mx-5">
             <div className="row my-5">
                <div className="col-sm my-auto ">
                   <h4>WELCOME TO </h4>
-                  <h1 className="text-pink"> ROTARACT CLUB OF ZAMBOANGA CITY TOLOSA COMMUNITY </h1>
+                  <h1 className="text-pink">
+                     {' '}
+                     ROTARACT CLUB OF ZAMBOANGA CITY TOLOSA COMMUNITY{' '}
+                  </h1>
                   <p className="row col-sm-8 mt-5">
                      Together, we see a world where people unite and take action
                      to create lasting change – across the globe, in our
                      communities, and in ourselves.{' '}
                   </p>
                   <div className="mt-5">
-                     <Link to="/about" className="btn btn-primary">
+                     <Link
+                        to={{
+                           pathname: `/donate/${chapter}`,
+                           state: {
+                              chapter: chapter,
+                           },
+                        }}
+                        className="btn btn-primary me-3"
+                     >
                         {' '}
-                        Donate{' '}
+                        Donate
                      </Link>
                      &nbsp; &nbsp;
-                     <a href='#about' onClick={closeMenu}className="btn bg-light px-3 text-pink">Explore </a>
-                        <BiIcons.BiRightArrowAlt />
-                        {' '}
+                     <a
+                        href="#about"
+                        onClick={closeMenu}
+                        className="btn bg-light px-3 text-pink"
+                     >
+                        Explore{' '}
+                     </a>
+                     <BiIcons.BiRightArrowAlt />{' '}
                   </div>
                </div>
                <div className="col-sm mt-5">
                   <img src={image10} width="90%" height="90%" alt="serve qr" />
                </div>
             </div>
-        
          </div>
 
          <div className="container">
-         <div className='about' id='about'>
+            <div className="about" id="about">
                <div class="row">
-                   <div className="col  mx-2 mb-3 ">
-                     <div style={{ textAlign: 'center' }}  >
+                  <div className="col  mx-2 mb-3 ">
+                     <div style={{ textAlign: 'center' }}>
                         <Carousel
                            data={data}
                            time={2000}
@@ -99,29 +108,31 @@ function Home() {
                               textAlign: 'center',
                               maxWidth: '100%',
                            }}
-                        />  
+                        />
                      </div>
-                   </div>
-                        <div className="col  p-4 mx-2 mb-3" >
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <br/>
-                           <h4>About</h4>
-                  <h2 className="text-pink">  Rotaract Club of Zamboanga City Tolosa Community</h2>
-                           <p className="row col-sm-10 mt-5">
-                           An Organization aims to help the community through perseverance and selfless service.{' '}
-
-                  </p>
+                  </div>
+                  <div className="col  p-4 mx-2 mb-3">
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <br />
+                     <h4>About</h4>
+                     <h2 className="text-pink">
+                        {' '}
+                        Rotaract Club of Zamboanga City Tolosa Community
+                     </h2>
+                     <p className="row col-sm-10 mt-5">
+                        An Organization aims to help the community through
+                        perseverance and selfless service.{' '}
+                     </p>
                   </div>
                </div>
-             </div>
+            </div>
          </div>
-            
 
          <div class="footer-dark ">
             <footer>
@@ -133,7 +144,6 @@ function Home() {
                            onClick={handleClick2}
                            size="5vh"
                         />
-                        
                      </div>
                   </div>
                   <p className="copyright">

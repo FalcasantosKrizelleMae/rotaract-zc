@@ -79,7 +79,7 @@ function Scan() {
       <div className="container mt-5">
          <PageHeader
             className="site-page-header"
-            onBack={() => history.push(`/secretary/${id}`)}
+            onBack={() => history.goBack()}
             title="Scan QR Code"
             // subTitle="View and update account"
          />{' '}

@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import * as AiIcons from 'react-icons/ai';
 import { Button, Table } from 'react-bootstrap';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 const Reports = () => {
    const [list, setList] = useState([]);
@@ -17,8 +18,71 @@ const Reports = () => {
       });
    });
 
-   const download = () => {
-      alert('donwload here');
+   const decline = (report_id) => {
+      Swal.fire({
+         title: `Are you sure you want to decline this request?`,
+         showDenyButton: true,
+         confirmButtonText: 'Yes',
+         denyButtonText: `No`,
+      }).then((result) => {
+         if (result.isConfirmed) {
+            Axios.post(`http://localhost:5000/reports/decline`, {
+               report_id: report_id,
+            }).then((response) => {
+               if (response.data.message === 'success') {
+                  Swal.fire({
+                     title: 'Report declined',
+                     icon: 'success',
+                  });
+               } else {
+                  Swal.fire({
+                     title: 'Error!',
+                     text: 'Action unsuccessful',
+                     icon: 'error',
+                     confirmButtonText: 'Okay',
+                  });
+               }
+            });
+         } else {
+            if (result.isDenied) {
+               Swal.fire('No action ', '', 'info');
+            }
+         }
+      });
+   };
+
+   const accept = (report_id) => {
+      Swal.fire({
+         title: `Are you sure you want to accept this request?`,
+         showDenyButton: true,
+         confirmButtonText: 'Yes',
+         denyButtonText: `No`,
+      }).then((result) => {
+         if (result.isConfirmed) {
+            Axios.post(`http://localhost:5000/reports/accept`, {
+               report_id: report_id,
+            }).then((response) => {
+               if (response.data.message === 'success') {
+                  Swal.fire({
+                     title: 'Success!',
+                     text: 'You have accepted the request',
+                     icon: 'success',
+                  });
+               } else {
+                  Swal.fire({
+                     title: 'Error!',
+                     text: 'Action unsuccessful',
+                     icon: 'error',
+                     confirmButtonText: 'Okay',
+                  });
+               }
+            });
+         } else {
+            if (result.isDenied) {
+               Swal.fire('No action ', '', 'info');
+            }
+         }
+      });
    };
 
    return (
@@ -29,13 +93,7 @@ const Reports = () => {
                <div className="row">
                   <div className="col-sm">
                      {' '}
-                     <h3 className="text-pink mb-5">Reports</h3>
-                  </div>
-
-                  <div className="col-sm">
-                     <Button className="float-end" variant="outline-secondary">
-                        + Add new report
-                     </Button>
+                     <h3 className="text-pink mb-4">Reports</h3>
                   </div>
                </div>
                <Table borderless hover className="border">
@@ -78,7 +136,35 @@ const Reports = () => {
                                  <>
                                     <td>N/A</td>
                                     <td>N/A</td>
-                                    <td>---</td>
+                                    <td>
+                                       <Button
+                                          variant="white"
+                                          data-tip
+                                          data-for="view"
+                                          className="text-primary"
+                                       >
+                                          <AiIcons.AiFillEye />
+                                       </Button>
+
+                                       <Button
+                                          onClick={() => {
+                                             accept(val.report_id);
+                                          }}
+                                       >
+                                          <AiIcons.AiFillCheckCircle />
+                                       </Button>
+
+                                       <Button
+                                          variant="danger"
+                                          data-tip
+                                          data-for="decline"
+                                          onClick={() => {
+                                             decline(val.report_id);
+                                          }}
+                                       >
+                                          <AiIcons.AiOutlineStop />
+                                       </Button>
+                                    </td>
                                  </>
                               ) : val.status === 'sent' ? (
                                  <>
@@ -87,10 +173,7 @@ const Reports = () => {
                                           'llll'
                                        )}
                                     </td>
-                                    <td>
-                                       {' '}
-                                       {moment(val.date_sent).format('llll')}
-                                    </td>
+                                    <td>N/A</td>
                                     <td>---</td>
                                  </>
                               ) : (
@@ -105,12 +188,6 @@ const Reports = () => {
                                           className="text-primary"
                                        >
                                           <AiIcons.AiFillEye />
-                                       </Button>
-                                       <Button
-                                          variant="white"
-                                          onClick={download}
-                                       >
-                                          <AiIcons.AiOutlineDownload />
                                        </Button>
                                     </td>
                                  </>

@@ -95,12 +95,12 @@ const SectEvent = () => {
    return (
       <div>
          <Navbar />
-         <div className=" main mx-5">
-            <div className="shadow-sm p-5 rounded">
+         <div className="container main">
+            <div className="shadow  p-5 rounded">
                <div className="row">
                   <div className="col-sm">
                      {' '}
-                     <h3 className="text-pink mb-5">List of Events</h3>
+                     <h3 className="text-pink mb-4">List of Events</h3>
                   </div>
                </div>
                <Table borderless hover>
