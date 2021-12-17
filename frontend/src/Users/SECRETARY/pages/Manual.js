@@ -6,7 +6,6 @@ import Axios from 'axios';
 
 import { useLocation, useHistory, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { wholeDivideDurations } from '@fullcalendar/react';
 
 const Manual = () => {
    const location = useLocation();

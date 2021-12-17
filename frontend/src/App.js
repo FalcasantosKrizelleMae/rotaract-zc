@@ -45,6 +45,7 @@ import Manual from './Users/SECRETARY/pages/Manual';
 import AttendanceList from './Users/SECRETARY/pages/AttendanceList';
 import Donate from './Clubs/West/pages/Donate';
 import PresReports from './Users/PRESIDENT/pages/Reports';
+import Send from './Users/SECRETARY/pages/Send';
 
 function App() {
    return (
@@ -102,6 +103,7 @@ function App() {
             <Route path="/sect-accounts" component={SectAccounts}></Route>
             <Route path="/sect-reports" component={SectReports}></Route>
             <Route path="/sect/manual" component={Manual}></Route>
+            <Route path="/send" component={Send}></Route>
 
             {/* PRESIDENT */}
             <Route path="/pres-events" component={PresEvents}></Route>

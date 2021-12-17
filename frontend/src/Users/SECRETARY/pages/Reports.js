@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import * as AiIcons from 'react-icons/ai';
 import { Button, Table } from 'react-bootstrap';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const Reports = () => {
    const [list, setList] = useState([]);
+   let history = useHistory();
 
    //Display all data
    useEffect(() => {
@@ -16,10 +19,6 @@ const Reports = () => {
          }
       });
    });
-
-   const download = () => {
-      alert('donwload here');
-   };
 
    return (
       <>
@@ -107,10 +106,17 @@ const Reports = () => {
                                           <AiIcons.AiFillEye />
                                        </Button>
                                        <Button
-                                          variant="white"
-                                          onClick={download}
+                                          variant="primary"
+                                          onClick={() =>
+                                             history.push({
+                                                pathname: `/send`,
+                                                state: {
+                                                   event_id: val.event_id,
+                                                },
+                                             })
+                                          }
                                        >
-                                          <AiIcons.AiOutlineDownload />
+                                          View report
                                        </Button>
                                     </td>
                                  </>

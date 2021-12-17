@@ -120,4 +120,19 @@ reports.post('/accept', (req, res) => {
    );
 });
 
+reports.get('/get_report', (req, res) => {
+   const event_id = req.query.event_id;
+
+   const sqlGetReport =
+      'SELECT reports.*, events.* FROM reports INNER JOIN events ON reports.event_id = events.event_id WHERE events.event_id = ?;';
+   db.query(sqlGetReport, event_id, (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.send(result);
+         console.log(result);
+      }
+   });
+});
+
 module.exports = reports;
