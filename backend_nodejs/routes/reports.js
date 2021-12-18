@@ -83,9 +83,28 @@ reports.get('/all', (req, res) => {
       if (err) {
          res.send(err);
       } else {
-         res.send({ message: 'success' });
+         res.send(result);
       }
    });
+});
+
+reports.get('/chapter/:chapter', (req, res) => {
+   //    const sqlGetData =
+   //       'SELECT attendance.member_id, attendance.status, members.first_name, members.last_name from attendance INNER JOIN members ON attendance.member_id = members.member_id WHERE event_id = ?;';
+
+   const chapter = req.params.chapter;
+
+   db.query(
+      'SELECT * from reports WHERE chapter = ?',
+      chapter,
+      (err, result) => {
+         if (err) {
+            res.send(err);
+         } else {
+            res.send(result);
+         }
+      }
+   );
 });
 
 reports.post('/decline', (req, res) => {

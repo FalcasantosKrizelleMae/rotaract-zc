@@ -13,14 +13,17 @@ import Swal from 'sweetalert2';
 const Reports = () => {
    const [list, setList] = useState([]);
    let history = useHistory();
+   const chapter = localStorage.getItem('chapter');
 
    //Display all data
    useEffect(() => {
-      Axios.get(`http://localhost:5000/reports/all`).then((response) => {
-         if (response) {
-            setList(response.data);
+      Axios.get(`http://localhost:5000/reports/chapter/${chapter}`).then(
+         (response) => {
+            if (response) {
+               setList(response.data);
+            }
          }
-      });
+      );
    });
 
    const sent = (report_id) => {

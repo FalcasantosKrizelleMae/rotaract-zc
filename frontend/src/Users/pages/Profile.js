@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as BiIcons from 'react-icons/bi';
 import { Avatar, Image, Card, PageHeader } from 'antd';
@@ -7,16 +7,19 @@ import { Input } from 'reactstrap';
 import Swal from 'sweetalert2';
 import Axios from 'axios';
 import { useForm } from 'react-hook-form';
+import moment from 'moment';
 
 function Profile() {
    useForm();
    let history = useHistory();
+   const [dataList, setDataList] = useState([]);
    const chapter = localStorage.getItem('chapter');
    const id = localStorage.getItem('member_id');
    const name = localStorage.getItem('name');
-   const balance = localStorage.getItem('balance');
+
    const [newPassword, setNewPassword] = useState('');
    const [oldPassword, setOldPassword] = useState('');
+   const [list, setList] = useState([]);
 
    const updatePass = (id) => {
       Axios.put(`http://localhost:5000/admin/update_pass`, {
@@ -40,6 +43,25 @@ function Profile() {
          }
       });
    };
+
+   useEffect(() => {
+      Axios.get(`http://localhost:5000/auth/get_user/${id}`).then(
+         (response) => {
+            if (response) {
+               setList(response.data);
+            }
+         }
+      );
+      Axios.get(`http://localhost:5000/payment/get_payment/${chapter}`)
+         .then((response) => {
+            if (response) {
+               // console.log(response.data);
+               setDataList(response.data);
+            }
+         })
+
+         .catch((error) => console.log(error));
+   });
 
    const tabListNoTitle = [
       {
@@ -179,7 +201,43 @@ function Profile() {
                   </Card>
                </div>
                <div className="col px-4 py-0 mt-0">
-                  <h4>Balance: {balance}</h4>
+                  <div className="container shadow-sm rounded border p-4">
+                     {list.map((item) => {
+                        return (
+                           <>
+                              BALANCE: {''} <br />
+                              <br />
+                              <h3>{item.balance} php</h3>
+                           </>
+                        );
+                     })}
+
+                     {dataList.map((item) => {
+                        return (
+                           <h6 className="mb-3">
+                              Payment for this month ({moment().format('MMMM')}
+                              ): <br />
+                              {item.amount} php
+                              <br />
+                              <br />
+                              Due Date: <br />
+                              {moment(item.due_date).format('llll')}
+                              <br />
+                              <br />
+                           </h6>
+                        );
+                     })}
+
+                     <Button
+                        type="primary"
+                        onClick={() => {
+                           history.push('/pay-mem');
+                        }}
+                     >
+                        Pay now
+                     </Button>
+                  </div>
+
                   <Card
                      className="rounded shadow-sm"
                      style={{ width: '100%', marginTop: 20 }}

@@ -34,19 +34,6 @@ function Transactions() {
          .catch((error) => console.log(error));
    });
 
-   // const pay = () => {
-   //    Axios.post('http://localhost:5000/payment/pay')
-   //       .then((response) => {
-   //          window.location.href = response.data;
-   //       })
-   //       .catch((error) => {
-   //          console.log({
-   //             error,
-   //          });
-   //          alert('Authentication failed');
-   //       });
-   // };
-
    return (
       <div>
          <Navbar />

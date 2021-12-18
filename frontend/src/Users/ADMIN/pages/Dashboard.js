@@ -17,13 +17,13 @@ const Dashboard = () => {
          name: 'Zamboanga City West',
          Collection: 4000,
          Expenses: 2400,
-         amt: 2400,
+         amount: 2400,
       },
       {
          name: 'Zamboanga City North',
          Collection: 4000,
          Expenses: 2400,
-         amt: 2210,
+         amount: 2210,
       },
       {
          name: 'Zamboanga City East',

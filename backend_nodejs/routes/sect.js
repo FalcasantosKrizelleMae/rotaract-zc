@@ -162,7 +162,7 @@ sect.post('/addAttendance', (req, res) => {
 sect.get('/getAttendance', (req, res) => {
    const event_id = req.query.event_id;
    const sqlGetData =
-      'SELECT attendance.member_id, attendance.status, members.first_name, members.last_name, attendance.log from attendance INNER JOIN members ON attendance.member_id = members.member_id WHERE event_id = ?;';
+      'SELECT attendance.member_id, attendance.status, members.first_name, members.last_name from attendance INNER JOIN members ON attendance.member_id = members.member_id WHERE event_id = ?;';
 
    // INNER JOIN payments ON members.chapter = payments.chapter;
    db.query(sqlGetData, event_id, (err, result) => {
@@ -177,7 +177,7 @@ sect.get('/getAttendance', (req, res) => {
 sect.get('/getAll', (req, res) => {
    const chapter = req.query.chapter;
    const sqlGetData =
-      'SELECT attendance.member_id, attendance.status, members.first_name, members.last_name, events.title, events.member_id from ((attendance INNER JOIN members ON attendance.member_id = members.member_id) INNER JOIN events ON attendance.event_id = events.event_id) WHERE events.chapter = ?;';
+      'SELECT attendance.member_id, attendance.status, members.first_name, members.last_name, events.title from ((attendance INNER JOIN members ON attendance.member_id = members.member_id) INNER JOIN events ON attendance.event_id = events.event_id) WHERE events.chapter = ?';
 
    // INNER JOIN payments ON members.chapter = payments.chapter;
    db.query(sqlGetData, chapter, (err, result) => {

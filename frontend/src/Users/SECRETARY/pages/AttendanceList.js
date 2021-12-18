@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
-import { Collapse, Table } from 'antd';
-
-const { Panel } = Collapse;
+import { Collapse, Table, Button, Select } from 'antd';
 
 const AttendanceList = () => {
    const [events, setEvents] = useState([]);
    const [list, setList] = useState([]);
    // const [body, setBody] = useState(false);
    const chapter = localStorage.getItem('chapter');
+   const { Panel } = Collapse;
 
    useEffect(() => {
-      Axios.get(`http://localhost:5000/sect/getAll`, {
+      Axios.get(`http://localhost:5000/sect/getEvent/${chapter}`, {}).then(
+         (result) => {
+            if (result) {
+               setEvents(result.data);
+            }
+         }
+      );
+   });
+
+   const getAttendance = (event_id) => {
+      Axios.get(`http://localhost:5000/sect/getAttendance`, {
          params: {
-            chapter: chapter,
+            event_id: event_id,
          },
       }).then((result) => {
          if (result) {
             setList(result.data);
          }
       });
-   });
+   };
 
    const columns = [
       {
@@ -66,13 +75,24 @@ const AttendanceList = () => {
                      events.map((val) => {
                         return (
                            <>
-                              <Collapse
-                                 bordered={false}
-                                 className="site-collapse-custom-collapse bg-white shadow-sm"
-                              >
+                              <Collapse>
                                  <Panel
-                                    header={val.title}
-                                    className="site-collapse-custom-panel "
+                                    header={
+                                       val.title +
+                                       ' (' +
+                                       val.participants +
+                                       ' participants)'
+                                    }
+                                    extra={
+                                       <Button
+                                          onClick={() => {
+                                             getAttendance(val.event_id);
+                                          }}
+                                       >
+                                          Click here to view attendance for this
+                                          event
+                                       </Button>
+                                    }
                                  >
                                     <Table
                                        dataSource={list}
@@ -80,6 +100,7 @@ const AttendanceList = () => {
                                     />
                                  </Panel>
                               </Collapse>
+                              <br />
                            </>
                         );
                      })
