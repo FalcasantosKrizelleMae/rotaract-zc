@@ -69,21 +69,21 @@ const PresDashboard = () => {
    return (
       <div>
          <Navbar />
-         <div className="mt-5">
-            <div className="bg-pink p-3 rounded fs-4 text-white ps-4 mb-4 mt-2 container">
+         <div className="container mt-5">
+            {/* <div className="bg-pink p-3 rounded fs-4 text-white ps-4 mb-4 mt-2 container">
                DASHBOARD
-            </div>
+            </div> */}
             <div class="row d-flex justify-content-center">
-               <div class="col-sm-3">
+               <div class="col-lg-4">
                   <Card
-                     title="Total Members"
+                     title="Total no. of embers"
                      imageUrl=""
                      className="bg-dark mb-4 shadow-sm "
                      body={total_mem + ' members'}
                   />
                </div>
                {}
-               <div class="col-sm-3">
+               <div class="col-lg-4">
                   <Card
                      title="Fund Balance "
                      imageUrl=""
@@ -92,7 +92,7 @@ const PresDashboard = () => {
                   />
                </div>
 
-               <div class="col-sm-3">
+               <div class="col-lg-4">
                   <Card
                      title="Expenses"
                      imageUrl=""

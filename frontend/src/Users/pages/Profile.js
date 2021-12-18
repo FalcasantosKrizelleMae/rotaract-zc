@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as BiIcons from 'react-icons/bi';
-import { Avatar, Image, Card, PageHeader, Table } from 'antd';
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Avatar, Image, Card, PageHeader, Table, Button } from 'antd';
+import { Form, InputGroup } from 'react-bootstrap';
 import { Input } from 'reactstrap';
 import Swal from 'sweetalert2';
 import Axios from 'axios';
@@ -234,14 +234,18 @@ function Profile() {
                      </div>
                   </Card>
                </div>
-               <div className="col px-4 py-0 mt-0">
-                  <div className="container shadow-sm rounded p-4">
+               <div className="col shadow-sm px-4 py-0 mt-0">
+                  <div className="container  rounded p-4">
                      {list.map((item) => {
                         return (
                            <>
-                              BALANCE: {''} <br />
-                              <br />
-                              <h2>{bal} php</h2>
+                              <div className="float-start">
+                                 <h6>BALANCE: {''} </h6>
+                                 <br />
+
+                                 <h2>{bal} php</h2>
+                              </div>
+
                               {bal === '0' ? (
                                  ' '
                               ) : (

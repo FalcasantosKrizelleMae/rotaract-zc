@@ -29,6 +29,7 @@ import MemEvents from './Users/MEMBER/pages/Events';
 import Profile from './Users/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
 import Member from './Users/MEMBER';
+import FinEvents from './Users/FINANCE/pages/Events';
 
 import Payment from './Users/pages/Payment';
 // import ProtectedRoute from './ProtectedRoute';
@@ -124,6 +125,7 @@ function App() {
             <Route path="/sect/manual" component={Manual}></Route>
             <Route path="/send" component={Send}></Route>
             <Route path="/send-to-mail" component={Mail}></Route>
+            <Route path="/attendance" component={AttendanceList}></Route>
 
             {/* PRESIDENT */}
             <Route path="/pres-events" component={PresEvents}></Route>
@@ -138,8 +140,8 @@ function App() {
 
             {/* FINANCE */}
             <Route path="/payments" component={Payments}></Route>
-            <Route path="/attendance" component={AttendanceList}></Route>
             <Route path="/pay-mem" component={Payment}></Route>
+            <Route path="/finance-events" component={FinEvents}></Route>
          </Router>
       </div>
    );

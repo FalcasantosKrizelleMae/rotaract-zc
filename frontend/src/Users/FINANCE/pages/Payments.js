@@ -113,15 +113,19 @@ const Payments = () => {
 
    return (
       <>
+         <Navbar />
          <div className="container mt-5">
-            <PageHeader
+            {/* <PageHeader
                className="site-page-header"
                onBack={() => history.push(`/finance/${id}`)}
                title="Payment page"
                // subTitle="View and update account"
-            />{' '}
+            />{' '} */}
             <div className="row container d-flex align-items-center mb-3">
-               <div className="col-sm-7">
+               <div className="col-sm-7 mt-5 pt-5">
+                  <h2 className="text-uppercase">Payments Page</h2>
+                  <br />
+
                   <h4>
                      {' '}
                      <Moment format="ll LTS (dddd) ">{dateState}</Moment>
@@ -230,7 +234,7 @@ const Payments = () => {
                      Hide list
                   </Button>
                   <div className="mt-5">
-                     <Table>
+                     <Table bordered>
                         <thead>
                            <tr>
                               <th>Order ID</th>

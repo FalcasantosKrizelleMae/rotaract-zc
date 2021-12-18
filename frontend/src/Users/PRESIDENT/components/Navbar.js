@@ -4,6 +4,7 @@ import { Menu } from 'antd';
 
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
+import * as AiIcons from 'react-icons/ai';
 
 const { SubMenu } = Menu;
 const member_id = localStorage.getItem('member_id');
@@ -42,7 +43,11 @@ class Header extends Component {
                   />
                </Menu.Item>
 
-               <Menu.Item key="mail" className="item">
+               <Menu.Item
+                  key="mail"
+                  className="item"
+                  icon={<AiIcons.AiOutlineDashboard />}
+               >
                   <Link
                      to={{
                         pathname: `/president/${member_id}`,
@@ -53,7 +58,12 @@ class Header extends Component {
                   </Link>
                </Menu.Item>
 
-               <SubMenu key="SubMenu3" classname="m-0" title="Requests">
+               <SubMenu
+                  key="SubMenu3"
+                  classname="m-0"
+                  title="Requests"
+                  icon={<AiIcons.AiOutlinePullRequest />}
+               >
                   <Menu.Item key="setting:1">
                      <Link
                         to={{
@@ -76,9 +86,11 @@ class Header extends Component {
                   </Menu.Item>
                </SubMenu>
 
-               <Menu.Item key="setting:3">Funds</Menu.Item>
-
-               <Menu.Item key="alipay" className="item">
+               <Menu.Item
+                  key="alipay"
+                  className="item"
+                  icon={<AiIcons.AiOutlineUserSwitch />}
+               >
                   <Link
                      to={{
                         pathname: `/pres-accounts/${member_id}`,
@@ -90,7 +102,12 @@ class Header extends Component {
                </Menu.Item>
 
                <Menu.Item className=" ms-auto me-0 pe-0"></Menu.Item>
-               <SubMenu key="SubMenu1" classname="m-0" title="PRESIDENT">
+               <SubMenu
+                  key="SubMenu1"
+                  classname="m-0"
+                  title="PRESIDENT"
+                  icon={<AiIcons.AiFillCaretDown />}
+               >
                   <Menu.Item key="profile">
                      <Link
                         to={{ pathname: `/profile/${member_id}` }}

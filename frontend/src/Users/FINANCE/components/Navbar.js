@@ -63,7 +63,7 @@ class Header extends Component {
                >
                   <Link
                      to={{
-                        pathname: `/finance/${chapter}`,
+                        pathname: `/finance-events/${chapter}`,
                      }}
                   >
                      Events
@@ -71,16 +71,16 @@ class Header extends Component {
                </Menu.Item>
 
                <Menu.Item
-                  key="reports"
+                  key="payments"
                   icon={<AiIcons.AiOutlinePaperClip />}
                   className="item"
                >
                   <Link
                      to={{
-                        pathname: `/finance/${chapter}`,
+                        pathname: `/payments/${chapter}`,
                      }}
                   >
-                     Funds
+                     Payments
                   </Link>
                </Menu.Item>
 
@@ -104,7 +104,7 @@ class Header extends Component {
                   key="SubMenu1"
                   icon={<AiIcons.AiOutlineCaretDown />}
                   classname="m-0"
-                  title="SECRETARY"
+                  title="FINANCE DIRECTOR"
                >
                   <Menu.Item key="profile">
                      <Link
