@@ -11,8 +11,34 @@ import {
    ResponsiveContainer,
 } from 'recharts';
 import Axios from 'axios';
+import { Table } from 'antd';
 
 const Dashboard = () => {
+   const [list, setList] = useState([]);
+
+   const columns = [
+      {
+         title: 'Title',
+         dataIndex: 'title',
+         key: 'title',
+      },
+      {
+         title: 'Date (s)',
+         dataIndex: 'start',
+         key: 'start',
+      },
+      {
+         title: 'No. of participants',
+         dataIndex: 'participants',
+         key: 'last_name',
+      },
+      {
+         title: 'Status',
+         dataIndex: 'status',
+         key: 'status',
+      },
+   ];
+
    const [data, setData] = useState([]);
    const [funds, setFunds] = useState([]);
 
@@ -25,6 +51,12 @@ const Dashboard = () => {
       Axios.get('http://localhost:5000/web/funds').then((response) => {
          if (response) {
             setFunds(response.data);
+         }
+      });
+
+      Axios.get(`http://localhost:5000/events/all`, {}).then((result) => {
+         if (result) {
+            setList(result.data);
          }
       });
    }, []);
@@ -74,6 +106,11 @@ const Dashboard = () => {
                      </div>
                   </div>
                </div>
+            </div>
+
+            <div className="mt-5 shadow p-5">
+               <h4 className="mb-4">Zamboanga City Chapter Events</h4>
+               <Table dataSource={list} columns={columns} />
             </div>
          </div>
       </>

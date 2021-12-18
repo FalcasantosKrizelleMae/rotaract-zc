@@ -167,7 +167,7 @@ function Profile() {
          <div className="container my-5 ">
             <PageHeader
                className="site-page-header"
-               onBack={() => history.push(`/member/${id}`)}
+               onBack={() => history.goBack()}
                title="My Account"
                // subTitle="View and update account"
             />

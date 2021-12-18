@@ -68,7 +68,6 @@ const Reports = () => {
                         <td>status</td>
                         <td>Date Requested</td>
                         <td>Date Reviewed</td>
-                        <td>Date Sent</td>
                         <td>Action</td>
                      </tr>
                   </thead>
@@ -100,7 +99,6 @@ const Reports = () => {
                                  <>
                                     <td>N/A</td>
                                     <td>N/A</td>
-                                    <td>---</td>
                                  </>
                               ) : val.status === 'sent' ? (
                                  <>
@@ -109,10 +107,7 @@ const Reports = () => {
                                           'llll'
                                        )}
                                     </td>
-                                    <td>
-                                       {' '}
-                                       {moment(val.date_sent).format('llll')}
-                                    </td>
+
                                     <td>---</td>
                                  </>
                               ) : (
@@ -122,7 +117,7 @@ const Reports = () => {
                                           'llll'
                                        )}
                                     </td>
-                                    <td>N/A</td>
+
                                     <td>
                                        {''}
                                        <Button

@@ -185,7 +185,7 @@ admin.get('/list', (req, res) => {
 //Display all data from table
 admin.get('/list/:chapter', (req, res) => {
    const chapter = req.params.chapter;
-   const sqlSelect = 'SELECT * FROM members where chapter = ?';
+   const sqlSelect = 'SELECT * FROM members where chapter = ? order by role ';
    db.query(sqlSelect, chapter, (err, result) => {
       res.send(result);
    });
