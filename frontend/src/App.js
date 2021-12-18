@@ -26,7 +26,7 @@ import PresAccounts from './Users/PRESIDENT/pages/Accounts';
 import PresDashboard from './Users/PRESIDENT/pages/Dashboard';
 import Transactions from './Users/MEMBER/pages/Transactions';
 import MemDashboard from './Users/MEMBER/';
-import MemProfile from './Users/pages/Profile';
+import Profile from './Users/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
 
 import Payment from './Users/pages/Payment';
@@ -43,9 +43,17 @@ import Wmsu from './Clubs/Wmsu/';
 import Funds from './Users/ADMIN/pages/Funds';
 import Manual from './Users/SECRETARY/pages/Manual';
 import AttendanceList from './Users/SECRETARY/pages/AttendanceList';
-import Donate from './Clubs/West/pages/Donate';
+import DonateWest from './Clubs/West/pages/Donate';
+import DonateEast from './Clubs/East/pages/Donate';
+import DonateNorth from './Clubs/North/pages/Donate';
+import DonateMetro from './Clubs/Metro/pages/Donate';
+import DonateWmsu from './Clubs/Wmsu/pages/Donate';
+import DonateTolosa from './Clubs/Tolosa/pages/Donate';
+import DonateSsc from './Clubs/West/pages/Donate';
+import DonateUz from './Clubs/UZ/pages/Donate';
 import PresReports from './Users/PRESIDENT/pages/Reports';
 import Send from './Users/SECRETARY/pages/Send';
+import Mail from './Users/SECRETARY/pages/Mail';
 
 function App() {
    return (
@@ -71,8 +79,17 @@ function App() {
 
             <Route path="/president" component={() => <President />} />
 
-            <Route path="/donate" component={() => <Donate />} />
+            {/* DONATE */}
+            <Route path="/donate-west" component={() => <DonateWest />} />
+            <Route path="/donate-wmsu" component={() => <DonateWmsu />} />
+            <Route path="/donate-ssc" component={() => <DonateSsc />} />
+            <Route path="/donate-tolosa" component={() => <DonateTolosa />} />
+            <Route path="/donate-north" component={() => <DonateNorth />} />
+            <Route path="/donate-east" component={() => <DonateEast />} />
+            <Route path="/donate-metro" component={() => <DonateMetro />} />
+            <Route path="/donate-uz" component={() => <DonateUz />} />
 
+            {/* CLubs */}
             <Route path="/West" component={() => <West />} />
             <Route path="/East" component={() => <East />} />
             <Route path="/Metro" component={() => <Metro />} />
@@ -104,6 +121,7 @@ function App() {
             <Route path="/sect-reports" component={SectReports}></Route>
             <Route path="/sect/manual" component={Manual}></Route>
             <Route path="/send" component={Send}></Route>
+            <Route path="/send-to-mail" component={Mail}></Route>
 
             {/* PRESIDENT */}
             <Route path="/pres-events" component={PresEvents}></Route>
@@ -114,7 +132,7 @@ function App() {
             {/* MEMBER */}
             <Route path="/transaction" component={Transactions}></Route>
             <Route path="/member" component={MemDashboard}></Route>
-            <Route path="/profile" component={MemProfile}></Route>
+            <Route path="/profile" component={Profile}></Route>
 
             {/* FINANCE */}
             <Route path="/payments" component={Payments}></Route>

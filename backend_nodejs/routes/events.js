@@ -413,33 +413,60 @@ event.get('/accept/:id', (req, res) => {
       } else {
          const sqlAll = 'SELECT * FROM events WHERE event_id = ?';
          db.query(sqlAll, id, (err, result) => {
-            const eventDate = moment(result[0].start);
-            const emailList = JSON.parse(JSON.stringify(response));
-            const notifDate = eventDate.subtract(1, 'hour').format();
+            db.query(
+               'SELECT email FROM members WHERE chapter = ?',
+               result[0].chapter,
+               (err, respo) => {
+                  const eventDate = moment(result[0].start);
+                  const emailList = JSON.parse(JSON.stringify(respo));
+                  const notifDate = eventDate.subtract(1, 'hour').format();
 
-            schedule.scheduleJob(notifDate, function () {
-               emailList.forEach((element) => {
-                  let info = transporter.sendMail({
-                     from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
-                     to: element.email, // list of receivers
-                     subject: ' A NEW EVENT FOR YOU!', // Subject line
+                  emailList.forEach((element) => {
+                     let info = transporter.sendMail({
+                        from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                        to: element.email, // list of receivers
+                        subject: ' A NEW EVENT FOR ZAMBOANGA MEMBERS', // Subject line
 
-                     html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${
-                        result.data.title
-                     }</b> <br/> When: <b>${moment(result.data.start).format(
-                        'LLL'
-                     )}</b> <br/> Other details: <b> ${
-                        result.data.description
-                     }</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+                        html: `<h4>A new event is coming your way. </h4>  Event details: <br/> What: <b> ${
+                           result[0].title
+                        }</b> <br/> When: <b>${moment(result[0].start).format(
+                           'LLL'
+                        )}</b> <br/> Other details: <b> ${
+                           result[0].description
+                        }</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
 
-                     auth: {
-                        user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
-                        pass: 'rotaractzc', // generated ethereal password
-                     },
+                        auth: {
+                           user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                           pass: 'rotaractzc', // generated ethereal password
+                        },
+                     });
                   });
-               });
-            });
-            res.send({ message: 'success' });
+
+                  schedule.scheduleJob(notifDate, function () {
+                     emailList.forEach((element) => {
+                        let info = transporter.sendMail({
+                           from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                           to: element.email, // list of receivers
+                           subject: ' A NEW EVENT FOR YOU!', // Subject line
+
+                           html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${
+                              result[0].title
+                           }</b> <br/> When: <b>${moment(
+                              result[0].start
+                           ).format('LLL')}</b> <br/> Other details: <b> ${
+                              result[0].description
+                           }</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+
+                           auth: {
+                              user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                              pass: 'rotaractzc', // generated ethereal password
+                           },
+                        });
+                     });
+                  });
+                  res.send({ message: 'success' });
+               }
+            );
          });
       }
    });

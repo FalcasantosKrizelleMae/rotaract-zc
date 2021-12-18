@@ -189,7 +189,7 @@ const Accounts = () => {
                      </Button>
                   </div>
                </div>
-               <Table responsive="lg" className="">
+               <Table responsive="lg" className="border">
                   <thead height="60" className="bg-pink text-white">
                      <tr>
                         <th>Member ID</th>
@@ -222,18 +222,24 @@ const Accounts = () => {
                                  <td>{val.chapter}</td>
 
                                  <td className="text-center">
-                                    <Button
-                                       variant="btn-white text-primary"
-                                       onClick={() => {
-                                          handleShow();
-                                          getData(
-                                             val.member_id,
-                                             val.first_name
-                                          );
-                                       }}
-                                    >
-                                       <BiIcons.BiEdit />
-                                    </Button>
+                                    {val.role === 'Secretary' ||
+                                    val.role === 'President' ||
+                                    val.role === 'Finance' ? (
+                                       '--'
+                                    ) : (
+                                       <Button
+                                          variant="btn-white text-primary"
+                                          onClick={() => {
+                                             handleShow();
+                                             getData(
+                                                val.member_id,
+                                                val.first_name
+                                             );
+                                          }}
+                                       >
+                                          <BiIcons.BiEdit />
+                                       </Button>
+                                    )}
                                     &nbsp;
                                  </td>
                               </tr>

@@ -28,7 +28,6 @@ function Login() {
             localStorage.setItem('auth', true);
 
             if (response.data.role === 'Member') {
-               localStorage.setItem('auth', true);
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
                localStorage.setItem('name', response.data.name);
@@ -39,34 +38,34 @@ function Login() {
                   pathname: `/member/${member_id}`,
                });
             } else if (response.data.role === 'admin') {
-               history.push('/admin');
                localStorage.setItem('role', response.data.role);
+               history.push('/admin');
             } else if (response.data.role === 'Secretary') {
-               localStorage.setItem('auth', true);
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
                localStorage.setItem('name', response.data.name);
                localStorage.setItem('status', response.data.status);
+               localStorage.setItem('balance', response.data.balance);
                localStorage.setItem('role', response.data.role);
                history.push({
                   pathname: `/secretary/${member_id}`,
                });
             } else if (response.data.role === 'President') {
-               localStorage.setItem('auth', true);
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
                localStorage.setItem('name', response.data.name);
                localStorage.setItem('status', response.data.status);
+               localStorage.setItem('balance', response.data.balance);
                localStorage.setItem('role', response.data.role);
                history.push({
                   pathname: `/president/${member_id}`,
                });
             } else if (response.data.role === 'Finance') {
-               localStorage.setItem('auth', true);
                localStorage.setItem('member_id', member_id);
                localStorage.setItem('chapter', response.data.chapter);
                localStorage.setItem('name', response.data.name);
                localStorage.setItem('status', response.data.status);
+               localStorage.setItem('balance', response.data.balance);
                localStorage.setItem('role', response.data.role);
                history.push({
                   pathname: `/finance/${member_id}`,
@@ -130,7 +129,6 @@ function Login() {
                               <Input
                                  className="text-secondary "
                                  type="text"
-                                 mame="member_id"
                                  onChange={(e) => setMember_id(e.target.value)}
                               />
                            </InputGroup>
@@ -150,7 +148,6 @@ function Login() {
                                  <BiLockAlt />
                               </InputGroup.Text>
                               <Input
-                                 name="password"
                                  className="text-secondary border-end-0"
                                  type={isHidden ? 'password' : 'text'}
                                  onChange={(e) => setPassword(e.target.value)}

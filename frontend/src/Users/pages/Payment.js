@@ -18,9 +18,19 @@ export default function Payment() {
          chapter === 'Metro Zamboanga'
             ? 'AeUH-TloPaiFneY_xxZboERWqyxCQpX1hQEgXXkyfS7SiUd2Gbf8jfTEW8K7tMgUEwjri74vYeQF79iN'
             : chapter === 'Western Mindanao State University (WMSU)'
-            ? 'AZbmJPYtB1DsCgR5tAeF_bm8JxvwUYgDx_xitzoh30dIhrYqgYwEm2GVn5BjEhyN53AhatcOoXj1ykti'
+            ? 'AW5H_GNDYl-Ks55_qLd17uJEe1xt60TR7gbdWuAjdu84PsVY8E9sXxrZseZ4FTlcolUb9V3EYCVjDLyC'
             : chapter === 'Southern City Colleges'
             ? 'AcltDSmw1GGXyyHYnoH95j59iCfCH9isXlKAZRXwkYw83wFL2VMkQ9Pze-xWcnpH9Wu8r0__ME8VNbAX'
+            : chapter === 'Tolosa Community'
+            ? 'AQ3QDLqKGgbFYC1oZCETIPH3jJt9cXgtTvRpsBpb5MUtpe2My-KyZ6rLfFqANCoxZQCcsyM2cPgx_54Q'
+            : chapter === 'Universidad De Zamboanga - CES'
+            ? 'AerHO7nMcxTgj7jYOoREnnFFf3pM8hwzi0ws6zb5heYpJIcQJCL1b9jUN6-FR3BBk3HGGaKkr1tkaZqE'
+            : chapter === 'Zamboanga City West'
+            ? 'AZDKK95i32yH9BDsfoAga126ET4nQp-1WWmON07qSkTUj75_CDGi5owVITonp4uIY3S5eLcXaZM4AdWS'
+            : chapter === 'Zamboanga City North'
+            ? 'AZcYVJrdRsjmC0p0XOIsi6U23brJ7rOq-nlb4FsnTI9cBM5cZ4dJCqWhtOBZdEP2QHM2zZ3WLpbwlGt2'
+            : chapter === 'Zamboanga City East'
+            ? 'AYGkV7VtOZLWwfUNMIGRzEueE2aOwEywWpdhrP_q3j82LnsnEPc9QD4RPtdPwSiO5u0vbtcac9OarFoV'
             : '',
    };
 
@@ -48,7 +58,8 @@ export default function Payment() {
                   chapter: chapter,
                   amount: balance,
                }).then((response) => {
-                  history.goBack();
+                  alert('success');
+                  console.log(details.purchase_units.amount);
                });
             }}
             onError={() =>

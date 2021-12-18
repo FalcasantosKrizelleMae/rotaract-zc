@@ -203,6 +203,7 @@ payment.get(`/get_transaction/:chapter`, (req, res) => {
 });
 
 payment.post('/save_payment', (req, res) => {
+   console.log(req.body.details);
    const order_id = req.body.details.id;
    const name =
       req.body.details.payer.name.given_name +
@@ -213,44 +214,47 @@ payment.post('/save_payment', (req, res) => {
    const chapter = req.body.chapter;
    const status = req.body.details.status;
    const member_id = req.body.member_id;
-
-   const save =
-      'INSERT INTO transaction (order_id, name, amount, date, chapter, status, member_id) VALUES (?, ?, ?, ?, ?, ?, ?);';
-   db.query(
-      save,
-      [order_id, name, amount, date, chapter, status, member_id],
-      (err, result) => {
-         if (err) {
-            console.log(err);
-         } else {
-            const setBal =
-               'UPDATE members SET balance = balance - ? WHERE member_id = ?';
-            db.query(setBal, [amount, member_id], (err) => {
-               if (err) {
-                  res.send(err);
-               } else {
-                  const set =
-                     'UPDATE funds SET total_funds = total_funds + ?, collections = collections + ?  WHERE club_name = ?';
-                  db.query(set, [amount, amount, chapter], (err) => {
-                     if (err) {
-                        res.send(err);
-                     } else {
-                        const sql =
-                           'UPDATE payments SET no_of_payers = no_of_payers + 1 WHERE chapter = ? AND status = "current"';
-                        db.query(sql, chapter, (err) => {
-                           if (err) {
-                              res.send(err);
-                           } else {
-                              console.log('success');
-                           }
-                        });
-                     }
-                  });
-               }
-            });
+   if (status === 'COMPLETED') {
+      const save =
+         'INSERT INTO transaction (order_id, name, amount, date, chapter, status, member_id) VALUES (?, ?, ?, ?, ?, ?, ?);';
+      db.query(
+         save,
+         [order_id, name, amount, date, chapter, status, member_id],
+         (err, result) => {
+            if (err) {
+               console.log(err);
+            } else {
+               const setBal =
+                  'UPDATE members SET balance = balance - ? WHERE member_id = ?';
+               db.query(setBal, [amount, member_id], (err) => {
+                  if (err) {
+                     res.send(err);
+                  } else {
+                     const set =
+                        'UPDATE funds SET total_funds = total_funds + ?, collections = collections + ?  WHERE club_name = ?';
+                     db.query(set, [amount, amount, chapter], (err) => {
+                        if (err) {
+                           res.send(err);
+                        } else {
+                           const sql =
+                              'UPDATE payments SET no_of_payers = no_of_payers + 1 WHERE chapter = ? AND status = "current"';
+                           db.query(sql, chapter, (err) => {
+                              if (err) {
+                                 res.send(err);
+                              } else {
+                                 console.log('success');
+                              }
+                           });
+                        }
+                     });
+                  }
+               });
+            }
          }
-      }
-   );
+      );
+   } else {
+      res.send({ message: 'error' });
+   }
 });
 
 module.exports = payment;

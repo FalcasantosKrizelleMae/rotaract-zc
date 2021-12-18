@@ -83,7 +83,7 @@ reports.get('/all', (req, res) => {
       if (err) {
          res.send(err);
       } else {
-         res.send(result);
+         res.send({ message: 'success' });
       }
    });
 });
@@ -120,6 +120,21 @@ reports.post('/accept', (req, res) => {
    );
 });
 
+reports.post('/sent', (req, res) => {
+   const report_id = req.body.report_id;
+   db.query(
+      'UPDATE reports SET status = "sent", date_sent = CURRENT_TIMESTAMP() WHERE report_id = ?;',
+      report_id,
+      (err) => {
+         if (err) {
+            res.send(err);
+         } else {
+            res.send({ message: 'success' });
+         }
+      }
+   );
+});
+
 reports.get('/get_report', (req, res) => {
    const event_id = req.query.event_id;
 
@@ -133,6 +148,32 @@ reports.get('/get_report', (req, res) => {
          console.log(result);
       }
    });
+});
+
+reports.post('/send-mail', (req, res) => {
+   const email = req.body.email;
+   const description = req.body.description;
+   const file = req.body.file;
+
+   transporter.sendMail(
+      {
+         from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+         to: email, // list of receivers
+         subject: 'Rotary Report', // Subject line
+         text: description, // plain text body
+         attachments: [
+            {
+               filename: 'Reports.pdf',
+               path: 'Z:' + file,
+            },
+         ],
+         auth: {
+            user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+            pass: 'rotaractzc', // generated ethereal password
+         },
+      },
+      console.log('success')
+   );
 });
 
 module.exports = reports;

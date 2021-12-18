@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as BiIcons from 'react-icons/bi';
 import { Avatar, Image, Card, PageHeader } from 'antd';
-import { Form, Button, InputGroup } from 'react-bootstrap';
-// import { Input } from 'reactstrap';
-// import Axios from 'axios';
+import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Input } from 'reactstrap';
+import Swal from 'sweetalert2';
+import Axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 function Profile() {
@@ -13,17 +14,31 @@ function Profile() {
    const chapter = localStorage.getItem('chapter');
    const id = localStorage.getItem('member_id');
    const name = localStorage.getItem('name');
+   const balance = localStorage.getItem('balance');
    const [newPassword, setNewPassword] = useState('');
-   const [confirmPassword, setConfirmPassword] = useState('');
+   const [oldPassword, setOldPassword] = useState('');
 
-   const change_pass = (id) => {
-      alert(newPassword + confirmPassword);
-      // Axios.post(`http://localhost:5000/auth/change_password/${id}`, {
-      //    newPassword: newPassword,
-      //    confirmPassword: confirmPassword,
-      // }).then((response) => {
-      //    alert(response.data.message);
-      // });
+   const updatePass = (id) => {
+      Axios.put(`http://localhost:5000/admin/update_pass`, {
+         oldPassword: oldPassword,
+         newPassword: newPassword,
+         member_id: id,
+      }).then((response) => {
+         if (response.data.message === 'success') {
+            Swal.fire({
+               title: 'Password has changed!',
+               icon: 'success',
+            });
+            localStorage.setItem('status', 'old');
+         } else {
+            Swal.fire({
+               title: 'Error!',
+               text: 'Password is invalid',
+               icon: 'error',
+               confirmButtonText: 'Okay',
+            });
+         }
+      });
    };
 
    const tabListNoTitle = [
@@ -42,14 +57,9 @@ function Profile() {
    ];
 
    const [isHidden, setHidden] = useState(true);
-   const [isHidden2, setHidden2] = useState(true);
 
    const togglePasswordVisibility = () => {
       setHidden(!isHidden);
-   };
-
-   const togglePasswordVisibility2 = () => {
-      setHidden2(!isHidden2);
    };
 
    const contentListNoTitle = {
@@ -61,48 +71,61 @@ function Profile() {
       account: (
          <div className="container mt-3 ps-4">
             <h4>CHANGE PASSWORD</h4>
-            <div className="mt-5 col-sm-10 col-md-10 col-lg-7">
+            <div className="mt-5 col-sm-10 col-md-10 col-lg-9">
                <Form action="">
-                  <InputGroup className="mb-3">
-                     <input
-                        className="form-control text-secondary border-end-0 "
-                        type={isHidden ? 'password' : 'text'}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                     />
-                     <InputGroup.Text className="bg-white ">
-                        <span className=" m-0 p-0 bg-white">
-                           <i
-                              className={!isHidden ? 'bi-eye' : 'bi-eye-slash'}
-                              onClick={togglePasswordVisibility}
-                           ></i>
-                        </span>
-                     </InputGroup.Text>
-                  </InputGroup>
-                  <InputGroup>
-                     <input
-                        className="form-control text-secondary border-end-0 "
-                        type={isHidden2 ? 'password' : 'text'}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                     />
-                     <InputGroup.Text className="bg-white ">
-                        <span className=" m-0 p-0 bg-white">
-                           <i
-                              className={!isHidden2 ? 'bi-eye' : 'bi-eye-slash'}
-                              onClick={togglePasswordVisibility2}
-                           ></i>
-                        </span>
-                     </InputGroup.Text>
-                  </InputGroup>
-                  <button className="my-5 btn btn-outline-danger mr-3">
-                     Cancel
-                  </button>{' '}
+                  <Form.Group className="">
+                     <Form.Label className="text-secondary">
+                        Old Password
+                     </Form.Label>
+                     <InputGroup className="">
+                        <Input
+                           className="text-secondary border-end-0"
+                           type={isHidden ? 'password' : 'text'}
+                           onChange={(e) => setOldPassword(e.target.value)}
+                        ></Input>
+                        <InputGroup.Text className="bg-white ">
+                           <span className="btn-white m-0 p-0 bg-white">
+                              <i
+                                 className={
+                                    !isHidden ? 'bi-eye' : 'bi-eye-slash'
+                                 }
+                                 onClick={togglePasswordVisibility}
+                              ></i>
+                           </span>
+                        </InputGroup.Text>
+                     </InputGroup>
+                  </Form.Group>
+                  <Form.Group className="my-4">
+                     <Form.Label className="text-secondary">
+                        New Password
+                     </Form.Label>
+                     <InputGroup className="">
+                        <Input
+                           className="border-end-0"
+                           type={isHidden ? 'password' : 'text'}
+                           onChange={(e) => setNewPassword(e.target.value)}
+                        ></Input>
+                        <InputGroup.Text className="bg-white ">
+                           <span className="btn-white m-0 p-0 bg-white">
+                              <i
+                                 className={
+                                    !isHidden ? 'bi-eye' : 'bi-eye-slash'
+                                 }
+                                 onClick={togglePasswordVisibility}
+                              ></i>
+                           </span>
+                        </InputGroup.Text>
+                     </InputGroup>
+                  </Form.Group>
+
                   <Button
-                     type="submit"
-                     className="my-5 "
-                     variant="primary"
-                     onClick={change_pass}
+                     className="my-4"
+                     variant="outline-success"
+                     onClick={() => {
+                        updatePass(id);
+                     }}
                   >
-                     Change password
+                     Save changes
                   </Button>
                </Form>
             </div>
@@ -156,6 +179,7 @@ function Profile() {
                   </Card>
                </div>
                <div className="col px-4 py-0 mt-0">
+                  <h4>Balance: {balance}</h4>
                   <Card
                      className="rounded shadow-sm"
                      style={{ width: '100%', marginTop: 20 }}

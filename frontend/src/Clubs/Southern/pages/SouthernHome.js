@@ -55,7 +55,7 @@ function Home() {
                      &nbsp; &nbsp;
                      <Link
                         to={{
-                           pathname: `/donate/${chapter}`,
+                           pathname: `/donate-ssc`,
                            state: {
                               chapter: chapter,
                            },

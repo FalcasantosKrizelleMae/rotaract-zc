@@ -61,7 +61,7 @@ function Home() {
                   <div className="mt-5">
                      <Link
                         to={{
-                           pathname: `/donate/${chapter}`,
+                           pathname: `/donate-west`,
                            state: {
                               chapter: chapter,
                            },

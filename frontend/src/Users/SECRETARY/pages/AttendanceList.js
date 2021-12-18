@@ -1,75 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Axios from 'axios';
-import { Table } from 'react-bootstrap';
+import { Collapse, Table } from 'antd';
+
+const { Panel } = Collapse;
 
 const AttendanceList = () => {
    const [events, setEvents] = useState([]);
    const [list, setList] = useState([]);
    // const [body, setBody] = useState(false);
    const chapter = localStorage.getItem('chapter');
-   //Display all data
+
    useEffect(() => {
-      Axios.get(`http://localhost:5000/events/${chapter}`).then((response) => {
-         if (response) {
-            setEvents(response.data);
-            Axios.get(`http://localhost:5000/sect/getAttendance`, {
-               params: {
-                  event_id: response.data.event_id,
-               },
-            }).then((result) => {
-               if (result) {
-                  setList(result.data);
-               }
-            });
+      Axios.get(`http://localhost:5000/sect/getAll`, {
+         params: {
+            chapter: chapter,
+         },
+      }).then((result) => {
+         if (result) {
+            setList(result.data);
          }
       });
    });
+
+   const columns = [
+      {
+         title: 'Member ID',
+         dataIndex: 'member_id',
+         key: 'member_id',
+      },
+      {
+         title: 'First name',
+         dataIndex: 'first_name',
+         key: 'first_name',
+      },
+      {
+         title: 'Last name',
+         dataIndex: 'last_name',
+         key: 'last_name',
+      },
+      {
+         title: 'Status',
+         dataIndex: 'status',
+         key: 'status',
+      },
+   ];
 
    return (
       <>
          <Navbar />
          <div className="main container">
-            <h1>Attendance list</h1>
-
-            {/* <Accordion>
-               <Accordion.Item eventKey="0">
-                  <Accordion.Header>Header 1</Accordion.Header>
-                  <Accordion.Body>Body 1</Accordion.Body>
-               </Accordion.Item>
-            </Accordion> */}
-
-            {events.length === 0 ? (
-               <>
-                  <div className="container bg-pink text-white p-4 rounded">
-                     No Events
+            <div className="shadow p-5 rounded">
+               <div className="row">
+                  <div className="col-sm">
+                     {' '}
+                     <h3 className="text-pink mb-5">Attendance</h3>
                   </div>
-               </>
-            ) : (
-               events.map((val) => {
-                  return (
-                     <>
-                        <div className="accordion">
-                           <div className="accordion-item p-4">
-                              <div className="accordion-header">
-                                 <div className="fs-5 float-start">
-                                    {val.event_id} <b className="ms-5"></b>
-                                    {val.title}
-                                 </div>
-
-                                 <div className="float-end">
-                                    <span className="badge rounded-pill bg-info">
-                                       {val.type}
-                                    </span>
-                                 </div>
-                              </div>
-                              <div className="accordion-body p-5"> </div>
-                           </div>
+                  {events.length === 0 ? (
+                     <div>
+                        <div className="container bg-pink text-white p-4 rounded">
+                           No Events
                         </div>
-                     </>
-                  );
-               })
-            )}
+                     </div>
+                  ) : (
+                     events.map((val) => {
+                        return (
+                           <>
+                              <Collapse
+                                 bordered={false}
+                                 className="site-collapse-custom-collapse bg-white shadow-sm"
+                              >
+                                 <Panel
+                                    header={val.title}
+                                    className="site-collapse-custom-panel "
+                                 >
+                                    <Table
+                                       dataSource={list}
+                                       columns={columns}
+                                    />
+                                 </Panel>
+                              </Collapse>
+                           </>
+                        );
+                     })
+                  )}
+               </div>
+            </div>
          </div>
       </>
    );

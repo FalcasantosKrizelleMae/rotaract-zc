@@ -119,7 +119,14 @@ class Header extends Component {
                   classname="m-0"
                   title="SECRETARY"
                >
-                  <Menu.Item key="profile">Profile</Menu.Item>
+                  <Menu.Item key="profile">
+                     <Link
+                        to={{ pathname: `/profile/${member_id}` }}
+                        className="text-decoration-none"
+                     >
+                        Profile
+                     </Link>
+                  </Menu.Item>
                   <Menu.Item key="logout">
                      <button
                         onClick={() => {

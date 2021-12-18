@@ -22,6 +22,17 @@ const AdminRoute = ({ component: Component, ...rest }) => {
                      <Component {...props} />;
                   </>
                );
+            } else if (role === 'admin') {
+               return (
+                  <>
+                     <Redirect
+                        to={{
+                           pathname: '/admin',
+                        }}
+                     />
+                     <Component {...props} />;
+                  </>
+               );
             } else if (auth && role !== 'admin') {
                history.goBack();
             } else {

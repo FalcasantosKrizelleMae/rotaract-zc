@@ -48,11 +48,12 @@ const Donate = () => {
                            // LIVE
                            options={{
                               clientId:
-                                 'AZDKK95i32yH9BDsfoAga126ET4nQp-1WWmON07qSkTUj75_CDGi5owVITonp4uIY3S5eLcXaZM4AdWS',
+                                 'AZfUgTirEtq72q4TxCouGBzArNxFu8r3V4du7sA5FNuiMPWTKpUHlq5hSjYJQntxx4M26rDZRiL_y8Od',
                               currency: 'PHP',
                            }}
                            amount={amount}
                            onSuccess={(details, data) => {
+                              console.log(details);
                               Axios.post(
                                  'http://localhost:5000/donations/save_donation',
                                  {

@@ -224,10 +224,9 @@ const SectEvent = () => {
                      </Button>
                   </div>
                </div>
-               <Table borderless hover>
+               <Table border>
                   <thead className="text-center text-white bg-pink text-uppercase">
                      <tr>
-                        {' '}
                         <td>EVENT ID</td>
                         <td>EVENT TYPE</td>
                         <td>Event Name</td>

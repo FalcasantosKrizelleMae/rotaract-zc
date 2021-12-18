@@ -60,7 +60,9 @@ const Send = () => {
                            <div className="col">
                               <Button
                                  type="primary"
-                                 onClick={toPdf}
+                                 onClick={() => {
+                                    toPdf();
+                                 }}
                                  shape="round"
                                  icon={
                                     <>
@@ -71,7 +73,14 @@ const Send = () => {
                               >
                                  {' '}
                                  Download as PDF
-                              </Button>
+                              </Button>{' '}
+                              <a
+                                 href="https://mail.google.com/mail/u/0/#inbox?compose=new"
+                                 target="_blank"
+                              >
+                                 {' '}
+                                 Send Email
+                              </a>
                            </div>
                         </div>
                      </>
@@ -115,7 +124,7 @@ const Send = () => {
                                           Event type
                                        </td>
                                        <td className="text-uppercase">
-                                          {val.title}
+                                          {val.type}
                                        </td>
                                     </tr>
                                     <tr>

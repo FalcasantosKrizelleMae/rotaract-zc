@@ -48,7 +48,7 @@ const Donate = () => {
                            // LIVE
                            options={{
                               clientId:
-                                 'AZDKK95i32yH9BDsfoAga126ET4nQp-1WWmON07qSkTUj75_CDGi5owVITonp4uIY3S5eLcXaZM4AdWS',
+                                 'AerHO7nMcxTgj7jYOoREnnFFf3pM8hwzi0ws6zb5heYpJIcQJCL1b9jUN6-FR3BBk3HGGaKkr1tkaZqE',
                               currency: 'PHP',
                            }}
                            amount={amount}
@@ -62,10 +62,7 @@ const Donate = () => {
                                  }
                               ).then((response) => {
                                  if (response) {
-                                    alert(
-                                       'Donation complete! Thank you for donation us ' +
-                                          details.payer.name.given_name
-                                    );
+                                    alert(response.data[0].status);
                                  } else {
                                     alert('error');
                                  }

@@ -240,6 +240,54 @@ admin.put('/update_admin', (req, res) => {
    });
 });
 
+admin.put('/update_pass', (req, res) => {
+   const old_password = req.body.oldPassword;
+   const new_password = req.body.newPassword;
+   const member_id = req.body.member_id;
+
+   const sqlAll = 'SELECT * FROM users WHERE member_id = ?';
+   db.query(sqlAll, member_id, (err, result) => {
+      bcrypt.compare(old_password, result[0].password, (err, response) => {
+         if (response) {
+            bcrypt.hash(new_password, saltRounds, (err, hash) => {
+               if (err) {
+                  console.log(err);
+               } else {
+                  bcrypt.hash(new_password, saltRounds, (err, hash) => {
+                     if (err) {
+                        console.log(err);
+                     }
+                     const sqlEdit =
+                        'UPDATE users set password = ? WHERE member_id = ?';
+                     db.query(sqlEdit, [hash, member_id], (err) => {
+                        if (err) {
+                           res.send(err);
+                        } else {
+                           db.query(
+                              'UPDATE members set status = "old" WHERE member_id = ?',
+                              member_id,
+                              (err) => {
+                                 if (err) {
+                                    res.send(err);
+                                 } else {
+                                    res.send({ message: 'success' });
+                                 }
+                              }
+                           );
+                        }
+                     });
+                  });
+               }
+            });
+         } else {
+            res.send({
+               message: "User doesn't exist",
+            });
+         }
+      });
+   });
+});
+
 //CALENDAR
 admin.get('/getEvent', (req, res) => {});
 

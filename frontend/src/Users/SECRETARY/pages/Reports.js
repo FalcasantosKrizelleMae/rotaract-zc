@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+
 import { useHistory } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import * as AiIcons from 'react-icons/ai';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
+import Swal from 'sweetalert2';
 
 const Reports = () => {
    const [list, setList] = useState([]);
@@ -20,6 +23,29 @@ const Reports = () => {
       });
    });
 
+   const sent = (report_id) => {
+      Axios.post(`http://localhost:5000/reports/sent`, {
+         report_id: report_id,
+      }).then((response) => {
+         if (response) {
+            if (response.data.message === 'success') {
+               Swal.fire({
+                  title: 'Success!',
+                  text: 'Record updated successfully!',
+                  icon: 'success',
+               });
+            } else if (response.data.message === 'exist') {
+               Swal.fire({
+                  title: 'Error!',
+                  text: 'Unsuccessful',
+                  icon: 'error',
+                  confirmButtonText: 'Okay',
+               });
+            }
+         }
+      });
+   };
+
    return (
       <>
          <Navbar />
@@ -30,14 +56,8 @@ const Reports = () => {
                      {' '}
                      <h3 className="text-pink mb-5">Reports</h3>
                   </div>
-
-                  <div className="col-sm">
-                     <Button className="float-end" variant="outline-secondary">
-                        + Add new report
-                     </Button>
-                  </div>
                </div>
-               <Table borderless hover className="border">
+               <Table className="border">
                   <thead className="text-center text-white bg-pink text-uppercase">
                      <tr>
                         {' '}
@@ -94,19 +114,16 @@ const Reports = () => {
                                  </>
                               ) : (
                                  <>
-                                    <td>N/A</td>
+                                    <td>
+                                       {moment(val.date_reviewed).format(
+                                          'llll'
+                                       )}
+                                    </td>
                                     <td>N/A</td>
                                     <td>
+                                       {''}
                                        <Button
-                                          variant="white"
-                                          data-tip
-                                          data-for="view"
-                                          className="text-primary"
-                                       >
-                                          <AiIcons.AiFillEye />
-                                       </Button>
-                                       <Button
-                                          variant="primary"
+                                          size="sm"
                                           onClick={() =>
                                              history.push({
                                                 pathname: `/send`,
@@ -117,6 +134,13 @@ const Reports = () => {
                                           }
                                        >
                                           View report
+                                       </Button>{' '}
+                                       <Button
+                                          type="primary"
+                                          size="sm"
+                                          onClick={sent(val.report_id)}
+                                       >
+                                          Sent
                                        </Button>
                                     </td>
                                  </>

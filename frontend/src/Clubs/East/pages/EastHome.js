@@ -56,7 +56,7 @@ function Home() {
                   <div className="mt-5">
                      <Link
                         to={{
-                           pathname: `/donate/${chapter}`,
+                           pathname: `/donate-east`,
                            state: {
                               chapter: chapter,
                            },
@@ -72,9 +72,8 @@ function Home() {
                         onClick={closeMenu}
                         className="btn bg-light px-3 text-pink"
                      >
-                        Explore{' '}
+                        Explore {''} <BiIcons.BiRightArrowAlt />{' '}
                      </a>
-                     <BiIcons.BiRightArrowAlt />{' '}
                   </div>
                </div>
 

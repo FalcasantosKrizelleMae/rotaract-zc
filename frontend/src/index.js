@@ -9,10 +9,12 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'flickity/dist/flickity.min.css';
 import 'antd/dist/antd.min.css';
 import 'antd/dist/antd.css';
-<script
+{
+   /* <script
    src="https://www.paypal.com/sdk/js?client-id=ASmqp-k2pRjAgKfz5csLmYKVI9wz8mmWqnv4_Y3dHl6oK5Ue66maexbld_2M92oczBhIXQQPbknwmecd&enable-funding=venmo&currency=PHP"
    data-sdk-integration-source="button-factory"
-></script>;
+></script>; */
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

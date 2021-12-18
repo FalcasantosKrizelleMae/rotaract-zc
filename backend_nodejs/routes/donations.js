@@ -21,6 +21,8 @@ let transporter = nodemailer.createTransport({
 });
 
 donations.post('/save_donation', (req, res) => {
+   console.log(req.body.details.purchase_units.amount);
+
    const order_id = req.body.details.id;
    const name =
       req.body.details.payer.name.given_name +
@@ -31,50 +33,53 @@ donations.post('/save_donation', (req, res) => {
    const chapter = req.body.chapter;
    const status = req.body.details.status;
 
-   const save =
-      'INSERT INTO donations (order_id, name, amount, date, club_name, status) VALUES (?, ?, ?, ?, ?, ?);';
-   db.query(save, [order_id, name, amount, date, chapter, status], (err) => {
-      if (err) {
-         console.log(err);
-      } else {
-         const set =
-            'UPDATE funds SET total_funds = total_funds + ?, donations = donations + ?  WHERE club_name = ?';
-         db.query(set, [amount, amount, chapter], (err, result) => {
-            if (err) {
-               res.send(err);
-            } else {
-               const sqlAll = 'SELECT email FROM members WHERE chapter = ?';
-               db.query(sqlAll, chapter, (err, result) => {
-                  const emailList = JSON.parse(JSON.stringify(result));
+   if (status == 'COMPLETED') {
+      const save =
+         'INSERT INTO donations (order_id, name, amount, date, club_name, status) VALUES (?, ?, ?, ?, ?, ?);';
+      db.query(save, [order_id, name, amount, date, chapter, status], (err) => {
+         if (err) {
+            console.log(err);
+         } else {
+            const set =
+               'UPDATE funds SET total_funds = total_funds + ?, donations = donations + ?  WHERE club_name = ?';
+            db.query(set, [amount, amount, chapter], (err, result) => {
+               if (err) {
+                  res.send(err);
+               } else {
+                  const sqlAll = 'SELECT email FROM members WHERE chapter = ?';
+                  db.query(sqlAll, chapter, (err, result) => {
+                     const emailList = JSON.parse(JSON.stringify(result));
 
-                  emailList.forEach((element) => {
-                     let info = transporter.sendMail({
-                        from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
-                        to: element.email, // list of receivers
-                        subject: 'DONATION RECEIVED', // Subject line
+                     emailList.forEach((element) => {
+                        let info = transporter.sendMail({
+                           from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                           to: element.email, // list of receivers
+                           subject: 'DONATION RECEIVED', // Subject line
 
-                        html: `<h1>SOMEONE DONATED IN YOUR CLUB</h1> <br/>
+                           html: `<h1>SOMEONE DONATED IN YOUR CLUB</h1> <br/>
                         <h3>Donation details: </h3> <br/> 
                         <h3>Name: ${name}</b> <br/> Date: <b>${moment(
-                           date
-                        ).format('LLLL')} <br/>
+                              date
+                           ).format('LLLL')} <br/>
                         Amount:${amount} </b>   <br/>.
                         <i> CHAPTER: ${chapter}
                         </i>`,
 
-                        auth: {
-                           user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
-                           pass: 'rotaractzc', // generated ethereal password
-                        },
+                           auth: {
+                              user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                              pass: 'rotaractzc', // generated ethereal password
+                           },
+                        });
                      });
+                     res.send({ message: 'success' });
                   });
-
-                  res.send(result);
-               });
-            }
-         });
-      }
-   });
+               }
+            });
+         }
+      });
+   } else {
+      res.send({ message: 'failed' });
+   }
 });
 
 module.exports = donations;

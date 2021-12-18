@@ -12,6 +12,7 @@ function Scan() {
    const [member_id, setMemberId] = useState();
    const [mark, setMark] = useState('present');
    const id = localStorage.getItem('member_id');
+   const [attendanceList, setAttendanceList] = useState([]);
    let history = useHistory();
    const [scanResultWebCam, setScanResultWebCam] = useState('');
 
@@ -56,6 +57,7 @@ function Scan() {
 
                if (getchapter === chapter) {
                   setData(response.data);
+                  setMemberId(response.data[0].member_id);
 
                   // Axios.post(`http://localhost:5000/sect/add_attendance`, {
                   //    event_id: event,
@@ -73,6 +75,16 @@ function Scan() {
             }
          }
       );
+
+      Axios.get(`http://localhost:5000/sect/getAttendance`, {
+         params: {
+            event_id: event_id,
+         },
+      }).then((result) => {
+         if (result) {
+            setAttendanceList(result.data);
+         }
+      });
    });
 
    return (
@@ -122,9 +134,6 @@ function Scan() {
                                              name="member_id"
                                              className="form-control "
                                              value={val.member_id}
-                                             onChange={(e) =>
-                                                setMemberId(val.member_id)
-                                             }
                                           />
                                        </td>
                                        <td>
@@ -186,6 +195,41 @@ function Scan() {
                   })
                )}
             </div>
+         </div>
+         <div className="container col-lg shadow-sm p-5 mt-4 px-5 mx-2">
+            <h4>Attendance List</h4>
+            <Table bordered className="bg-white">
+               <thead>
+                  <tr className="">
+                     <th>Member ID</th>
+                     <th>Name</th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {attendanceList.map((val) => {
+                     return (
+                        <tr>
+                           <td>{val.member_id}</td>
+                           <td>{val.first_name + ' ' + val.last_name}</td>
+                           <td>
+                              {val.status === 'present' ? (
+                                 <>
+                                    <span className="badge bg-success rounded-pill">
+                                       {val.status}
+                                    </span>
+                                 </>
+                              ) : (
+                                 <span className="badge bg-warning rounded-pill">
+                                    {val.status}
+                                 </span>
+                              )}
+                           </td>
+                        </tr>
+                     );
+                  })}
+               </tbody>
+            </Table>
          </div>
       </div>
    );
