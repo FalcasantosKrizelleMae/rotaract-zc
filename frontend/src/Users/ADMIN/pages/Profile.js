@@ -65,12 +65,12 @@ function ProfileAdmin() {
    return (
       <>
          <Navbar />
-         <div className="main mx-5">
-            <div className="container-fluid bg-pink p-3  rounded">
-               <h5 className="m-0 text-white">SETTINGS</h5>
+         <div className="container main ">
+            <div className="bg-pink p-3 rounded fs-3 text-white ps-4 mb-5 mt-2 ">
+               SETTINGS
             </div>
 
-            <div className="mt-5 col-sm-6">
+            <div className=" container mt-5 ">
                <Card>
                   <Card.Header>
                      <Nav variant="tabs" defaultActiveKey="#first">

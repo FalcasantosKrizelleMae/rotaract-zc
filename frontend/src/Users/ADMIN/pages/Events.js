@@ -235,8 +235,8 @@ function Events() {
       <div>
          <Navbar />
          <div className="main mx-5">
-            <div className="container-fluid bg-pink p-3 mb-4 rounded">
-               <h5 className="m-0 text-white">EVENTS</h5>
+            <div className="bg-pink p-3 rounded fs-3 text-white ps-4 mb-5 mt-2 ">
+               EVENTS
             </div>
             <div className="row">
                <div className="col-lg">

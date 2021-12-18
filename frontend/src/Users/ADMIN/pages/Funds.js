@@ -12,43 +12,46 @@ const Funds = () => {
             setList(response.data);
          }
       });
+
+      Axios.get('http://localhost:5000/funds/all').then((response) => {
+         if (response) {
+            setList(response.data);
+         }
+      });
    }, []);
 
    return (
       <>
          <Navbar />
-         <div className="main mx-5">
+         <div className="container main">
             <div className="bg-pink p-3 rounded fs-4 text-white ps-4 mt-2 container">
                CLUB FUNDS
             </div>
 
-            <div className="row d-flex justify-content-center">
+            <div className="row container d-flex justify-content-center">
                {list.map((val) => {
                   return (
                      <Card
-                        className="col-lg-5 mx-3 mt-4 rounded "
+                        className="col-lg-3 mx-3 mt-5 shadow-sm "
                         title={val.club_name}
-                        //     extra={<a href="#">More</a>}
-                        style={{ width: 400 }}
+                        style={{ height: 300, width: 500 }}
                         headStyle={{ backgroundColor: '#eee' }}
                      >
-                        <p className="col-lg-5 float-end">
-                           Total Expenses: <br />
-                           <b>{val.expenses}</b>
-                        </p>
-                        <p>
-                           {' '}
-                           TOTAL FUNDS: <br />
-                           <b>{val.total_funds}</b>
-                        </p>
-                        <p className="col-lg-5 float-end">
-                           No of donations: <br />
-                           <b>{val.no_of_donations}</b>
-                        </p>{' '}
-                        <p>
-                           Donations receieved: <br />
-                           <b>{val.donations}</b>
-                        </p>
+                        <div className="p-4 ">
+                           <h6 className="float-end">
+                              Total Expenses: <br />
+                              <h4>{val.expenses}</h4>
+                           </h6>
+                           <h6>
+                              TOTAL FUNDS: <br />
+                              <h4>{val.total_funds}</h4>
+                           </h6>
+                           <br />
+                           <h6>
+                              Donations receieved: <br />
+                              <h4>{val.donations}</h4>
+                           </h6>
+                        </div>
                      </Card>
                   );
                })}
