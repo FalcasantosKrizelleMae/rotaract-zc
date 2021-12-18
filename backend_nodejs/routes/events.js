@@ -158,11 +158,11 @@ event.post('/add_event-admin', (req, res) => {
                               subject:
                                  ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
 
-                              html: `<h4>A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
+                              html: `<h4>A new event is coming your way. </h4> <br/> Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
                                  start
                               ).format(
                                  'LLL'
-                              )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+                              )}</b> <br/> Other details: <b> ${description}</b> <br/> Platform: <b> ${platform}</b> <br/> Link: <a href="${link}"> ${link}</a> <br/> Hosted by: <b> ${host}</b> <br/> Venue: <b> ${venue}</b> <br/> Email: <b> ${email}</b> <br/> Chairperson: <b> ${chairperson}`,
 
                               auth: {
                                  user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
@@ -373,7 +373,7 @@ event.get('/:chapter', (req, res) => {
          //    if (err) {
          //       res.send(err);
          //    } else {
-         //       res.send(result);
+         //       res.send(resust);
          //    }
          // });
       }
@@ -424,15 +424,27 @@ event.get('/accept/:id', (req, res) => {
                      let info = transporter.sendMail({
                         from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
                         to: element.email, // list of receivers
-                        subject: ' A NEW EVENT FOR ZAMBOANGA MEMBERS', // Subject line
+                        subject: ` A ${result[0].title} EVENT FOR ZAMBOANGA MEMBERS`, // Subject line
 
-                        html: `<h4>A new event is coming your way. </h4>  Event details: <br/> What: <b> ${
+                        html: `<h4>A new event is coming your way. </h4> <br/> Event details: <br/> What: <b> ${
                            result[0].title
                         }</b> <br/> When: <b>${moment(result[0].start).format(
                            'LLL'
                         )}</b> <br/> Other details: <b> ${
                            result[0].description
-                        }</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+                        }</b> <br/> Platform: <b> ${
+                           result[0].platform
+                        }</b> <br/> Link: <a href="${result[0].link}"> ${
+                           result[0].link
+                        }</a> <br/> Hosted by: <b> ${
+                           result[0].host
+                        }</b> <br/> Venue: <b> ${
+                           result[0].venue
+                        }</b> <br/> Email: <b> ${
+                           result[0].email
+                        }</b> <br/> Chairperson: <b> ${result[0].chairperson}
+ 
+                        <br/> </b> <br/> </b> <br/>  <i>NOTE: For virtual events, kindly present your QR Code for attedance. Have a great day ahead!</i>`,
 
                         auth: {
                            user: 'rotaryzamboangacity@gmail.com', // generated ethereal user

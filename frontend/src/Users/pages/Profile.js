@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as BiIcons from 'react-icons/bi';
-import { Avatar, Image, Card, PageHeader } from 'antd';
+import { Avatar, Image, Card, PageHeader, Table } from 'antd';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { Input } from 'reactstrap';
 import Swal from 'sweetalert2';
@@ -13,9 +13,11 @@ function Profile() {
    useForm();
    let history = useHistory();
    const [dataList, setDataList] = useState([]);
+   const [payments, setPayments] = useState([]);
    const chapter = localStorage.getItem('chapter');
    const id = localStorage.getItem('member_id');
    const name = localStorage.getItem('name');
+   const bal = localStorage.getItem('balance');
 
    const [newPassword, setNewPassword] = useState('');
    const [oldPassword, setOldPassword] = useState('');
@@ -52,11 +54,24 @@ function Profile() {
             }
          }
       );
-      Axios.get(`http://localhost:5000/payment/get_payment/${chapter}`)
-         .then((response) => {
+      Axios.get(`http://localhost:5000/payment/get_payment/${chapter}`).then(
+         (response) => {
             if (response) {
                // console.log(response.data);
                setDataList(response.data);
+            }
+         }
+      );
+
+      Axios.get(`http://localhost:5000/payment/get_transaction`, {
+         params: {
+            member_id: id,
+         },
+      })
+         .then((response) => {
+            if (response) {
+               // console.log(response.data);
+               setPayments(response.data);
             }
          })
 
@@ -65,16 +80,12 @@ function Profile() {
 
    const tabListNoTitle = [
       {
-         key: 'transactions',
-         tab: 'Transactions',
-      },
-      {
          key: 'account',
          tab: 'Account',
       },
       {
          key: 'history',
-         tab: 'History',
+         tab: 'Payment History',
       },
    ];
 
@@ -84,12 +95,31 @@ function Profile() {
       setHidden(!isHidden);
    };
 
+   const columns = [
+      {
+         title: 'Payment ID',
+         dataIndex: 'order_id',
+         key: 'order_id',
+      },
+      {
+         title: 'Name',
+         dataIndex: 'name',
+         key: 'name',
+      },
+
+      {
+         title: 'Date',
+         dataIndex: 'date',
+         key: 'date',
+      },
+      {
+         title: 'Status',
+         dataIndex: 'status',
+         key: 'status',
+      },
+   ];
+
    const contentListNoTitle = {
-      transactions: (
-         <div>
-            <h3>Transactions</h3>
-         </div>
-      ),
       account: (
          <div className="container mt-3 ps-4">
             <h4>CHANGE PASSWORD</h4>
@@ -153,7 +183,11 @@ function Profile() {
             </div>
          </div>
       ),
-      history: <p>project content</p>,
+      history: (
+         <>
+            <Table dataSource={payments} columns={columns} />
+         </>
+      ),
    };
 
    const [activeTabKey, setActiveTabKey] = useState('transactions');
@@ -201,41 +235,45 @@ function Profile() {
                   </Card>
                </div>
                <div className="col px-4 py-0 mt-0">
-                  <div className="container shadow-sm rounded border p-4">
+                  <div className="container shadow-sm rounded p-4">
                      {list.map((item) => {
                         return (
                            <>
                               BALANCE: {''} <br />
                               <br />
-                              <h3>{item.balance} php</h3>
+                              <h2>{bal} php</h2>
+                              {bal === '0' ? (
+                                 ' '
+                              ) : (
+                                 <Button
+                                    className="float-end"
+                                    type="primary"
+                                    onClick={() => {
+                                       history.push('/pay-mem');
+                                    }}
+                                 >
+                                    Pay now
+                                 </Button>
+                              )}
                            </>
                         );
                      })}
-
                      {dataList.map((item) => {
                         return (
-                           <h6 className="mb-3">
+                           <h6 className="mt-5">
                               Payment for this month ({moment().format('MMMM')}
                               ): <br />
-                              {item.amount} php
+                              <h6> {item.amount} php</h6>
                               <br />
-                              <br />
-                              Due Date: <br />
-                              {moment(item.due_date).format('llll')}
+                              <div className="text-danger fs-6">
+                                 Due Date: <br />
+                                 {moment(item.due_date).format('llll')}
+                              </div>
                               <br />
                               <br />
                            </h6>
                         );
                      })}
-
-                     <Button
-                        type="primary"
-                        onClick={() => {
-                           history.push('/pay-mem');
-                        }}
-                     >
-                        Pay now
-                     </Button>
                   </div>
 
                   <Card

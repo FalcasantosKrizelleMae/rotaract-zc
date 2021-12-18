@@ -169,7 +169,7 @@ payment.post('/save_payment', (req, res) => {
                               if (err) {
                                  res.send(err);
                               } else {
-                                 console.log('success');
+                                 res.send(result);
                               }
                            });
                         }
@@ -182,6 +182,18 @@ payment.post('/save_payment', (req, res) => {
    } else {
       res.send({ message: 'error' });
    }
+});
+
+payment.get(`/get_transaction`, (req, res) => {
+   const member_id = req.query.member_id;
+   const sqlGet = 'SELECT * from transaction WHERE member_id = ?';
+   db.query(sqlGet, member_id, (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.send(result);
+      }
+   });
 });
 
 module.exports = payment;

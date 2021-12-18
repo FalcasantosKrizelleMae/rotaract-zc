@@ -1,4 +1,4 @@
-import Navbar from './components/Navbar';
+import Events from './pages/Events';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'antd';
@@ -35,17 +35,13 @@ function MemberPage() {
             onCancel() {},
          });
       } else {
-         alert('old member');
+         console.log('old');
       }
    });
 
    return (
       <div>
-         <Navbar />
-
-         <div className="main">
-            {name} <br /> {status}
-         </div>
+         <Events />
       </div>
    );
 }

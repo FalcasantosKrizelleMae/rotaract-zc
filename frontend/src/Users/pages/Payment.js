@@ -11,7 +11,7 @@ export default function Payment() {
    const chapter = localStorage.getItem('chapter');
    const amount = localStorage.getItem('balance');
    const member_id = localStorage.getItem('member_id');
-   const balance = '' + amount;
+   const bal = '' + amount;
 
    const initialOptions = {
       'client-id':
@@ -45,21 +45,28 @@ export default function Payment() {
             />
          </div>
 
+         <h4>
+            Select Payment Method: <br /> <br />
+         </h4>
+
          <PayPalButton
             options={{
                clientId: initialOptions['client-id'],
                currency: 'PHP',
             }}
-            amount={balance}
+            amount={bal}
             onSuccess={(details, data) => {
                Axios.post('http://localhost:5000/payment/save_payment', {
                   details: details,
                   member_id: member_id,
                   chapter: chapter,
-                  amount: balance,
+                  amount: bal,
                }).then((response) => {
-                  alert('success');
-                  console.log(details.purchase_units.amount);
+                  if (response) {
+                     history.push('/success');
+
+                     localStorage.setItem('balance', 0);
+                  }
                });
             }}
             onError={() =>

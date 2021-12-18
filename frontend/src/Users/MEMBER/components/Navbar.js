@@ -48,15 +48,24 @@ class Header extends Component {
                   icon={<AiIcons.AiOutlineCalendar />}
                   className="item"
                >
-                   <Link
+                  <Link
                      to={{ pathname: `/events/${member_id}` }}
                      className="text-decoration-none"
                   >
-                  Events
+                     Events
                   </Link>
                </Menu.Item>
-             
-               <Menu.Item
+
+               <Menu.Item key="profile" icon={<AiIcons.AiOutlineUser />}>
+                  <Link
+                     to={{ pathname: `/profile/${member_id}` }}
+                     className="text-decoration-none"
+                  >
+                     Profile
+                  </Link>
+               </Menu.Item>
+
+               {/* <Menu.Item
                   key="alipay"
                   icon={<AiIcons.AiOutlineAccountBook />}
                   className="item"
@@ -67,11 +76,11 @@ class Header extends Component {
                   >
                      Transaction
                   </Link>
-               </Menu.Item>
+               </Menu.Item> */}
 
                <Menu.Item className=" ms-auto me-0 pe-0"> </Menu.Item>
                <SubMenu
-                  key="SubMenu1"
+                  key="profile"
                   icon={<AiIcons.AiOutlineCaretDown />}
                   classname="m-0"
                   title={name}
