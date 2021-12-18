@@ -27,79 +27,6 @@ let transporter = nodemailer.createTransport({
    ssl: 465, // true for 465, false for other ports
 });
 
-// //PAY
-// payment.post('/pay', (req, res) => {
-//    const create_payment_json = {
-//       redirect_urls: {
-//          return_url: 'http://localhost:5000/payment/success',
-//          cancel_url: 'http://localhost:3000/cancel',
-//       },
-//    };
-
-//    paypal.payment.create(create_payment_json, function (error, payment) {
-//       if (error) {
-//          throw error;
-//       } else {
-//          for (let i = 0; i < payment.links.length; i++) {
-//             if (payment.links[i].rel === 'approval_url') {
-//                res.send(payment.links[i].href);
-//             }
-//          }
-//       }
-//    });
-// });
-
-// payment.get('/success', (req, res) => {
-//    const payerId = req.query.PayerID;
-//    const paymentId = req.query.paymentId;
-
-//    const execute_payment_json = {
-//       payer_id: payerId,
-//       transactions: [
-//          {
-//             amount: {
-//                currency: 'USD',
-//                total: '20.00',
-//             },
-//          },
-//       ],
-//    };
-
-//    paypal.payment.execute(
-//       paymentId,
-//       execute_payment_json,
-//       function (error, payment) {
-//          if (error) {
-//             console.log(error.response);
-//             throw error;
-//          } else {
-//             const data = payment.payer.payer_info;
-//             res.send(`
-//                Payment details: <br/>
-//                Payment id: ${payment.id} <br/>
-//                Sender name: ${data.first_name + ' ' + data.last_name}   <br/>
-//                Email: ${payment.transactions[0].payee.email} <br/> <br/>
-//                Transaction details: <br/> Amount:  ${
-//                   payment.transactions[0].amount.total +
-//                   ' ' +
-//                   payment.transactions[0].amount.currency
-//                }   <br/>
-
-//                Payment method: ${payment.payer.payment_method} <br/>
-//                Description: ${payment.transactions[0].description} <br/>
-//                Transaction fee: ${
-//                   payment.transactions[0].related_resources[0].sale
-//                      .transaction_fee.value +
-//                   ' ' +
-//                   payment.transactions[0].related_resources[0].sale
-//                      .transaction_fee.currency
-//                }
-//             `);
-//          }
-//       }
-//    );
-// });
-
 //SET PAYMENT
 payment.post('/set_payment', (req, res) => {
    const amount = req.body.amount;
@@ -127,11 +54,11 @@ payment.post('/set_payment', (req, res) => {
                      to: element.email, // list of receivers
                      subject: 'A reminder for your payment!', // Subject line
 
-                     html: `<b>REMINDER!!!! <br/> Monthly dues must be paid on time, thank you! </h4>  Event details: <br/> Amount: <b> ${amount}</b> <br/> <div classname="text-danger">Due date: <b>${moment(
+                     html: `<b>REMINDER!!!! <br/> Monthly dues must be paid on time, thank you! </h4>  DETAILS: <br/> Amount: <b> ${amount}</b> <br/> <div classname="text-danger">Due date: <b>${moment(
                         due_date
                      ).format(
                         'll'
-                     )}</b> </div> <br/> Other details: <br/><br/> <i>You can using Paypal and credit card</i>`,
+                     )}</b> </div> <br/> Other details: <br/><br/> <i>You can pay thru Paypal or using Credit card</i>`,
 
                      auth: {
                         user: 'rotaryzamboangacity@gmail.com', // generated ethereal user

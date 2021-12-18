@@ -25,9 +25,10 @@ import PresAccounts from './Users/PRESIDENT/pages/Accounts';
 
 import PresDashboard from './Users/PRESIDENT/pages/Dashboard';
 import Transactions from './Users/MEMBER/pages/Transactions';
-import MemDashboard from './Users/MEMBER/';
+import MemEvents from './Users/MEMBER/pages/Events';
 import Profile from './Users/pages/Profile';
 import Payments from './Users/FINANCE/pages/Payments';
+import Member from './Users/MEMBER';
 
 import Payment from './Users/pages/Payment';
 // import ProtectedRoute from './ProtectedRoute';
@@ -78,6 +79,7 @@ function App() {
             <Route path="/finance" component={() => <Finance />} />
 
             <Route path="/president" component={() => <President />} />
+            <Route path="/member" component={() => <Member />} />
 
             {/* DONATE */}
             <Route path="/donate-west" component={() => <DonateWest />} />
@@ -131,7 +133,7 @@ function App() {
 
             {/* MEMBER */}
             <Route path="/transaction" component={Transactions}></Route>
-            <Route path="/member" component={MemDashboard}></Route>
+            <Route path="/Events" component={MemEvents}></Route>
             <Route path="/profile" component={Profile}></Route>
 
             {/* FINANCE */}

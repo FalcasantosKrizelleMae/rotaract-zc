@@ -22,10 +22,12 @@ function Home() {
 
    const data = [
       {
-         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/263477138_644677916912724_5391718727021497366_n.jpg?_nc_cat=103&_nc_rgb565=1&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeGCKIGPv7RRCWG2T1TH_3eA4uJY8DvfgD7i4ljwO9-APizZXyYx57BF8RoC1lDYoVrHvdtRXlkZFW8DYz5zgFUg&_nc_ohc=rxz2Cx86OAEAX9Z7MCO&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT9j_lNJ1HyUl0ym66nKN_5nhx9YUfeadYCpcehsANCLkg&oe=61C24067',
+         caption: '',
       },
       {
-         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/268074324_133277799115881_8938400988958528684_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeEknhwiyI9RN0ESi-DRpMA4ankjXQbViP1qeSNdBtWI_QE3ZZ2XN1UsFLGSCB3tBV-HeQyBxpAOCDyVdqMwWyZA&_nc_ohc=9dx5g6PnzZcAX-1Fpmr&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT-W6xPQibKwsjXfLAKe5ZFw3XoxTBVzKOnu8hNA_Lhgyg&oe=61C2E184',
+         caption: '',
       },
    ];
 

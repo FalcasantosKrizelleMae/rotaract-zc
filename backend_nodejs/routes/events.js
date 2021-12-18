@@ -170,31 +170,30 @@ event.post('/add_event-admin', (req, res) => {
                               },
                            });
                         });
-                        console.log('success');
 
                         res.send({ message: 'success' });
 
-                        // schedule.scheduleJob(notifDate, function () {
-                        //    emailList.forEach((element) => {
-                        //       let info = transporter.sendMail({
-                        //          from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
-                        //          to: element.email, // list of receivers
-                        //          subject:
-                        //             ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
+                        schedule.scheduleJob(notifDate, function () {
+                           emailList.forEach((element) => {
+                              let info = transporter.sendMail({
+                                 from: 'Rotary Zamboanga City <rotaryzamboangacity@gmail.com>', // sender address
+                                 to: element.email, // list of receivers
+                                 subject:
+                                    ' A NEW EVENT FOR ALL ROTARY ZAMBOANGA MEMBERS', // Subject line
 
-                        //          html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
-                        //             start
-                        //          ).format(
-                        //             'LLL'
-                        //          )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
+                                 html: `<b>REMINDER!!!! <br/> 1 hour left until the event. See you!<br/></b><h4> A new event is coming your way. </h4>  Event details: <br/> What: <b> ${title}</b> <br/> When: <b>${moment(
+                                    start
+                                 ).format(
+                                    'LLL'
+                                 )}</b> <br/> Other details: <b> ${description}</b> <br/><br/> <i>NOTE: Kindly present your QR Code for attedance. Have a great day ahead!</i>`,
 
-                        //          auth: {
-                        //             user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
-                        //             pass: 'rotaractzc', // generated ethereal password
-                        //          },
-                        //       });
-                        //    });
-                        // });
+                                 auth: {
+                                    user: 'rotaryzamboangacity@gmail.com', // generated ethereal user
+                                    pass: 'rotaractzc', // generated ethereal password
+                                 },
+                              });
+                           });
+                        });
                      }
                   });
                }

@@ -45,19 +45,17 @@ class Header extends Component {
 
                <Menu.Item
                   key="dash"
-                  icon={<AiIcons.AiOutlineAppstore />}
-                  className="item"
-               >
-                  <Link to={{}}>Dashboard</Link>
-               </Menu.Item>
-               <Menu.Item
-                  key="events"
                   icon={<AiIcons.AiOutlineCalendar />}
                   className="item"
                >
-                  <Link to={{}}>Events</Link>
+                   <Link
+                     to={{ pathname: `/events/${member_id}` }}
+                     className="text-decoration-none"
+                  >
+                  Events
+                  </Link>
                </Menu.Item>
-
+             
                <Menu.Item
                   key="alipay"
                   icon={<AiIcons.AiOutlineAccountBook />}

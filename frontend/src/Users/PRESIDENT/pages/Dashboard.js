@@ -18,31 +18,21 @@ import {
 import Axios from 'axios';
 
 const PresDashboard = () => {
-   const [event, setEvent] = useState([]);
+   const [total_mem, setTotalMem] = useState();
    const [data, setData] = useState([]);
    const [funds, setFunds] = useState([]);
+   const [expenses, setExpenses] = useState();
+   const [total_funds, setTotalFunds] = useState();
    const chapter = localStorage.getItem('chapter');
 
    const COLORS = ['darkgrey', '#d91b5c'];
 
    useEffect(() => {
-      Axios.get(`http://localhost:5000/events/pres/${chapter}`).then(
-         (response) => {
-            if (response) {
-               setEvent(response.data);
-
-               Axios.get(`http://localhost:5000/web/selectEvent`, {
-                  params: {
-                     event_id: response.data[0].event_id,
-                  },
-               }).then((response) => {
-                  if (response) {
-                     setData(response.data);
-                  }
-               });
-            }
+      Axios.get(`http://localhost:5000/web/selectEvent`).then((response) => {
+         if (response) {
+            setData(response.data);
          }
-      );
+      });
 
       Axios.get('http://localhost:5000/web/funds_chapter', {
          params: {
@@ -51,6 +41,27 @@ const PresDashboard = () => {
       }).then((response) => {
          if (response) {
             setFunds(response.data);
+         }
+      });
+
+      Axios.get(`http://localhost:5000/web/total_mem/chapter`, {
+         params: {
+            chapter: chapter,
+         },
+      }).then((response) => {
+         if (response) {
+            setTotalMem(response.data[0].total_mem);
+         }
+      });
+
+      Axios.get(`http://localhost:5000/web/funds_chapter`, {
+         params: {
+            chapter: chapter,
+         },
+      }).then((response) => {
+         if (response) {
+            setTotalFunds(response.data[0].total_funds);
+            setExpenses(response.data[0].expenses);
          }
       });
    });
@@ -62,22 +73,39 @@ const PresDashboard = () => {
             <div className="bg-pink p-3 rounded fs-4 text-white ps-4 mb-4 mt-2 container">
                DASHBOARD
             </div>
-            {/* <div class="row d-flex justify-content-center">
-               <div class="col-sm-3 ">
-                  <Card title="Total Members" imageUrl="" body="18" />
-               </div>
+            <div class="row d-flex justify-content-center">
                <div class="col-sm-3">
-                  <Card title="Fund Balance " imageUrl="" body="20,000" />
+                  <Card
+                     title="Total Members"
+                     imageUrl=""
+                     className="bg-dark mb-4 shadow-sm "
+                     body={total_mem + ' members'}
+                  />
+               </div>
+               {}
+               <div class="col-sm-3">
+                  <Card
+                     title="Fund Balance "
+                     imageUrl=""
+                     className="bg-dark mb-4 shadow-sm "
+                     body={total_funds + ' php'}
+                  />
                </div>
 
                <div class="col-sm-3">
-                  <Card title="Total Expenses" imageUrl="" body="18" />
+                  <Card
+                     title="Expenses"
+                     imageUrl=""
+                     className="bg-dark mb-4 shadow-sm "
+                     body={expenses + ' php'}
+                  />
                </div>
-            </div> */}
+            </div>
             <div class="container">
                <div className="row">
                   <div className="col-lg shadow p-5 rounded mx-2">
-                     <h3>Attendance</h3> <br />
+                     <h4>Attendance graph for all events</h4>
+                     <br />
                      <div style={{ width: '100%', height: 300 }}>
                         <ResponsiveContainer>
                            <PieChart>

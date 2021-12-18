@@ -54,10 +54,22 @@ web.get('/attendance', (req, res) => {
 });
 
 web.get('/selectEvent', (req, res) => {
-   const id = req.query.event_id;
    const sqlGetData =
-      'SELECT status, COUNT(*) AS "attendees" FROM attendance WHERE event_id = ? GROUP BY status;';
-   db.query(sqlGetData, id, (err, result) => {
+      'SELECT status, COUNT(*) AS "attendees" FROM attendance GROUP BY status;';
+   db.query(sqlGetData, (err, result) => {
+      if (err) {
+         res.send(err);
+      } else {
+         res.send(result);
+      }
+   });
+});
+
+web.get('/total_mem/chapter', (req, res) => {
+   const chapter = req.query.chapter;
+   const sqlGetData =
+      'select count(*) as total_mem from members where chapter = ?;';
+   db.query(sqlGetData, chapter, (err, result) => {
       if (err) {
          res.send(err);
       } else {

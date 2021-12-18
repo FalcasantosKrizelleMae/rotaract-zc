@@ -36,42 +36,40 @@ function Home() {
 
    const data = [
       {
-         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg',
-         caption: `<div>
-          San Francisco<br/><span>Next line</span>
-        </div>`,
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/244417609_159160476407141_5776292729667220496_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeFKqGYWikhV99W6qZ93z0zszebQ4EpLCsfN5tDgSksKx3C_-pjHSCraU_IvfOGQsLb_MV1hTn6Cg0FQRhPrfvxk&_nc_ohc=e0oK4hht2MYAX-k4UYZ&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT_qnlWHlW7P2vROhC6BFbATA-5BpIXrWfZWEOD0ROqfwA&oe=61C2C587',
+         caption: '',
       },
       {
-         image: 'https://cdn.britannica.com/s:800x450,c:crop/35/204435-138-2F2B745A/Time-lapse-hyper-lapse-Isle-Skye-Scotland.jpg',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/260287189_4442909372501186_786300875508618491_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeHagvxKKzha-JRhTjnPcnL1pHmGw4wdw-ykeYbDjB3D7CsiKyLig7vUNI8vq22LIqiRY2wnkaSJUhP0blAdZcoD&_nc_ohc=SKE17eAeUQUAX9MXa3M&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT96pGrOTD_ysOtTtRdQqxMV-ySkStSaLnhb75HPe6x1gg&oe=61C2F039',
+         caption: '',
       },
       {
-         image: 'https://static2.tripoto.com/media/filter/tst/img/735873/TripDocument/1537686560_1537686557954.jpg',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-1.fna.fbcdn.net/v/t39.30808-6/248417561_4375108832614574_2841135477559560567_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeE_PoO_TQlexyRfL4TmkqCvHpYkdsGSoiMeliR2wZKiI52f675cLKA6DcMwPbNgVK9rQ-XoXKpFqLiI-ST06tv1&_nc_ohc=qb5gXSB1QnoAX9IV9a8&_nc_ht=scontent.fcgy2-1.fna&oh=00_AT-L65aCauWOpJ84tVQwFOfLMYCconUaIvZapn1wL7qxyg&oe=61C2B7E1',
+         caption: '',
       },
       {
-         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/252310780_4353027488156042_692752812978759530_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeGxQrxAkgV2KIT-YPvhcXiY7dg_VISoh-7t2D9UhKiH7nV7qDtsREHeIcPnvmEbxMR2Aqj2jKo7lTFf9xmOr8Xp&_nc_ohc=hYmI9C6hQ8UAX9pU8_N&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT-t2uBBY5jKQyd_qUkkSxAvp6MMu2HPiQe9qJ5E5xa6yw&oe=61C3A202',
+         caption: '',
       },
       {
-         image: 'https://i.natgeofe.com/n/f7732389-a045-402c-bf39-cb4eda39e786/scotland_travel_4x3.jpg',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-1.fna.fbcdn.net/v/t39.30808-6/248059562_963949114464666_5628637395049046275_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeE8ljk3Wi-PrlMEFfnKFPMTWrvWlXFweEBau9aVcXB4QB91N5ol2lhhCoJ42bpngNQQ0JabWgsLRw7_DK_Nk0hN&_nc_ohc=Z1BWk8vr6tIAX8kmnSa&_nc_ht=scontent.fcgy2-1.fna&oh=00_AT8lYbvdulGhr-nJHYILE7oofT7e54axzMzIMdZXONBSjQ&oe=61C22C5F',
+         caption: '',
       },
       {
-         image: 'https://www.tusktravel.com/blog/wp-content/uploads/2020/07/Best-Time-to-Visit-Darjeeling-for-Honeymoon.jpg',
-         caption: 'Darjeeling',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/263477138_644677916912724_5391718727021497366_n.jpg?_nc_cat=103&_nc_rgb565=1&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeGCKIGPv7RRCWG2T1TH_3eA4uJY8DvfgD7i4ljwO9-APizZXyYx57BF8RoC1lDYoVrHvdtRXlkZFW8DYz5zgFUg&_nc_ohc=rxz2Cx86OAEAX9Z7MCO&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT9j_lNJ1HyUl0ym66nKN_5nhx9YUfeadYCpcehsANCLkg&oe=61C24067',
+         caption: '',
       },
       {
-         image: 'https://www.omm.com/~/media/images/site/locations/san_francisco_780x520px.ashx',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/264414241_4486785468113576_9049602934727068773_n.jpg?_nc_cat=104&_nc_rgb565=1&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeHCIlBpMsU48kx9FDnKL7S2_YI2KZjVrJX9gjYpmNWslaWinMuvO40zc6NXrd3VQJGl0cCA0J_aE--k8cWGe33Y&_nc_ohc=BuTSjcIMrCkAX-iPteR&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT-kidpA_LSCqQp4q81UmwO35QxqtlPdLU4NKTuvfMaRKQ&oe=61C3B9EA',
+         caption: '',
       },
       {
-         image: 'https://images.ctfassets.net/bth3mlrehms2/6Ypj2Qd3m3jQk6ygmpsNAM/61d2f8cb9f939beed918971b9bc59bcd/Scotland.jpg?w=750&h=422&fl=progressive&q=50&fm=jpg',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-1.fna.fbcdn.net/v/t39.30808-6/249862750_4329472050511586_3197559657567231910_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeHP10CBUBAoeBf54hf7tM9eJTQCBI7XCswlNAIEjtcKzAiD_d9ILpEFWKbPrnxv0MQZ9zyOfC9lj9hcZLZ9zMPx&_nc_ohc=8avQouLH3w8AX9QOiuB&_nc_ht=scontent.fcgy2-1.fna&oh=00_AT9lwKF3DK0lVRpr5yWEkeP25T5XDzxjyESIG54dKRmazQ&oe=61C39F2A',
+         caption: '',
       },
       {
-         image: 'https://www.oyorooms.com/travel-guide/wp-content/uploads/2019/02/summer-7.jpg',
-         caption: '<div>San Francisco</div>',
+         image: 'https://scontent.fcgy2-2.fna.fbcdn.net/v/t39.30808-6/240394594_4124770727648387_6353064691621258274_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeFXTEjypw4ivSGF_IVk4HZmXnOXBFGdxuBec5cEUZ3G4A2uqBqJeQsed8V_LtCrry4cmeOSO3QlV8wTx1tZLoDU&_nc_ohc=Uqc53VmofrQAX86E7Ju&tn=G0pwGMiOwPMtPw5o&_nc_ht=scontent.fcgy2-2.fna&oh=00_AT-v1miEaU35DcPBK-2zX2UEFBsmRmaxEbUrgAtthaFkgw&oe=61C3796B',
+         caption: '',
       },
    ];
 
@@ -90,10 +88,10 @@ function Home() {
 
          <div className=" px-5 py-4 mt-5 mb-5 mx-5">
             <div className="row my-5">
-               <div className="col-sm my-auto ">
+               <div className="col-lg my-auto ">
                   <h4>WELCOME TO </h4>
                   <h1 className="text-pink">ZAMBOANGA CITY ROTARACT CLUB </h1>
-                  <p className="row col-sm-8 mt-5">
+                  <p className="row col-lg-8 mt-5">
                      Together, we see a world where people unite and take action
                      to create lasting change – across the globe, in our
                      communities, and in ourselves.{' '}
@@ -113,7 +111,7 @@ function Home() {
                      </Link>
                   </div>
                </div>
-               <div className="col-sm mt-5">
+               <div className="col-lg mt-5">
                   <img src={logo} width="100%" height="100%" alt="serve qr" />
                </div>
             </div>
@@ -417,12 +415,12 @@ function Home() {
             </div>
          </div>
          <div className="gallery" id="gallery">
-            <div style={{ textAlign: 'center' }} className="mb-5 mt-5 pt-5">
+            <div style={{ textAlign: 'center' }} className="container mb-5 mt-5 pt-5 rounded">
                <Carousel
                   data={data}
                   time={2000}
                   width="100%"
-                  height="790px"
+                  height="700px"
                   captionStyle={captionStyle}
                   slideNumber={true}
                   slideNumberStyle={slideNumberStyle}
@@ -446,11 +444,11 @@ function Home() {
          </div>
          <div class="footer pt-5 mt-5 bg-light">
             <footer>
-               <div class="row">
-                  <div class="col-sm-4 col-md-2 mt-2"></div>
-                  <div class="mt-2 py-2 col-sm">
-                     <h4>Rotaract Zamboanga City Chapter</h4>
-                     <p>
+               <div class="row ">
+                
+                  <div class="m-5 p-5 col-lg-6 ">
+                     <h4 className="text-uppercase text-bold mb-5">Rotaract Zamboanga City Chapter</h4>
+                     <p class="col-lg-7">
                         Rotaract clubs bring together people ages 18 and older,
                         Zamboanga City has a total of 8 Rotaract Clubs, which
                         aims to develop leadership and professional skills, and
@@ -458,15 +456,15 @@ function Home() {
                      </p>
                   </div>
 
-                  <div class="mt-2 py-2 col-sm">
+                  <div class="m-5 p-5 col-lg">
                      <h5>Contact and Follow us: </h5>
                      <FaIcons.FaFacebook
-                        className="me-1"
+                        className="me-5"
                         onClick={handleClick1}
                         size="5vh"
                      />
                      <FaIcons.FaInstagram
-                        className="me-1"
+                        className="me-5"
                         onClick={handleClick1}
                         size="5vh"
                      />
